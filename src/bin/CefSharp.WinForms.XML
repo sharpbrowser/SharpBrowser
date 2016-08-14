@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CefSharp.WinForms</name>
+    </assembly>
+    <members>
+        <member name="M:CefSharp.WinForms.Internals.DefaultFocusHandler.OnGotFocus">
+            <remarks>
+            Try to avoid needing to override this logic in a subclass. The implementation in 
+            DefaultFocusHandler relies on very detailed behavior of how WinForms and 
+            Windows interact during window activation.
+            </remarks>
+        </member>
+        <member name="M:CefSharp.WinForms.Internals.ControlExtensions.InvokeOnUiThreadIfRequired(System.Windows.Forms.Control,System.Action)">
+            <summary>
+            Executes the Action asynchronously on the UI thread, does not block execution on the calling thread.
+            </summary>
+            <param name="control">the control for which the update is required</param>
+            <param name="action">action to be performed on the control</param>
+        </member>
+        <member name="M:CefSharp.WinForms.Internals.ControlExtensions.IsActiveControl(System.Windows.Forms.Control)">
+            <summary>
+            Returns whether the supplied control is the currently
+            active control.
+            </summary>
+            <param name="control"></param>
+            <returns></returns>
+        </member>
+        <member name="F:CefSharp.WinForms.Internals.ParentFormMessageInterceptor.isMoving">
+            <summary>
+            Keep track of whether a move is in progress.
+            </summary>
+        </member>
+        <member name="F:CefSharp.WinForms.Internals.ParentFormMessageInterceptor.movingRectangle">
+            <summary>
+            Used to determine the coordinates involved in the move
+            </summary>
+        </member>
+        <member name="M:CefSharp.WinForms.Internals.ParentFormMessageInterceptor.RefindParentForm">
+            <summary>
+            Call to force refinding of the parent Form. 
+            (i.e. top level window that owns the ChromiumWebBrowserControl)
+            </summary>
+        </member>
+        <member name="M:CefSharp.WinForms.Internals.ParentFormMessageInterceptor.ParentParentChanged(System.Object,System.EventArgs)">
+            <summary>
+            Adjust the form to listen to if the ChromiumWebBrowserControl's parent changes.
+            </summary>
+            <param name="sender">The ChromiumWebBrowser whose parent has changed.</param>
+            <param name="e"></param>
+        </member>
+        <member name="M:CefSharp.WinForms.ChromiumWebBrowser.SetFocus(System.Boolean)">
+            <summary>
+            Tell the browser to acquire/release focus.
+            </summary>
+        </member>
+        <member name="P:CefSharp.WinForms.ChromiumWebBrowser.IsActivating">
+            <summary>
+            Set to true while handing an activating WM_ACTIVATE message.
+            MUST ONLY be cleared by DefaultFocusHandler.
+            </summary>
+        </member>
+        <member name="P:CefSharp.WinForms.ChromiumWebBrowser.FocusHandler">
+            <summary>
+            The <see cref="T:CefSharp.IFocusHandler"/> for this ChromiumWebBrowser.
+            </summary>
+            <remarks>
+            If you need customized focus handling behavior for WinForms, the suggested 
+            best practice would be to inherit from DefaultFocusHandler and try to avoid 
+            needing to override the logic in OnGotFocus. The implementation in 
+            DefaultFocusHandler relies on very detailed behavior of how WinForms and 
+            Windows interact during window activation.
+            </remarks>
+        </member>
+        <member name="P:CefSharp.WinForms.ChromiumWebBrowser.Focused">
+            <summary>
+            Manually implement Focused because cef does not implement it.
+            </summary>
+            <remarks>
+            This is also how the Microsoft's WebBrowserControl implements the Focused property.
+            </remarks>
+        </member>
+    </members>
+</doc>

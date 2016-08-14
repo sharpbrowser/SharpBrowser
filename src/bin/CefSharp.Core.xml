@@ -1,0 +1,470 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        "CefSharp.Core"
+    </assembly>
+    <members>
+        <member name="M:CefSharp.Cef.ForceWebPluginShutdown(System.String)">
+            <summary>
+Force a plugin to shutdown. 
+</summary>
+            <param name="path">Path (directory + file).</param>
+        </member>
+        <member name="M:CefSharp.Cef.UnregisterInternalWebPlugin(System.String)">
+            <summary>
+Unregister an internal plugin. This may be undone the next time RefreshWebPlugins() is called. 
+</summary>
+            <param name="path">Path (directory + file).</param>
+        </member>
+        <member name="M:CefSharp.Cef.RemoveWebPluginPath(System.String)">
+            <summary>
+Remove a plugin path (directory + file). This change may not take affect until after RefreshWebPlugins() is called. 
+</summary>
+            <param name="path">Path (directory + file).</param>
+        </member>
+        <member name="M:CefSharp.Cef.RefreshWebPlugins">
+            <summary>
+Cause the plugin list to refresh the next time it is accessed regardless of whether it has already been loaded.
+</summary>
+        </member>
+        <member name="M:CefSharp.Cef.AddWebPluginDirectory(System.String)">
+            <summary>
+Add a plugin directory. This change may not take affect until after CefRefreshWebPlugins() is called.
+</summary>
+            <param name="directory">Directory.</param>
+        </member>
+        <member name="M:CefSharp.Cef.AddWebPluginPath(System.String)">
+            <summary>
+Add a plugin path (directory + file). This change may not take affect until after RefreshWebPlugins() is called.
+</summary>
+            <param name="path">Path (directory + file).</param>
+        </member>
+        <member name="M:CefSharp.Cef.GetPlugins">
+            <summary>
+Async returns a list containing Plugin Information
+(Wrapper around CefVisitWebPluginInfo)
+The Task will be cancelled and a TaskCanceledException throw
+if the Task does not complete within 2000ms
+Documentation for CefWebPluginInfoVisitor.Visit states
+`This method may never be called if no plugins are found.`
+hence the Task cancelled timeout
+</summary>
+            <return>Returns List of <see cref="T:CefSharp.Plugin" /> structs.</return>
+        </member>
+        <member name="M:CefSharp.Cef.ClearSchemeHandlerFactories">
+            <summary>
+Clear all registered scheme handler factories.
+</summary>
+            <return>Returns false on error.</return>
+        </member>
+        <member name="M:CefSharp.Cef.Shutdown">
+            <summary>
+Shuts down CefSharp and the underlying CEF infrastructure. This method is safe to call multiple times; it will only
+shut down CEF on the first call (all subsequent calls will be ignored).
+This function should be called on the main application thread to shut down the CEF browser process before the application exits. 
+</summary>
+        </member>
+        <member name="M:CefSharp.Cef.GetGlobalCookieManager">
+            <summary>
+Returns the global cookie manager.
+</summary>
+        </member>
+        <member name="M:CefSharp.Cef.ClearCrossOriginWhitelist">
+            <summary>Remove all entries from the cross-origin access whitelist.</summary>
+            <remarks>
+Remove all entries from the cross-origin access whitelist. Returns false if
+the whitelist cannot be accessed.
+</remarks>
+        </member>
+        <member name="M:CefSharp.Cef.RemoveCrossOriginWhitelistEntry(System.String,System.String,System.String,System.Boolean)">
+            <summary>Remove entry from cross-origin whitelist</summary>
+            <param name="sourceOrigin">The origin allowed to be accessed by the target protocol/domain.</param>
+            <param name="targetProtocol">The target protocol allowed to access the source origin.</param>
+            <param name="targetDomain">The optional target domain allowed to access the source origin.</param>
+            <param name="allowTargetSubdomains">If set to true would allow a blah.example.com if the 
+    <paramref name="targetDomain" /> was set to example.com
+</param>
+            <remarks>
+Remove an entry from the cross-origin access whitelist. Returns false if
+<paramref name="sourceOrigin" /> is invalid or the whitelist cannot be accessed.
+</remarks>
+        </member>
+        <member name="M:CefSharp.Cef.AddCrossOriginWhitelistEntry(System.String,System.String,System.String,System.Boolean)">
+            <summary>Add an entry to the cross-origin whitelist.</summary>
+            <param name="sourceOrigin">The origin allowed to be accessed by the target protocol/domain.</param>
+            <param name="targetProtocol">The target protocol allowed to access the source origin.</param>
+            <param name="targetDomain">The optional target domain allowed to access the source origin.</param>
+            <param name="allowTargetSubdomains">If set to true would allow a blah.example.com if the 
+    <paramref name="targetDomain" /> was set to example.com
+</param>
+            <remarks>
+The same-origin policy restricts how scripts hosted from different origins
+(scheme + domain + port) can communicate. By default, scripts can only access
+resources with the same origin. Scripts hosted on the HTTP and HTTPS schemes
+(but no other schemes) can use the "Access-Control-Allow-Origin" header to
+allow cross-origin requests. For example, https://source.example.com can make
+XMLHttpRequest requests on http://target.example.com if the
+http://target.example.com request returns an "Access-Control-Allow-Origin:
+https://source.example.com" response header.
+Scripts in separate frames or iframes and hosted from the same protocol and
+domain suffix can execute cross-origin JavaScript if both pages set the
+document.domain value to the same domain suffix. For example,
+scheme://foo.example.com and scheme://bar.example.com can communicate using
+JavaScript if both domains set document.domain="example.com".
+This method is used to allow access to origins that would otherwise violate
+the same-origin policy. Scripts hosted underneath the fully qualified
+<paramref name="sourceOrigin" /> URL (like http://www.example.com) will be allowed access to
+all resources hosted on the specified <paramref name="targetProtocol" /> and <paramref name="targetDomain" />.
+If <paramref name="targetDomain" /> is non-empty and <paramref name="allowTargetSubdomains" /> if false only
+exact domain matches will be allowed. If <paramref name="targetDomain" /> contains a top-
+level domain component (like "example.com") and <paramref name="allowTargetSubdomains" /> is
+true sub-domain matches will be allowed. If <paramref name="targetDomain" /> is empty and
+<paramref name="allowTargetSubdomains" /> if true all domains and IP addresses will be
+allowed.
+This method cannot be used to bypass the restrictions on local or display
+isolated schemes. See the comments on <see cref="T:CefSharp.CefCustomScheme" /> for more
+information.
+
+This function may be called on any thread. Returns false if <paramref name="sourceOrigin" />
+is invalid or the whitelist cannot be accessed.
+</remarks>
+        </member>
+        <member name="M:CefSharp.Cef.Initialize(CefSharp.CefSettings,System.Boolean,System.Boolean)">
+            <summary>
+Initializes CefSharp with user-provided settings.
+This function should be called on the main application thread to initialize the CEF browser process.
+</summary>
+            <param name="cefSettings">CefSharp configuration settings.</param>
+            <param name="shutdownOnProcessExit">When the Current AppDomain (relative to the thread called on)
+Exits(ProcessExit event) then Shudown will be called.</param>
+            <param name="performDependencyCheck">Check that all relevant dependencies avaliable, throws exception if any are missing</param>
+            <return>true if successful; otherwise, false.</return>
+        </member>
+        <member name="M:CefSharp.Cef.Initialize(CefSharp.CefSettings)">
+            <summary>
+Initializes CefSharp with user-provided settings.
+This function should be called on the main application thread to initialize the CEF browser process.
+</summary>
+            <param name="cefSettings">CefSharp configuration settings.</param>
+            <return>true if successful; otherwise, false.</return>
+        </member>
+        <member name="M:CefSharp.Cef.Initialize">
+            <summary>
+Initializes CefSharp with the default settings.
+This function should be called on the main application thread to initialize the CEF browser process.
+</summary>
+            <return>true if successful; otherwise, false.</return>
+        </member>
+        <member name="P:CefSharp.Cef.CefCommitHash">
+            <summary>
+Gets a value that indicates the Git Hash for CEF version currently being used.
+</summary>
+            <value>The Git Commit Hash</value>
+        </member>
+        <member name="P:CefSharp.Cef.ChromiumVersion">
+            <summary>Gets a value that indicates the Chromium version currently being used.</summary>
+            <value>The Chromium version.</value>
+        </member>
+        <member name="P:CefSharp.Cef.CefVersion">
+            <summary>Gets a value that indicates the CEF version currently being used.</summary>
+            <value>The CEF Version</value>
+        </member>
+        <member name="P:CefSharp.Cef.CefSharpVersion">
+            <summary>Gets a value that indicates the version of CefSharp currently being used.</summary>
+            <value>The CefSharp version.</value>
+        </member>
+        <member name="P:CefSharp.Cef.IsInitialized">
+            <summary>Gets a value that indicates whether CefSharp is initialized.</summary>
+            <value>true if CefSharp is initialized; otherwise, false.</value>
+        </member>
+        <member name="P:CefSharp.Cef.OnContextInitialized">
+            <summary>
+Called on the browser process UI thread immediately after the CEF context has been initialized. 
+</summary>
+        </member>
+        <member name="P:CefSharp.BrowserSettings.WindowlessFrameRate">
+            <summary>
+The maximum rate in frames per second (fps) that CefRenderHandler::OnPaint
+will be called for a windowless browser. The actual fps may be lower if
+the browser cannot generate frames at the requested rate. The minimum
+value is 1 and the maximum value is 60 (default 30). This value can also be
+changed dynamically via IBrowserHost.SetWindowlessFrameRate.
+</summary>
+        </member>
+        <member name="P:CefSharp.BrowserSettings.AcceptLanguageList">
+            <summary>
+Comma delimited ordered list of language codes without any whitespace that
+will be used in the "Accept-Language" HTTP header. May be overridden on a
+per-browser basis using the CefBrowserSettings.AcceptLanguageList value.
+If both values are empty then "en-US,en" will be used. Can be overridden
+for individual RequestContext instances via the
+RequestContextSettings.AcceptLanguageList value.
+</summary>
+        </member>
+        <member name="P:CefSharp.BrowserSettings.BackgroundColor">
+            <summary>
+Opaque background color used for the browser before a document is loaded
+and when no document color is specified. By default the background color
+will be the same as CefSettings.background_color. Only the RGB compontents
+of the specified value will be used. The alpha component must greater than
+0 to enable use of the background color but will be otherwise ignored.
+</summary>
+        </member>
+        <member name="P:CefSharp.BrowserSettings.WebGl">
+            <summary>
+Controls whether WebGL can be used. Note that WebGL requires hardware
+support and may not work on all systems even when enabled. Also
+configurable using the "disable-webgl" command-line switch.
+</summary>
+        </member>
+        <member name="P:CefSharp.BrowserSettings.ApplicationCache">
+            <summary>
+Controls whether the application cache can be used. Also configurable using
+the "disable-application-cache" command-line switch.
+</summary>
+        </member>
+        <member name="P:CefSharp.BrowserSettings.Databases">
+            <summary>
+Controls whether databases can be used. Also configurable using the
+"disable-databases" command-line switch.
+</summary>
+        </member>
+        <member name="P:CefSharp.BrowserSettings.LocalStorage">
+            <summary>
+Controls whether local storage can be used. Also configurable using the
+"disable-local-storage" command-line switch.
+</summary>
+        </member>
+        <member name="P:CefSharp.BrowserSettings.TabToLinks">
+            <summary>
+Controls whether the tab key can advance focus to links. Also configurable
+using the "disable-tab-to-links" command-line switch.
+</summary>
+        </member>
+        <member name="P:CefSharp.BrowserSettings.TextAreaResize">
+            <summary>
+Controls whether text areas can be resized. Also configurable using the
+"disable-text-area-resize" command-line switch.
+</summary>
+        </member>
+        <member name="P:CefSharp.BrowserSettings.ImageShrinkStandaloneToFit">
+            <summary>
+Controls whether standalone images will be shrunk to fit the page. Also
+configurable using the "image-shrink-standalone-to-fit" command-line
+switch.
+</summary>
+        </member>
+        <member name="P:CefSharp.BrowserSettings.ImageLoading">
+            <summary>
+Controls whether image URLs will be loaded from the network. A cached image
+will still be rendered if requested. Also configurable using the
+"disable-image-loading" command-line switch.
+</summary>
+        </member>
+        <member name="P:CefSharp.BrowserSettings.WebSecurity">
+            <summary>
+Controls whether web security restrictions (same-origin policy) will be
+enforced. Disabling this setting is not recommend as it will allow risky
+security behavior such as cross-site scripting (XSS). Also configurable
+using the "disable-web-security" command-line switch.
+</summary>
+        </member>
+        <member name="P:CefSharp.BrowserSettings.FileAccessFromFileUrls">
+            <summary>
+Controls whether file URLs will have access to other file URLs. Also
+configurable using the "allow-access-from-files" command-line switch.
+</summary>
+        </member>
+        <member name="P:CefSharp.BrowserSettings.UniversalAccessFromFileUrls">
+            <summary>
+Controls whether file URLs will have access to all URLs. Also configurable
+using the "allow-universal-access-from-files" command-line switch.
+</summary>
+        </member>
+        <member name="P:CefSharp.BrowserSettings.Plugins">
+            <summary>
+Controls whether any plugins will be loaded. Also configurable using the
+"disable-plugins" command-line switch.
+</summary>
+        </member>
+        <member name="P:CefSharp.BrowserSettings.Java">
+            <summary>
+Controls whether the Java plugin will be loaded. Also configurable using
+the "disable-java" command-line switch.
+</summary>
+        </member>
+        <member name="P:CefSharp.BrowserSettings.CaretBrowsing">
+            <summary>
+Controls whether the caret position will be drawn. Also configurable using
+the "enable-caret-browsing" command-line switch.
+</summary>
+        </member>
+        <member name="P:CefSharp.BrowserSettings.JavascriptDomPaste">
+            <summary>
+Controls whether DOM pasting is supported in the editor via
+execCommand("paste"). The |javascript_access_clipboard| setting must also
+be enabled. Also configurable using the "disable-javascript-dom-paste"
+command-line switch.
+</summary>
+        </member>
+        <member name="P:CefSharp.BrowserSettings.JavascriptAccessClipboard">
+            <summary>
+Controls whether JavaScript can access the clipboard. Also configurable
+using the "disable-javascript-access-clipboard" command-line switch.
+</summary>
+        </member>
+        <member name="P:CefSharp.BrowserSettings.JavascriptCloseWindows">
+            <summary>
+Controls whether JavaScript can be used to close windows that were not
+opened via JavaScript. JavaScript can still be used to close windows that
+were opened via JavaScript. Also configurable using the
+"disable-javascript-close-windows" command-line switch.
+</summary>
+        </member>
+        <member name="P:CefSharp.BrowserSettings.JavascriptOpenWindows">
+            <summary>
+Controls whether JavaScript can be used for opening windows. Also
+configurable using the "disable-javascript-open-windows" command-line
+switch.
+</summary>
+        </member>
+        <member name="P:CefSharp.BrowserSettings.Javascript">
+            <summary>
+Controls whether JavaScript can be executed. Also configurable using the
+"disable-javascript" command-line switch.
+</summary>
+        </member>
+        <member name="P:CefSharp.BrowserSettings.RemoteFonts">
+            <summary>
+Controls the loading of fonts from remote sources. Also configurable using
+the "disable-remote-fonts" command-line switch.
+</summary>
+        </member>
+        <member name="P:CefSharp.BrowserSettings.DefaultEncoding">
+            <summary>
+Default encoding for Web content. If empty "ISO-8859-1" will be used. Also
+configurable using the "default-encoding" command-line switch.
+</summary>
+        </member>
+        <member name="T:CefSharp.BrowserSettings">
+            <summary>
+Browser initialization settings. Specify NULL or 0 to get the recommended
+default values. The consequences of using custom values may not be well
+tested. Many of these and other settings can also configured using command-
+line switches.
+</summary>
+        </member>
+        <member name="T:CefSharp.RequestContext">
+            <summary>
+A request context provides request handling for a set of related browser objects.
+A request context is specified when creating a new browser object via the CefBrowserHost
+static factory methods. Browser objects with different request contexts will never be
+hosted in the same render process. Browser objects with the same request context may or
+may not be hosted in the same render process depending on the process model.
+Browser objects created indirectly via the JavaScript window.open function or targeted
+links will share the same render process and the same request context as the source browser.
+When running in single-process mode there is only a single render process (the main process)
+and so all browsers created in single-process mode will share the same request context.
+This will be the first request context passed into a CefBrowserHost static factory method
+and all other request context objects will be ignored. 
+</summary>
+        </member>
+        <member name="M:CefSharp.ResourceHandlerWrapper.#ctor(CefSharp.IResourceHandler,CefSharp.IBrowser,CefSharp.IFrame,CefSharp.IRequest)">
+            <summary>
+Constructor that accepts IBrowser, IFrame, IRequest in order to be the CefSharp
+lifetime management container  (i.e. calling .Dispose at the correct time) on 
+managed objects that contain MCefRefPtrs.
+</summary>
+        </member>
+        <member name="T:CefSharp.RequestContextSettings">
+            <summary>
+RequestContextSettings
+</summary>
+        </member>
+        <member name="M:CefSharp.CefSettings.SetOffScreenRenderingBestPerformanceArgs">
+            <summary>
+Set command line arguments for best OSR (Offscreen and WPF) Rendering performance
+This will disable WebGL, look at the source to determine which flags best suite
+your requirements.
+</summary>
+        </member>
+        <member name="M:CefSharp.CefSettings.RegisterExtension(CefSharp.CefExtension)">
+            <summary>
+Registers an extension with the provided settings.
+</summary>
+            <param name="extension">The CefExtension that contains the extension code.</param>
+        </member>
+        <member name="M:CefSharp.CefSettings.RegisterScheme(CefSharp.CefCustomScheme)">
+            <summary>
+Registers a custom scheme using the provided settings.
+</summary>
+            <param name="cefCustomScheme">The CefCustomScheme which provides the details about the scheme.</param>
+        </member>
+        <member name="P:CefSharp.CefSettings.AcceptLanguageList">
+            <summary>
+Comma delimited ordered list of language codes without any whitespace that
+will be used in the "Accept-Language" HTTP header. May be set globally
+using the CefSettings.AcceptLanguageList value. If both values are
+empty then "en-US,en" will be used.
+</summary>
+        </member>
+        <member name="P:CefSharp.CefSettings.IgnoreCertificateErrors">
+            <summary>
+Set to true in order to completely ignore SSL certificate errors.
+This is NOT recommended.
+</summary>
+        </member>
+        <member name="M:CefSharp.Internals.StringUtils.AssignNativeFromClr(_cef_string_utf16_t*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,System.String)">
+            <summary>
+Assigns the provided cef_string_t object from the given .NET string.
+</summary>
+            <param name="cefStr">The cef_string_t that should be updated.</param>
+            <param name="str">The .NET string whose value should be used to update cefStr.</param>
+        </member>
+        <member name="M:CefSharp.Internals.StringUtils.ToNative(System.Collections.Generic.IEnumerable`1{System.String})">
+            <summary>
+Converts a .NET List of strings to native (unmanaged) format.
+</summary>
+            <param name="str">The List of strings that should be converted.</param>
+            <returns>An unmanaged representation of the provided List of strings, or an empty List if the input is a nullptr.</returns>
+        </member>
+        <member name="M:CefSharp.Internals.StringUtils.ToNative(System.String)">
+            <summary>
+Converts a .NET string to native (unmanaged) format. Note that this method does not allocate a new copy of the
+</summary>
+            <param name="str">The string that should be converted.</param>
+            <returns>An unmanaged representation of the provided string, or an empty string if the input string is a nullptr.</returns>
+        </member>
+        <member name="M:CefSharp.Internals.StringUtils.ToClr(std.vector&lt;CefStringBase&lt;CefStringTraitsUTF16&gt;&gt;!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+            <summary>
+Converts an unmanaged vector of strings to a (managed) .NET List of strings.
+</summary>
+            <param name="cefStr">The vector of strings that should be converted.</param>
+            <returns>A .NET List of strings.</returns>
+        </member>
+        <member name="M:CefSharp.Internals.StringUtils.ToClr(CefStringBase&lt;CefStringTraitsUTF16&gt;!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+            <summary>
+Converts an unmanaged string to a (managed) .NET string.
+</summary>
+            <param name="cefStr">The string that should be converted.</param>
+            <returns>A .NET string.</returns>
+        </member>
+        <member name="M:CefSharp.Internals.StringUtils.ToClr(_cef_string_utf16_t!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+            <summary>
+Converts an unmanaged string to a (managed) .NET string.
+</summary>
+            <param name="cefStr">The string that should be converted.</param>
+            <returns>A .NET string.</returns>
+        </member>
+        <member name="M:CefSharp.ManagedCefBrowserAdapter.GetBrowser">
+            <summary>
+Gets the CefBrowserWrapper instance
+</summary>
+            <returns>Gets the current instance or null</returns>
+            <summary>
+Gets the CefBrowserWrapper instance
+</summary>
+            <returns>Gets the current instance or null</returns>
+        </member>
+    </members>
+</doc>
