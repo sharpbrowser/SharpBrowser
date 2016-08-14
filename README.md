@@ -1,6 +1,5 @@
-![](https://github.com/sharpbrowser/SharpBrowser/raw/master/images/logo.png)
+![SharpBrowser](https://github.com/sharpbrowser/SharpBrowser/raw/master/images/logo.png)
 
-# SharpBrowser
 The fastest open source C# web browser there is! Slightly faster than Google Chrome when rendering web pages due to lightweight CEF renderer. We compared every available .NET browsing browsing engine and finally settled on the high-performance [CefSharp](https://github.com/cefsharp/CefSharp/). Released under the permissive MIT license.
 
 ## Features
