@@ -22,14 +22,18 @@ The fastest open source C# web browser there is! Slightly faster than Google Chr
 
 ## Screenshots
 
-Apple Homepage
+### Apple Homepage
+
 ![](https://github.com/sharpbrowser/SharpBrowser/raw/master/images/1.png)
 
-Google Maps
+### Google Maps
+
 ![](https://github.com/sharpbrowser/SharpBrowser/raw/master/images/2.png)
 
-Downloads Tab
+### Downloads Tab
+
 ![](https://github.com/sharpbrowser/SharpBrowser/raw/master/images/3.png)
 
-Developer Tools
+### Developer Tools
+
 ![](https://github.com/sharpbrowser/SharpBrowser/raw/master/images/4.png)
