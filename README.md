@@ -13,16 +13,15 @@ SharpBrowser is the fastest open source C# web browser there is! Slightly faster
 - Download manager (download progress, cancellation, etc)
 - Custom error pages (cannot connect, file not found)
 - Custom context menu
-- Open online & offline webpages (localhost, filesystem)
+- Online & offline webpages (localhost, filesystem)
 - Easy to add any vendor-specific branding, buttons or hotkeys
-- Uses CefSharp 51, NET Framework 4.5.2
 
 ## Hotkeys
 
 Hotkeys | Function
 ------------ | -------------
 Ctrl+T		| Add a new tab
-Ctrl+W		| Add a new window (simply opens another instance of SharpBrowser)
+Ctrl+N		| Add a new window
 Ctrl+W		| Close active tab
 F5			| Refresh active tab
 F12			| Open developer tools
@@ -32,6 +31,7 @@ Ctrl+F		| Open search bar (Enter to find next, Esc to close)
 
 ## Code
 
+- SharpBrowser uses CefSharp 51, NET Framework 4.5.2
 - `MainForm.cs` - main web browser UI and related functionality
 - `Handlers` - various handlers that we have registered with CefSharp that enable deeper integration between us and CefSharp
 - `Data/JSON.cs` - fast JSON serializer/deserializer
@@ -54,6 +54,10 @@ Ctrl+F		| Open search bar (Enter to find next, Esc to close)
 
 ![](https://github.com/sharpbrowser/SharpBrowser/raw/master/images/2.png)
 
+### Search Bar
+
+![](https://github.com/sharpbrowser/SharpBrowser/raw/master/images/search.png)
+
 ### Downloads Tab
 
 ![](https://github.com/sharpbrowser/SharpBrowser/raw/master/images/3.png)
@@ -62,11 +66,7 @@ Ctrl+F		| Open search bar (Enter to find next, Esc to close)
 
 ![](https://github.com/sharpbrowser/SharpBrowser/raw/master/images/4.png)
 
-### Search Bar
-
-![](https://github.com/sharpbrowser/SharpBrowser/raw/master/images/search.png)
-
-### Error Pages
+### Custom Error Pages
 
 ![](https://github.com/sharpbrowser/SharpBrowser/raw/master/images/error1.png)
 
