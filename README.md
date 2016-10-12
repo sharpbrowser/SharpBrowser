@@ -38,6 +38,12 @@ Ctrl+F		| Open search bar (Enter to find next, Esc to close)
 - `bin` - Binaries are included in the `bin` folder due to the complex CefSharp setup required. Don't empty this folder.
 - `bin/storage` - HTML and JS required for downloads manager and custom error pages
 
+## Credits
+
+- [Harsh Gupta](https://github.com/hgupta9) - SharpBrowser project.
+- [Alex Maitland](https://github.com/amaitland) - CefSharp project, wrapper for CEF embeddable browser.
+- [Ahmet Uzun](https://github.com/postacik) - Original browser project.
+
 ## Screenshots
 
 ### Apple Homepage
