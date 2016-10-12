@@ -5,16 +5,16 @@ SharpBrowser is the fastest open source C# web browser there is! Slightly faster
 ## Features
 
 - HTML5, CSS3, JS, HTML5 Video, WebGL 3D, etc
-- Tabbed browsing (open in new tab, etc)
-- Address bar (also opens Google Search)
+- Tabbed browsing
+- Address bar (also opens Google)
 - Back, Forward, Stop, Refresh
 - Developer tools
-- Search bar (highlights all instances, find next, previous)
-- Download manager (download progress, cancellation, etc)
-- Custom error pages (cannot connect, file not found)
+- Search bar (also highlights all instances)
+- Download manager
+- Custom error pages
 - Custom context menu
-- Online & offline webpages (localhost, filesystem)
-- Easy to add any vendor-specific branding, buttons or hotkeys
+- Easily add vendor-specific branding, buttons or hotkeys
+- View online & offline webpages
 
 ## Hotkeys
 
