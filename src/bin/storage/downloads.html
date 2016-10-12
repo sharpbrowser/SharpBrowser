@@ -1,0 +1,183 @@
+﻿<html  dir="ltr" lang="en" i18n-processed=""><head>
+  <meta charset="utf-8">
+  <title>Downloads</title>
+  <link rel="stylesheet" href="shared.css">
+  <link rel="stylesheet" href="other.css">
+  <script type="text/javascript" src="jquery-1.10.2.min.js"></script>
+  <script type="text/javascript">
+
+      var $container;
+      var $template;
+      var timer;
+
+      $(document).ready(function () {
+          $container = $("#downloads-display");
+          $template = $("#template");
+          UpdateList();
+          timer = setInterval(UpdateList, 500);
+      });
+
+      function formatBytes(bytes, decimals) {
+          if (bytes == 0) return '0 Byte';
+          var k = 1000;
+          var dm = decimals + 1 || 3;
+          var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+          var i = Math.floor(Math.log(bytes) / Math.log(k));
+          return (bytes / Math.pow(k, i)).toPrecision(dm) + ' ' + sizes[i];
+      }
+
+      String.prototype.between = function (prefix, suffix) {
+          s = this;
+          var i = s.indexOf(prefix);
+          if (i >= 0) {
+              s = s.substring(i + prefix.length);
+          }
+          else {
+              return '';
+          }
+          if (suffix) {
+              i = s.indexOf(suffix);
+              if (i >= 0) {
+                  s = s.substring(0, i);
+              }
+              else {
+                  return '';
+              }
+          }
+          return s;
+      }
+
+      Date.prototype.format = function (format) //author: meizz
+      {
+          var o = {
+              "M+": this.getMonth() + 1, //month
+              "d+": this.getDate(),    //day
+              "h+": this.getHours(),   //hour
+              "m+": this.getMinutes(), //minute
+              "s+": this.getSeconds(), //second
+              "q+": Math.floor((this.getMonth() + 3) / 3),  //quarter
+              "S": this.getMilliseconds() //millisecond
+          }
+
+          if (/(y+)/.test(format)) format = format.replace(RegExp.$1,
+            (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+          for (var k in o) if (new RegExp("(" + k + ")").test(format))
+              format = format.replace(RegExp.$1,
+                RegExp.$1.length == 1 ? o[k] :
+                  ("00" + o[k]).substr(("" + o[k]).length));
+          return format;
+      }
+
+      function getDate(dt) {
+          return eval("new " + dt.between("/","/"));
+      }
+
+      function UpdateItem(item) {
+          var $item;
+          var id = "d" + item.Id;
+          $item = $("#" + id);
+          //Add item if it does not exist
+          if ($item.length == 0) {
+              $item = $($template[0].outerHTML);
+              $container.prepend($item);
+			  
+			  // show it
+              $item.removeAttr("hidden");
+			  
+			  // add basic stuff
+              $item.attr("id", id);
+              $item.find("a.cancel").click(function () {
+                  host.cancelDownload(item.Id);
+              });
+			  
+			  // icon
+              $item.find("img.icon").attr("src", "sharpbrowser://fileicon/" + item.SuggestedFileName);
+			  
+			  // name
+              if (item.SuggestedFileName != "") $item.find("span.name").text(item.SuggestedFileName);
+              $item.find("a.src-url").attr("href", item.Url).text(item.Url);
+              $item.find("a.cancel").removeAttr("hidden");
+			  
+			  // date
+              //var startTime = Date.parse(item.StartTime);
+              //$item.find("div.since").text(startTime.format("dd.MM.yyyy"));
+              //$item.find("div.date").text(startTime.format("hh:mm:ss"));
+          }
+          var progress = "";
+          if (item.IsInProgress) {
+              progress = formatBytes(item.CurrentSpeed) + "/s - " + formatBytes(item.ReceivedBytes, 2);
+              if (item.TotalBytes > 0) progress += " of " + formatBytes(item.TotalBytes, 2);
+              if (item.PercentComplete > 0) progress += " (" + item.PercentComplete + "%)";
+          } else {
+              if (item.IsComplete) progress = "Complete";
+              else if (item.IsCancelled) progress = "Cancelled";
+              $item.find("a.cancel").attr("hidden","");
+          }
+          $item.find("span.status").text(progress);
+      }
+
+      function UpdateList() {
+          host.getDownloads().then(function (res) {
+              var list = JSON.parse(res);
+              $.each(list, function (key, item) {
+                  UpdateItem(item.v);
+              });
+          });
+      }
+
+  </script>
+</head>
+<body>
+  <header>
+    <h1 >Downloads</h1>
+    <input id="term" type="search" tabindex="1" autofocus="" incremental="" placeholder="Search downloads" hidden>
+  </header>
+  <div class="main">
+    <div class="summary" id="downloads-summary">
+      <span id="downloads-summary-text"></span>
+      <span id="downloads-actions">
+        <a is="action-link" id="open-downloads-folder"  tabindex="0" role="link" hidden>Open downloads folder</a>
+        <a is="action-link" id="clear-all"  tabindex="0" role="link" hidden>Clear all</a>
+      </span>
+    </div>
+    <div id="downloads-display"><div id="template" class="download" hidden>
+      <div class="date-container">
+        <div class="since">Today</div>
+        <div class="date">Jan 24, 2016</div>
+      </div>
+      <div class="safe">
+        <div class="progress background" hidden=""></div>
+        <canvas class="progress" hidden=""></canvas>
+        <img class="icon" alt="" src="">
+        <div class="title-area">
+          <a is="action-link" class="name" focus-type="name" tabindex="0" role="link" href="http://x.org/x.zip" hidden="">x.xip</a>
+          <span class="name">x.zip</span>
+          <span class="status">Status</span>
+        </div>
+        <div class="url-container">
+          <a class="src-url" target="_blank" focus-type="url" href="http://x.org/x.zip" tabindex="0">http://x.org/x.zip</a>
+        </div>
+        <div class="controls">
+          <a is="action-link" class="show" focus-type="show-retry"  tabindex="0" role="link" hidden="">Show in folder</a>
+          <a class="retry" focus-type="show-retry"  download="" href="http://x.org/x.zip" hidden="" tabindex="0">Retry download</a>
+          <a is="action-link" class="pause" focus-type="pause-resume"  tabindex="0" role="link" hidden="">Pause</a>
+          <a is="action-link" class="resume" focus-type="pause-resume"  tabindex="0" role="link" hidden="">Resume</a>
+          <a is="action-link" class="remove" focus-type="remove-discard"  tabindex="0" role="link" hidden>Remove from list</a>
+          <a is="action-link" class="cancel" focus-type="cancel"  tabindex="0" role="link">Cancel</a>
+          <span class="controlled-by"  hidden="">Downloaded by <a>$1</a></span>
+        </div>
+      </div>
+      <div class="dangerous" hidden>
+        <img class="icon" alt="">
+        <div class="description"></div>
+        <div class="controls">
+          <a is="action-link" class="restore" focus-type="restore-save"  tabindex="0" role="link">Recover malicious file</a>
+          <a is="action-link" class="remove" focus-type="discard"  tabindex="0" role="link">Remove from list</a>
+        </div>
+        <button class="save" focus-type="restore-save"  tabindex="0">Keep</button>
+        <button class="discard" focus-type="remove-discard"  tabindex="0">Discard</button>
+      </div>
+    </div>
+	</div>
+  </div>
+</body></html>

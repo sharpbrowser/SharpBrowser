@@ -9,7 +9,7 @@ namespace SharpBrowser {
 	/// <summary>
 	/// functions in this class are accessible by JS using the code `host.X()`
 	/// </summary>
-	public class HostHandler {
+	internal class HostHandler {
 		MainForm myForm;
 
 		public HostHandler(MainForm form) {
@@ -33,6 +33,9 @@ namespace SharpBrowser {
 				}
 			}
 			return true;
+		}
+		public void refreshActiveTab() {
+			myForm.RefreshActiveTab();
 		}
 	}
 
