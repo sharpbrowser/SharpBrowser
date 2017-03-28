@@ -1,2 +1,9 @@
 [1012/184414:ERROR:angle_platform_impl.cc(33)] ANGLE Display::initialize error 5: DXGI 1.2 required to present to HWNDs owned by another process.
 [1012/184414:ERROR:gl_surface_egl.cc(594)] eglInitialize D3D11 failed with error EGL_NOT_INITIALIZED, trying next display type
+[0328/122016:WARNING:backend_impl.cc(1807)] Destroying invalid entry.
+[0328/122022:ERROR:ipc_channel_win.cc(217)] pipe error: 109
+[0328/122113:WARNING:backend_impl.cc(1807)] Destroying invalid entry.
+[0328/122118:ERROR:ipc_channel_win.cc(217)] pipe error: 109
+[0328/122139:WARNING:backend_impl.cc(1807)] Destroying invalid entry.
+[0328/122200:ERROR:ipc_channel_win.cc(217)] pipe error: 109
+[0328/122319:ERROR:ipc_channel_win.cc(217)] pipe error: 109

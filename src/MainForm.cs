@@ -28,12 +28,13 @@ namespace SharpBrowser {
 		public static MainForm Instance;
 
 		public static string Branding = "SharpBrowser";
-		public static string UserAgent = "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/21.0.1180.79 Safari/537.1";
-		public static string HomepageURL = "about:blank";
+		public static string UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.110 Safari/537.36";
+		public static string HomepageURL = "https://www.google.com";
+		public static string NewTabURL = "about:blank";
 		public static string DownloadsURL = "sharpbrowser://storage/downloads.html";
 		public static string FileNotFoundURL = "sharpbrowser://storage/errors/notFound.html";
 		public static string CannotConnectURL = "sharpbrowser://storage/errors/cannotConnect.html";
-		public static string SearchURL = "https://www.google.co.in/#q=";
+		public static string SearchURL = "https://www.google.com/#q=";
 
 		public bool WebSecurity = true;
 		public bool CrossDomainSecurity = true;
@@ -348,7 +349,7 @@ namespace SharpBrowser {
 			});
 		}
 		private ChromiumWebBrowser AddNewBrowser(FATabStripItem tabStrip, String url) {
-			if (url == "") url = HomepageURL;
+			if (url == "") url = NewTabURL;
 			ChromiumWebBrowser browser = new ChromiumWebBrowser(url);
 
 			// set config
@@ -831,6 +832,10 @@ namespace SharpBrowser {
 		/// open a new tab with the downloads URL
 		/// </summary>
 		private void btnDownloads_Click(object sender, EventArgs e) {
+			OpenDownloadsTab();
+		}
+
+		public void OpenDownloadsTab() {
 			if (downloadsStrip != null && ((ChromiumWebBrowser)downloadsStrip.Controls[0]).Address == DownloadsURL) {
 				TabPages.SelectedItem = downloadsStrip;
 			} else {

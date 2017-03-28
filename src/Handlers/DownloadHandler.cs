@@ -24,10 +24,20 @@ namespace SharpBrowser {
 
 					// if file should not be saved, path will be null, so skip file
 					if (path != null) {
+
+						// skip file
 						callback.Continue(path, false);
+
 					} else {
+
+						// download file
 						callback.Dispose();
+
+						// open the downloads tab
+						myForm.OpenDownloadsTab();
+
 					}
+
                 }
             }
         }
