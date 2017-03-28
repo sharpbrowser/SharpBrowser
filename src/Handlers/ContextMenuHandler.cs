@@ -89,7 +89,7 @@ namespace SharpBrowser {
 				browser.GetHost().StartDownload(parameters.LinkUrl);
 			}
 			if (id == OpenLinkInNewTab) {
-				ChromiumWebBrowser newBrowser = myForm.AddNewBrowserTab(parameters.LinkUrl, false);
+				ChromiumWebBrowser newBrowser = myForm.AddNewBrowserTab(parameters.LinkUrl, false, browser.MainFrame.Url);
 			}
 			if (id == CopyLinkAddress) {
 				Clipboard.SetText(parameters.LinkUrl);

@@ -327,7 +327,7 @@ namespace SharpBrowser {
 			});
 		}
 
-		public ChromiumWebBrowser AddNewBrowserTab(String url, bool focusNewTab = true) {
+		public ChromiumWebBrowser AddNewBrowserTab(string url, bool focusNewTab = true, string refererUrl = null) {
 			return (ChromiumWebBrowser)this.Invoke((Func<ChromiumWebBrowser>)delegate {
 
 				// check if already exists
@@ -343,12 +343,14 @@ namespace SharpBrowser {
 				tabStrip.Title = "New Tab";
 				TabPages.Items.Insert(TabPages.Items.Count - 1, tabStrip);
 				newStrip = tabStrip;
-				ChromiumWebBrowser browser = AddNewBrowser(newStrip, url);
+
+				SharpTab newTab = AddNewBrowser(newStrip, url);
+				newTab.RefererURL = refererUrl;
 				if (focusNewTab) timer1.Enabled = true;
-				return browser;
+				return newTab.Browser;
 			});
 		}
-		private ChromiumWebBrowser AddNewBrowser(FATabStripItem tabStrip, String url) {
+		private SharpTab AddNewBrowser(FATabStripItem tabStrip, String url) {
 			if (url == "") url = NewTabURL;
 			ChromiumWebBrowser browser = new ChromiumWebBrowser(url);
 
@@ -389,7 +391,17 @@ namespace SharpBrowser {
 			if (url.StartsWith("sharpbrowser:")) {
 				browser.RegisterAsyncJsObject("host", host, true);
 			}
-			return browser;
+			return tab;
+		}
+
+		public SharpTab GetTabByBrowser(IWebBrowser browser) {
+			foreach (FATabStripItem tab2 in TabPages.Items) {
+				SharpTab tab = (SharpTab)(tab2.Tag);
+				if (tab != null && tab.Browser == browser) {
+					return tab;
+				}
+			}
+			return null;
 		}
 
 		public void RefreshActiveTab() {
@@ -929,6 +941,8 @@ internal class SharpTab {
 	public string OrigURL;
 	public string CurURL;
 	public string Title;
+
+	public string RefererURL;
 
 	public DateTime DateCreated;
 

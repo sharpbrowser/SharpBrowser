@@ -1,4 +1,5 @@
-﻿using CefSharp;
+﻿using System.Collections.Specialized;
+using CefSharp;
 
 namespace SharpBrowser {
 	internal class RequestHandler : IRequestHandler {
@@ -92,6 +93,20 @@ namespace SharpBrowser {
 		//     CefSharp.CefReturnValue.Continue to allow the resource to load normally.
 		//     For async return CefSharp.CefReturnValue.ContinueAsync
 		public CefReturnValue OnBeforeResourceLoad(IWebBrowser browserControl, IBrowser browser, IFrame frame, IRequest request, IRequestCallback callback) {
+
+			var tab = myForm.GetTabByBrowser(browserControl);
+			if (tab != null && tab.RefererURL != null) {
+
+				var headers = request.Headers;
+
+				// Set referer.
+				headers["Referer"] = tab.RefererURL;
+
+				// Update request headers.
+				request.Headers = headers;
+
+			}
+
 			return CefSharp.CefReturnValue.Continue;
 		}
 		//
