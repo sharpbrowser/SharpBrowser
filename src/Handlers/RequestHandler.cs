@@ -94,16 +94,12 @@ namespace SharpBrowser {
 		//     For async return CefSharp.CefReturnValue.ContinueAsync
 		public CefReturnValue OnBeforeResourceLoad(IWebBrowser browserControl, IBrowser browser, IFrame frame, IRequest request, IRequestCallback callback) {
 
+			// if referer given
 			var tab = myForm.GetTabByBrowser(browserControl);
 			if (tab != null && tab.RefererURL != null) {
 
-				var headers = request.Headers;
-
-				// Set referer.
-				headers["Referer"] = tab.RefererURL;
-
-				// Update request headers.
-				request.Headers = headers;
+				// Set referer
+				request.SetReferrer(tab.RefererURL, ReferrerPolicy.Always);
 
 			}
 
