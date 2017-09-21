@@ -40,7 +40,7 @@ Ctrl+F		| Open search bar (Enter to find next, Esc to close)
 
 ## Credits
 
-- [Harsh Gupta](https://github.com/hgupta9) - SharpBrowser project.
+- [Robin Rodricks](https://github.com/hgupta9) - SharpBrowser project.
 - [Alex Maitland](https://github.com/amaitland) - CefSharp project, wrapper for CEF embeddable browser.
 - [Ahmet Uzun](https://github.com/postacik) - Original browser project.
 
