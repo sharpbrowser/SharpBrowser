@@ -149,12 +149,20 @@ namespace SharpBrowser {
 		//     value indicates whether the new browser window should be scriptable and in
 		//     the same process as the source browser.
 		public bool OnBeforePopup(IWebBrowser browserControl, IBrowser browser, IFrame frame, string targetUrl, string targetFrameName, WindowOpenDisposition targetDisposition, bool userGesture, IPopupFeatures popupFeatures, IWindowInfo windowInfo, IBrowserSettings browserSettings, ref bool noJavascriptAccess, out IWebBrowser newBrowser) {
+                     
+			if (targetUrl.Contains("google") ) //This will ensure that 'Sign in or Sign up with Google Popups open in CefSharp Default' because the method in the else block, failed to help users login through Google in sites like KhanAcademy.
+            {
+	    // Open in CefSharp Default
+                newBrowser = null;
+                return false;
+            }
+            else{
+	    // Open in new tab
+                newBrowser = myForm.AddNewBrowserTab(targetUrl);
 
-			// open popup in new tab!
-			newBrowser = myForm.AddNewBrowserTab(targetUrl);
-
-			return true;
-
+                return true;
+                
+            }
 		}
     }
 }
