@@ -1,14 +1,12 @@
 ﻿using CefSharp;
 
 namespace SharpBrowser {
-    internal class LifeSpanHandler : ILifeSpanHandler
-    {
-        MainForm myForm;
+	internal class LifeSpanHandler : ILifeSpanHandler {
+		MainForm myForm;
 
-        public LifeSpanHandler(MainForm form)
-        {
-            myForm = form;
-        }
+		public LifeSpanHandler(MainForm form) {
+			myForm = form;
+		}
 
 
 		// Summary:
@@ -151,10 +149,11 @@ namespace SharpBrowser {
 		public bool OnBeforePopup(IWebBrowser browserControl, IBrowser browser, IFrame frame, string targetUrl, string targetFrameName, WindowOpenDisposition targetDisposition, bool userGesture, IPopupFeatures popupFeatures, IWindowInfo windowInfo, IBrowserSettings browserSettings, ref bool noJavascriptAccess, out IWebBrowser newBrowser) {
 
 			// open popup in new tab!
-			newBrowser = myForm.AddNewBrowserTab(targetUrl);
+			newBrowser = null;
+			myForm.AddNewBrowserTab(targetUrl);
 
 			return true;
 
 		}
-    }
+	}
 }

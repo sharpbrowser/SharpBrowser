@@ -1,4 +1,5 @@
 ﻿using System.Collections.Specialized;
+using System.Security.Cryptography.X509Certificates;
 using CefSharp;
 
 namespace SharpBrowser {
@@ -7,6 +8,16 @@ namespace SharpBrowser {
 
 		public RequestHandler(MainForm form) {
 			myForm = form;
+		}
+
+		public bool CanGetCookies(IWebBrowser chromiumWebBrowser, IBrowser browser, IFrame frame, IRequest request) {
+
+			return true;
+		}
+
+		public bool CanSetCookie(IWebBrowser chromiumWebBrowser, IBrowser browser, IFrame frame, IRequest request, Cookie cookie) {
+
+			return true;
 		}
 
 		// Summary:
@@ -28,8 +39,8 @@ namespace SharpBrowser {
 		//     when the authentication information is available. Return false to cancel
 		//     the request.
 		public bool GetAuthCredentials(IWebBrowser browserControl, IBrowser browser, IFrame frame, bool isProxy, string host, int port, string realm, string scheme, IAuthCallback callback) {
-			
-			return false;
+
+			return true;
 		}
 		//
 		// Summary:
@@ -70,9 +81,10 @@ namespace SharpBrowser {
 		// Returns:
 		//     Return true to cancel the navigation or false to allow the navigation to
 		//     proceed.
-		public bool OnBeforeBrowse(IWebBrowser browserControl, IBrowser browser, IFrame frame, IRequest request, bool isRedirect) {
+		public bool OnBeforeBrowse(IWebBrowser chromiumWebBrowser, IBrowser browser, IFrame frame, IRequest request, bool userGesture, bool isRedirect) {
 			return false;
 		}
+
 		//
 		// Summary:
 		//     Called before a resource request is loaded. For async processing return CefSharp.CefReturnValue.ContinueAsync
@@ -261,8 +273,10 @@ namespace SharpBrowser {
 		//
 		//   newUrl:
 		//     the new URL and can be changed if desired
-		public void OnResourceRedirect(IWebBrowser browserControl, IBrowser browser, IFrame frame, IRequest request, ref string newUrl) {
+		public void OnResourceRedirect(IWebBrowser chromiumWebBrowser, IBrowser browser, IFrame frame, IRequest request, IResponse response, ref string newUrl) {
+
 		}
+
 		//
 		// Summary:
 		//     Called on the CEF IO thread when a resource response is received.  To allow
@@ -328,9 +342,12 @@ namespace SharpBrowser {
 				}
 
 			}
-			
+
 			return false;
 		}
 
+		public bool OnSelectClientCertificate(IWebBrowser chromiumWebBrowser, IBrowser browser, bool isProxy, string host, int port, X509Certificate2Collection certificates, ISelectClientCertificateCallback callback) {
+			return false;
+		}
 	}
 }

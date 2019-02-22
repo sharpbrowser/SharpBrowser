@@ -28,17 +28,18 @@ namespace SharpBrowser {
 		public static MainForm Instance;
 
 		public static string Branding = "SharpBrowser";
-		public static string UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.110 Safari/537.36";
+		public static string UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Safari/537.36";
 		public static string HomepageURL = "https://www.google.com";
 		public static string NewTabURL = "about:blank";
 		public static string DownloadsURL = "sharpbrowser://storage/downloads.html";
 		public static string FileNotFoundURL = "sharpbrowser://storage/errors/notFound.html";
 		public static string CannotConnectURL = "sharpbrowser://storage/errors/cannotConnect.html";
-		public static string SearchURL = "https://www.google.com/#q=";
+		public static string SearchURL = "https://www.google.com/search?q=";
 
 		public bool WebSecurity = true;
 		public bool CrossDomainSecurity = true;
 		public bool WebGL = true;
+		public bool ApplicationCache = true;
 
 
 
@@ -193,6 +194,7 @@ namespace SharpBrowser {
 			config.UniversalAccessFromFileUrls = (!CrossDomainSecurity).ToCefState();
 			config.WebSecurity = WebSecurity.ToCefState();
 			config.WebGl = WebGL.ToCefState();
+			config.ApplicationCache = ApplicationCache.ToCefState();
 
 			browser.BrowserSettings = config;
 
@@ -389,7 +391,7 @@ namespace SharpBrowser {
 			tabStrip.Tag = tab;
 
 			if (url.StartsWith("sharpbrowser:")) {
-				browser.RegisterAsyncJsObject("host", host, true);
+				browser.RegisterAsyncJsObject("host", host);
 			}
 			return tab;
 		}
