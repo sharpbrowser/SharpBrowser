@@ -9,12 +9,11 @@ using System.Windows.Forms;
 using System.Drawing;
 
 namespace SharpBrowser {
-    internal class SchemeHandler : IResourceHandler, IDisposable
-    {
-        private static string appPath = Path.GetDirectoryName(Application.ExecutablePath) + @"\";
+	internal class SchemeHandler : IResourceHandler, IDisposable {
+		private static string appPath = Path.GetDirectoryName(Application.ExecutablePath) + @"\";
 
-        private string mimeType;
-        private Stream stream;
+		private string mimeType;
+		private Stream stream;
 		MainForm myForm;
 		private Uri uri;
 		private string fileName;
@@ -24,7 +23,7 @@ namespace SharpBrowser {
 		}
 
 		public void Dispose() {
-			
+
 		}
 
 
@@ -184,5 +183,5 @@ namespace SharpBrowser {
 			return true;
 		}
 
-    }
+	}
 }

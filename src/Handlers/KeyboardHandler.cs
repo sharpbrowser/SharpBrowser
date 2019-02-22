@@ -5,9 +5,8 @@ using CefSharp;
 
 
 namespace SharpBrowser {
-    internal class KeyboardHandler : IKeyboardHandler
-    {
-        MainForm myForm;
+	internal class KeyboardHandler : IKeyboardHandler {
+		MainForm myForm;
 
 		public static List<SharpHotKey> Hotkeys = new List<SharpHotKey>();
 		public static void AddHotKey(Form form, Action function, Keys key, bool ctrl = false, bool shift = false, bool alt = false) {
@@ -15,18 +14,16 @@ namespace SharpBrowser {
 			Hotkeys.Add(new SharpHotKey(function, key, ctrl, shift, alt));
 		}
 
-        public KeyboardHandler(MainForm form)
-        {
-            myForm = form;
-        }
-        public bool OnPreKeyEvent(IWebBrowser browserControl, IBrowser browser, KeyType type, int windowsKeyCode, int nativeKeyCode, CefEventFlags modifiers, bool isSystemKey, ref bool isKeyboardShortcut)
-        {
-            return false;
-        }
+		public KeyboardHandler(MainForm form) {
+			myForm = form;
+		}
+		public bool OnPreKeyEvent(IWebBrowser browserControl, IBrowser browser, KeyType type, int windowsKeyCode, int nativeKeyCode, CefEventFlags modifiers, bool isSystemKey, ref bool isKeyboardShortcut) {
+			return false;
+		}
 
-        /// <inheritdoc/>
+		/// <inheritdoc/>
 		public bool OnKeyEvent(IWebBrowser browserControl, IBrowser browser, KeyType type, int windowsKeyCode, int nativeKeyCode, CefEventFlags modifiers, bool isSystemKey) {
-			
+
 			if (type == KeyType.RawKeyDown) {
 
 
@@ -38,9 +35,9 @@ namespace SharpBrowser {
 
 				// per registered hotkey
 				foreach (SharpHotKey key in Hotkeys) {
-					if (key.KeyCode == windowsKeyCode){
+					if (key.KeyCode == windowsKeyCode) {
 						if (key.Ctrl == ctrlDown && key.Shift == shiftDown && key.Alt == altDown) {
-							myForm.InvokeOnParent(delegate() {
+							myForm.InvokeOnParent(delegate () {
 								key.Callback();
 							});
 						}
@@ -48,10 +45,10 @@ namespace SharpBrowser {
 				}
 
 				//Debug.WriteLine(String.Format("OnKeyEvent: KeyType: {0} 0x{1:X} Modifiers: {2}", type, windowsKeyCode, modifiers));
-				
+
 			}
 
 			return false;
 		}
-    }
+	}
 }

@@ -27,7 +27,7 @@ namespace SharpBrowser {
 		}
 
 		public void OnBeforeContextMenu(IWebBrowser browserControl, IBrowser browser, IFrame frame, IContextMenuParams parameters, IMenuModel model) {
-			
+
 			// clear the menu
 			model.Clear();
 
@@ -49,7 +49,7 @@ namespace SharpBrowser {
 			}
 
 			if (parameters.HasImageContents && parameters.SourceUrl.CheckIfValid()) {
-				
+
 				// RIGHT CLICKED ON IMAGE
 
 			}
@@ -95,12 +95,12 @@ namespace SharpBrowser {
 				Clipboard.SetText(parameters.LinkUrl);
 			}
 			if (id == CloseTab) {
-				myForm.InvokeOnParent(delegate() {
+				myForm.InvokeOnParent(delegate () {
 					myForm.CloseActiveTab();
 				});
 			}
 			if (id == RefreshTab) {
-				myForm.InvokeOnParent(delegate() {
+				myForm.InvokeOnParent(delegate () {
 					myForm.RefreshActiveTab();
 				});
 			}
