@@ -1,15 +1,15 @@
 Chromium Embedded Framework (CEF) Standard Binary Distribution for Windows
 -------------------------------------------------------------------------------
 
-Date:             January 12, 2019
+Date:             July 27, 2019
 
-CEF Version:      3.3578.1863.gbf8cff2
+CEF Version:      75.1.14+gc81164e+chromium-75.0.3770.100
 CEF URL:          https://bitbucket.org/chromiumembedded/cef.git
-                  @bf8cff263c07bd74cf57050d755fb48a8cde00fc
+                  @c81164e2ce84574410706e460d6aadaf8616d46c
 
-Chromium Version: 71.0.3578.98
+Chromium Version: 75.0.3770.100
 Chromium URL:     https://chromium.googlesource.com/chromium/src.git
-                  @c2bec8045f7ad3ece1c5d80236183a21c1fac3f5
+                  @5afa96dadfe803e8a058d6ede0c9c3987405b8d8
 
 This distribution contains all components necessary to build and distribute an
 application using CEF on the Windows platform. Please see the LICENSING
@@ -132,7 +132,6 @@ run but any related functionality may become broken or disabled.
     Tools. Without this file Chrome Developer Tools will not function.
 
 * Angle and Direct3D support.
-  * d3dcompiler_43.dll (required for Windows XP)
   * d3dcompiler_47.dll (required for Windows Vista and newer)
   * libEGL.dll
   * libGLESv2.dll

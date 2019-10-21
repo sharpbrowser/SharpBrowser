@@ -1367,3 +1367,46 @@ C:\fakepath(95,10-42): warning X3571: pow(f, e) will not work for negative f, us
 [0222/114930.472:INFO:CONSOLE(0)] "[.WebGL-08E04010]RENDER WARNING: there is no texture bound to the unit 0", source: https://alteredqualia.com/three/examples/webgl_pasta.html (0)
 [0222/114930.473:INFO:CONSOLE(0)] "[.WebGL-08E04010]RENDER WARNING: there is no texture bound to the unit 0", source: https://alteredqualia.com/three/examples/webgl_pasta.html (0)
 [0222/114930.474:INFO:CONSOLE(0)] "WebGL: too many errors, no more errors will be reported to the console for this context.", source: https://alteredqualia.com/three/examples/webgl_pasta.html (0)
+[1021/112121.928:ERROR:shader_disk_cache.cc(258)] Failed to create shader cache entry: -2
+[1021/112124.741:WARNING:angle_platform_impl.cc(52)] compileToBinary(259): 
+C:\fakepath(120,36-100): warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+
+[1021/112124.753:WARNING:angle_platform_impl.cc(52)] compileToBinary(259): 
+C:\fakepath(214,32-92): warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+C:\fakepath(215,32-92): warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+
+[1021/112946.479:ERROR:broker_win.cc(55)] Error reading broker pipe: The pipe has been ended. (0x6D)
+[1021/112957.704:WARNING:backend_impl.cc(1846)] Destroying invalid entry.
+[1021/113000.038:WARNING:backend_impl.cc(1638)] Messed up entry found.
+[1021/113000.038:WARNING:backend_impl.cc(1846)] Destroying invalid entry.
+[1021/113037.344:INFO:CONSOLE(9049)] "Download the Vue Devtools extension for a better development experience:
+https://github.com/vuejs/vue-devtools", source: file:///D:/Projects/R-VueJsCourse/VueJsTemplate/libs/vue.2.6.10.js (9049)
+[1021/113037.344:INFO:CONSOLE(9058)] "You are running Vue in development mode.
+Make sure to turn on production mode when deploying for production.
+See more tips at https://vuejs.org/guide/deployment.html", source: file:///D:/Projects/R-VueJsCourse/VueJsTemplate/libs/vue.2.6.10.js (9058)
+[1021/113053.111:INFO:CONSOLE(9049)] "Download the Vue Devtools extension for a better development experience:
+https://github.com/vuejs/vue-devtools", source: file:///D:/Projects/R-VueJsCourse/VueJsTemplate/libs/vue.2.6.10.js (9049)
+[1021/113053.111:INFO:CONSOLE(9058)] "You are running Vue in development mode.
+Make sure to turn on production mode when deploying for production.
+See more tips at https://vuejs.org/guide/deployment.html", source: file:///D:/Projects/R-VueJsCourse/VueJsTemplate/libs/vue.2.6.10.js (9058)
+[1021/113058.473:INFO:CONSOLE(9049)] "Download the Vue Devtools extension for a better development experience:
+https://github.com/vuejs/vue-devtools", source: file:///D:/Projects/R-VueJsCourse/VueJsTemplate/libs/vue.2.6.10.js (9049)
+[1021/113058.473:INFO:CONSOLE(9058)] "You are running Vue in development mode.
+Make sure to turn on production mode when deploying for production.
+See more tips at https://vuejs.org/guide/deployment.html", source: file:///D:/Projects/R-VueJsCourse/VueJsTemplate/libs/vue.2.6.10.js (9058)
+[1021/113218.172:INFO:CONSOLE(120)] "Uncaught ReferenceError: host is not defined", source: sharpbrowser://storage/downloads.html (120)
+[1021/113600.539:ERROR:render_media_log.cc(27)] MediaEvent: MEDIA_ERROR_LOG_ENTRY {"error":"FFmpegDemuxer: no supported streams"}
+[1021/113600.540:ERROR:render_media_log.cc(27)] MediaEvent: PIPELINE_ERROR DEMUXER_ERROR_NO_SUPPORTED_STREAMS
+[1021/113609.065:INFO:CONSOLE(15)] "Snowplow: Tracker namespace oh already exists.", source: https://ddc.optimahub.com/3/ddc.min.js (15)
+[1021/114758.210:INFO:CONSOLE(120)] "Uncaught ReferenceError: host is not defined", source: sharpbrowser://storage/downloads.html (120)
+[1021/114906.110:INFO:CONSOLE(120)] "Uncaught ReferenceError: host is not defined", source: sharpbrowser://storage/downloads.html (120)
+[1021/115037.125:INFO:CONSOLE(9049)] "Download the Vue Devtools extension for a better development experience:
+https://github.com/vuejs/vue-devtools", source: file:///D:/Projects/R-VueJsCourse/VueJsTemplate/libs/vue.2.6.10.js (9049)
+[1021/115037.125:INFO:CONSOLE(9058)] "You are running Vue in development mode.
+Make sure to turn on production mode when deploying for production.
+See more tips at https://vuejs.org/guide/deployment.html", source: file:///D:/Projects/R-VueJsCourse/VueJsTemplate/libs/vue.2.6.10.js (9058)
+[1021/115039.082:INFO:CONSOLE(9049)] "Download the Vue Devtools extension for a better development experience:
+https://github.com/vuejs/vue-devtools", source: file:///D:/Projects/R-VueJsCourse/VueJsTemplate/libs/vue.2.6.10.js (9049)
+[1021/115039.082:INFO:CONSOLE(9058)] "You are running Vue in development mode.
+Make sure to turn on production mode when deploying for production.
+See more tips at https://vuejs.org/guide/deployment.html", source: file:///D:/Projects/R-VueJsCourse/VueJsTemplate/libs/vue.2.6.10.js (9058)
