@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using CefSharp;
 using System.Windows.Forms;
 using System.Drawing;
+using CefSharp.Callback;
 
 namespace SharpBrowser {
 	internal class SchemeHandler : IResourceHandler, IDisposable {
@@ -26,32 +27,38 @@ namespace SharpBrowser {
 
 		}
 
-
 		//
 		// Summary:
-		//     Begin processing the request.
+		//     Open the response stream. - To handle the request immediately set handleRequest
+		//     to true and return true. - To decide at a later time set handleRequest to false,
+		//     return true, and execute callback to continue or cancel the request. - To cancel
+		//     the request immediately set handleRequest to true and return false. This method
+		//     will be called in sequence but not from a dedicated thread. For backwards compatibility
+		//     set handleRequest to false and return false and the CefSharp.IResourceHandler.ProcessRequest(CefSharp.IRequest,CefSharp.ICallback)
+		//     method will be called.
 		//
 		// Parameters:
 		//   request:
-		//     The request object.
+		//     request
+		//
+		//   handleRequest:
+		//     see main summary
 		//
 		//   callback:
-		//     The callback used to Continue or Cancel the request (async).
+		//     callback
 		//
 		// Returns:
-		//     To handle the request return true and call CefSharp.ICallback.Continue()
-		//     once the response header information is available CefSharp.ICallback.Continue()
-		//     can also be called from inside this method if header information is available
-		//     immediately).  To cancel the request return false.
-		public bool ProcessRequest(IRequest request, ICallback callback) {
+		//     see main summary
+		public bool Open(IRequest request, out bool handleRequest, ICallback callback) {
 			uri = new Uri(request.Url);
 			fileName = uri.AbsolutePath;
 
 			// if url is blocked
-			/*if (!myForm.IsURLOk(request.Url)) {
+			/*if (...request.Url....) {
 
-				// return true so it does not open up
-				return true;
+				// cancel the request - set handleRequest to true and return false
+				handleRequest = true;
+				return false;
 			}*/
 
 			// if url is browser file
@@ -60,8 +67,6 @@ namespace SharpBrowser {
 				if (File.Exists(fileName)) {
 					Task.Factory.StartNew(() => {
 						using (callback) {
-							//var bytes = Encoding.UTF8.GetBytes(resource);
-							//stream = new MemoryStream(bytes);
 							FileStream fStream = new FileStream(fileName, FileMode.Open, FileAccess.Read);
 							mimeType = ResourceHandler.GetMimeType(Path.GetExtension(fileName));
 							stream = fStream;
@@ -69,6 +74,8 @@ namespace SharpBrowser {
 						}
 					});
 
+					// handle the request at a later time
+					handleRequest = false;
 					return true;
 				}
 			}
@@ -82,12 +89,18 @@ namespace SharpBrowser {
 						callback.Continue();
 					}
 				});
+
+				// handle the request at a later time
+				handleRequest = false;
 				return true;
 			}
 
 
 			// by default reject
 			callback.Dispose();
+
+			// cancel the request - set handleRequest to true and return false
+			handleRequest = true;
 			return false;
 		}
 		//
@@ -111,7 +124,7 @@ namespace SharpBrowser {
 		//     To redirect the request to a new URL set redirectUrl to the new Url.
 		public void GetResponseHeaders(IResponse response, out long responseLength, out string redirectUrl) {
 
-			responseLength = stream.Length;
+			responseLength = stream != null ? stream.Length : 0; 
 			redirectUrl = null;
 
 			response.StatusCode = (int)HttpStatusCode.OK;
@@ -163,6 +176,74 @@ namespace SharpBrowser {
 			return bytesRead > 0;
 
 		}
+
+		//
+		// Summary:
+		//     Read response data. If data is available immediately copy up to dataOut.Length
+		//     bytes into dataOut, set bytesRead to the number of bytes copied, and return true.
+		//     To read the data at a later time keep a pointer to dataOut, set bytesRead to
+		//     0, return true and execute callback when the data is available (dataOut will
+		//     remain valid until the callback is executed). To indicate response completion
+		//     set bytesRead to 0 and return false. To indicate failure set bytesRead to < 0
+		//     (e.g. -2 for ERR_FAILED) and return false. This method will be called in sequence
+		//     but not from a dedicated thread. For backwards compatibility set bytesRead to
+		//     -1 and return false and the ReadResponse method will be called.
+		//
+		// Parameters:
+		//   dataOut:
+		//     If data is available immediately copy up to System.IO.Stream.Length bytes into
+		//     dataOut.
+		//
+		//   bytesRead:
+		//     To indicate response completion set bytesRead to 0 and return false.
+		//
+		//   callback:
+		//     set bytesRead to 0, return true and execute callback when the data is available
+		//     (dataOut will remain valid until the callback is executed). If you have no need
+		//     of the callback then Dispose of it immeduately.
+		//
+		// Returns:
+		//     return true or false depending on the criteria, see summary.
+		public bool Read(Stream dataOut, out int bytesRead, IResourceReadCallback callback) {
+
+			// For backwards compatibility set bytesRead to
+			//     -1 and return false and the ReadResponse method will be called.
+			bytesRead = -1;
+			return false;
+		}
+
+		//
+		// Summary:
+		//     Skip response data when requested by a Range header. Skip over and discard bytesToSkip
+		//     bytes of response data. - If data is available immediately set bytesSkipped to
+		//     the number of of bytes skipped and return true. - To read the data at a later
+		//     time set bytesSkipped to 0, return true and execute callback when the data is
+		//     available. - To indicate failure set bytesSkipped to < 0 (e.g. -2 for ERR_FAILED)
+		//     and return false. This method will be called in sequence but not from a dedicated
+		//     thread.
+		//
+		// Parameters:
+		//   bytesToSkip:
+		//     number of bytes to be skipped
+		//
+		//   bytesSkipped:
+		//     If data is available immediately set bytesSkipped to the number of of bytes skipped
+		//     and return true. To read the data at a later time set bytesSkipped to 0, return
+		//     true and execute callback when the data is available.
+		//
+		//   callback:
+		//     To read the data at a later time set bytesSkipped to 0, return true and execute
+		//     callback when the data is available.
+		//
+		// Returns:
+		//     See summary
+		public bool Skip(long bytesToSkip, out long bytesSkipped, IResourceSkipCallback callback) {
+			// To indicate failure set bytesSkipped to < 0 (e.g. -2 for ERR_FAILED)
+			//     and return false.
+			bytesSkipped = -2;
+			return false;
+		}
+
 		// Summary:
 		//     Request processing has been canceled.
 		public void Cancel() {
@@ -182,6 +263,27 @@ namespace SharpBrowser {
 		public bool CanSetCookie(CefSharp.Cookie cookie) {
 			return true;
 		}
+
+		//
+		// Summary:
+		//     Begin processing the request.
+		//
+		// Parameters:
+		//   request:
+		//     The request object.
+		//
+		//   callback:
+		//     The callback used to Continue or Cancel the request (async).
+		//
+		// Returns:
+		//     To handle the request return true and call CefSharp.ICallback.Continue once the
+		//     response header information is available CefSharp.ICallback.Continue can also
+		//     be called from inside this method if header information is available immediately).
+		//     To cancel the request return false.
+		public bool ProcessRequest(IRequest request, ICallback callback) {
+			return false;
+		}
+
 
 	}
 }

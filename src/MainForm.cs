@@ -28,7 +28,7 @@ namespace SharpBrowser {
 		public static MainForm Instance;
 
 		public static string Branding = "SharpBrowser";
-		public static string UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Safari/537.36";
+		public static string UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36";
 		public static string HomepageURL = "https://www.google.com";
 		public static string NewTabURL = "about:blank";
 		public static string DownloadsURL = "sharpbrowser://storage/downloads.html";
@@ -153,6 +153,8 @@ namespace SharpBrowser {
 		/// this is done just once, to globally initialize CefSharp/CEF
 		/// </summary>
 		private void InitBrowser() {
+
+			CefSharpSettings.LegacyJavascriptBindingEnabled = true;
 
 			CefSettings settings = new CefSettings();
 

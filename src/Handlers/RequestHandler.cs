@@ -1,5 +1,6 @@
 ﻿using System.Collections.Specialized;
 using System.Security.Cryptography.X509Certificates;
+using System.Windows.Forms;
 using CefSharp;
 
 namespace SharpBrowser {
@@ -10,57 +11,47 @@ namespace SharpBrowser {
 			myForm = form;
 		}
 
-		public bool CanGetCookies(IWebBrowser chromiumWebBrowser, IBrowser browser, IFrame frame, IRequest request) {
-
-			return true;
-		}
-
-		public bool CanSetCookie(IWebBrowser chromiumWebBrowser, IBrowser browser, IFrame frame, IRequest request, Cookie cookie) {
-
-			return true;
-		}
-
+		//
 		// Summary:
 		//     Called when the browser needs credentials from the user.
 		//
 		// Parameters:
-		//   frame:
-		//     The frame object that needs credentials (This will contain the URL that is
-		//     being requested.)
+		//   chromiumWebBrowser:
+		//     The ChromiumWebBrowser control
+		//
+		//   browser:
+		//     the browser object
+		//
+		//   originUrl:
+		//     is the origin making this authentication request
 		//
 		//   isProxy:
 		//     indicates whether the host is a proxy server
+		//
+		//   host:
+		//     hostname
+		//
+		//   port:
+		//     port number
+		//
+		//   realm:
+		//     realm
+		//
+		//   scheme:
+		//     scheme
 		//
 		//   callback:
 		//     Callback interface used for asynchronous continuation of authentication requests.
 		//
 		// Returns:
-		//     Return true to continue the request and call CefAuthCallback::Continue()
-		//     when the authentication information is available. Return false to cancel
-		//     the request.
-		public bool GetAuthCredentials(IWebBrowser browserControl, IBrowser browser, IFrame frame, bool isProxy, string host, int port, string realm, string scheme, IAuthCallback callback) {
+		//     Return true to continue the request and call CefSharp.IAuthCallback.Continue(System.String,System.String)
+		//     when the authentication information is available. Return false to cancel the
+		//     request.
+		public bool GetAuthCredentials(IWebBrowser chromiumWebBrowser, IBrowser browser, string originUrl, bool isProxy, string host, int port, string realm, string scheme, IAuthCallback callback) {
+			// Return false to cancel the request.
+			return false;
+		}
 
-			return true;
-		}
-		//
-		// Summary:
-		//     Called on the CEF IO thread to optionally filter resource response content.
-		//
-		// Parameters:
-		//   frame:
-		//     The frame that is being redirected.
-		//
-		//   request:
-		//     the request object - cannot be modified in this callback
-		//
-		//   response:
-		//     the response object - cannot be modified in this callback
-		//
-		// Returns:
-		//     Return an IResponseFilter to intercept this response, otherwise return null
-		public IResponseFilter GetResourceResponseFilter(IWebBrowser browserControl, IBrowser browser, IFrame frame, IRequest request, IResponse response) {
-			return null;
-		}
 		//
 		// Summary:
 		//     Called before browser navigation.  If the navigation is allowed CefSharp.IWebBrowser.FrameLoadStart
@@ -84,39 +75,8 @@ namespace SharpBrowser {
 		public bool OnBeforeBrowse(IWebBrowser chromiumWebBrowser, IBrowser browser, IFrame frame, IRequest request, bool userGesture, bool isRedirect) {
 			return false;
 		}
+		
 
-		//
-		// Summary:
-		//     Called before a resource request is loaded. For async processing return CefSharp.CefReturnValue.ContinueAsync
-		//     and execute CefSharp.IRequestCallback.Continue(System.Boolean) or CefSharp.IRequestCallback.Cancel()
-		//
-		// Parameters:
-		//   frame:
-		//     The frame object
-		//
-		//   request:
-		//     the request object - can be modified in this callback.
-		//
-		//   callback:
-		//     Callback interface used for asynchronous continuation of url requests.
-		//
-		// Returns:
-		//     To cancel loading of the resource return CefSharp.CefReturnValue.Cancel or
-		//     CefSharp.CefReturnValue.Continue to allow the resource to load normally.
-		//     For async return CefSharp.CefReturnValue.ContinueAsync
-		public CefReturnValue OnBeforeResourceLoad(IWebBrowser browserControl, IBrowser browser, IFrame frame, IRequest request, IRequestCallback callback) {
-
-			// if referer given
-			var tab = myForm.GetTabByBrowser(browserControl);
-			if (tab != null && tab.RefererURL != null) {
-
-				// Set referer
-				request.SetReferrer(tab.RefererURL, ReferrerPolicy.Always);
-
-			}
-
-			return CefSharp.CefReturnValue.Continue;
-		}
 		//
 		// Summary:
 		//     Called to handle requests for URLs with an invalid SSL certificate.  Return
@@ -182,22 +142,7 @@ namespace SharpBrowser {
 		//     path of the plugin that crashed
 		public void OnPluginCrashed(IWebBrowser browserControl, IBrowser browser, string pluginPath) {
 		}
-		//
-		// Summary:
-		//     Called on the UI thread to handle requests for URLs with an unknown protocol
-		//     component. SECURITY WARNING: YOU SHOULD USE THIS METHOD TO ENFORCE RESTRICTIONS
-		//     BASED ON SCHEME, HOST OR OTHER URL ANALYSIS BEFORE ALLOWING OS EXECUTION.
-		//
-		// Parameters:
-		//   url:
-		//     the request url
-		//
-		// Returns:
-		//     return to true to attempt execution via the registered OS protocol handler,
-		//     if any. Otherwise return false.
-		public bool OnProtocolExecution(IWebBrowser browserControl, IBrowser browser, string url) {
-			return true;
-		}
+
 		//
 		// Summary:
 		//     Called when JavaScript requests a specific storage quota size via the webkitStorageInfo.requestQuota
@@ -238,116 +183,87 @@ namespace SharpBrowser {
 		//     is ready to receive/handle IPC messages in the render process.
 		public void OnRenderViewReady(IWebBrowser browserControl, IBrowser browser) {
 		}
-		//
-		// Summary:
-		//     Called on the CEF IO thread when a resource load has completed.
-		//
-		// Parameters:
-		//   frame:
-		//     The frame that is being redirected.
-		//
-		//   request:
-		//     the request object - cannot be modified in this callback
-		//
-		//   response:
-		//     the response object - cannot be modified in this callback
-		//
-		//   status:
-		//     indicates the load completion status
-		//
-		//   receivedContentLength:
-		//     is the number of response bytes actually read.
-		public void OnResourceLoadComplete(IWebBrowser browserControl, IBrowser browser, IFrame frame, IRequest request, IResponse response, UrlRequestStatus status, long receivedContentLength) {
-		}
-		//
-		// Summary:
-		//     Called on the IO thread when a resource load is redirected. The CefSharp.IRequest.Url
-		//     parameter will contain the old URL and other request-related information.
-		//
-		// Parameters:
-		//   frame:
-		//     The frame that is being redirected.
-		//
-		//   request:
-		//     the request object - cannot be modified in this callback
-		//
-		//   newUrl:
-		//     the new URL and can be changed if desired
-		public void OnResourceRedirect(IWebBrowser chromiumWebBrowser, IBrowser browser, IFrame frame, IRequest request, IResponse response, ref string newUrl) {
-
-		}
 
 		//
 		// Summary:
-		//     Called on the CEF IO thread when a resource response is received.  To allow
-		//     the resource to load normally return false.  To redirect or retry the resource
-		//     modify request (url, headers or post body) and return true.  The response
-		//     object cannot be modified in this callback.
+		//     Called on the CEF IO thread before a resource request is initiated.
 		//
 		// Parameters:
+		//   chromiumWebBrowser:
+		//     the ChromiumWebBrowser control
+		//
+		//   browser:
+		//     represent the source browser of the request
+		//
 		//   frame:
-		//     The frame that is being redirected.
+		//     represent the source frame of the request
 		//
 		//   request:
-		//     the request object
+		//     represents the request contents and cannot be modified in this callback
 		//
-		//   response:
-		//     the response object - cannot be modified in this callback
+		//   isNavigation:
+		//     will be true if the resource request is a navigation
+		//
+		//   isDownload:
+		//     will be true if the resource request is a download
+		//
+		//   requestInitiator:
+		//     is the origin (scheme + domain) of the page that initiated the request
+		//
+		//   disableDefaultHandling:
+		//     to true to disable default handling of the request, in which case it will need
+		//     to be handled via CefSharp.IResourceRequestHandler.GetResourceHandler(CefSharp.IWebBrowser,CefSharp.IBrowser,CefSharp.IFrame,CefSharp.IRequest)
+		//     or it will be canceled
 		//
 		// Returns:
-		//     To allow the resource to load normally return false.  To redirect or retry
-		//     the resource modify request (url, headers or post body) and return true.
-		public bool OnResourceResponse(IWebBrowser browserControl, IBrowser browser, IFrame frame, IRequest request, IResponse response) {
-
-
-			int code = response.StatusCode;
-
-
-			// if NOT FOUND
-			if (code == 404) {
-
-				if (!request.Url.IsURLLocalhost()) {
-
-					// redirect to web archive to try and find older version
-					request.Url = "http://web.archive.org/web/*/" + request.Url;
-
-				} else {
-
-					// show offline "file not found" page
-					request.Url = MainForm.FileNotFoundURL + "?path=" + request.Url.EncodeURL();
-				}
-
-				return true;
-			}
-
-
-			// if FILE NOT FOUND
-			if (code == 0 && request.Url.IsURLOfflineFile()) {
-				string path = request.Url.FileURLToPath();
-				if (path.FileNotExists()) {
-
-					// show offline "file not found" page
-					request.Url = MainForm.FileNotFoundURL + "?path=" + path.EncodeURL();
-					return true;
-
-				}
-			} else {
-
-				// if CANNOT CONNECT
-				if (code == 0 || code == 444 || (code >= 500 && code <= 599)) {
-
-					// show offline "cannot connect to server" page
-					request.Url = MainForm.CannotConnectURL;
-					return true;
-				}
-
-			}
-
-			return false;
+		//     To allow the resource load to proceed with default handling return null. To specify
+		//     a handler for the resource return a CefSharp.IResourceRequestHandler object.
+		//     If this callback returns null the same method will be called on the associated
+		//     CefSharp.IRequestContextHandler, if any
+		public IResourceRequestHandler GetResourceRequestHandler(IWebBrowser chromiumWebBrowser, IBrowser browser, IFrame frame, IRequest request, bool isNavigation, bool isDownload, string requestInitiator, ref bool disableDefaultHandling) {
+			var rh = new ResourceRequestHandler(myForm);
+			return rh;
 		}
+		
 
+		//
+		// Summary:
+		//     Called when the browser needs user to select Client Certificate for authentication
+		//     requests (eg. PKI authentication).
+		//
+		// Parameters:
+		//   chromiumWebBrowser:
+		//     The ChromiumWebBrowser control
+		//
+		//   browser:
+		//     the browser object
+		//
+		//   isProxy:
+		//     indicates whether the host is a proxy server
+		//
+		//   host:
+		//     hostname
+		//
+		//   port:
+		//     port number
+		//
+		//   certificates:
+		//     List of Client certificates for selection
+		//
+		//   callback:
+		//     Callback interface used for asynchronous continuation of client certificate selection
+		//     for authentication requests.
+		//
+		// Returns:
+		//     Return true to continue the request and call ISelectClientCertificateCallback.Select()
+		//     with the selected certificate for authentication. Return false to use the default
+		//     behavior where the browser selects the first certificate from the list.
 		public bool OnSelectClientCertificate(IWebBrowser chromiumWebBrowser, IBrowser browser, bool isProxy, string host, int port, X509Certificate2Collection certificates, ISelectClientCertificateCallback callback) {
 			return false;
 		}
+
+
+
+
 	}
 }

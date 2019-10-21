@@ -1410,3 +1410,75 @@ https://github.com/vuejs/vue-devtools", source: file:///D:/Projects/R-VueJsCours
 [1021/115039.082:INFO:CONSOLE(9058)] "You are running Vue in development mode.
 Make sure to turn on production mode when deploying for production.
 See more tips at https://vuejs.org/guide/deployment.html", source: file:///D:/Projects/R-VueJsCourse/VueJsTemplate/libs/vue.2.6.10.js (9058)
+[1021/115510.568:ERROR:broker_win.cc(55)] Error reading broker pipe: The pipe has been ended. (0x6D)
+[1021/115843.608:WARNING:dns_config_service_win.cc(672)] Failed to read DnsConfig.
+[1021/115844.569:WARNING:dns_config_service_win.cc(672)] Failed to read DnsConfig.
+[1021/115848.610:WARNING:dns_config_service_win.cc(672)] Failed to read DnsConfig.
+[1021/115849.571:WARNING:dns_config_service_win.cc(672)] Failed to read DnsConfig.
+[1021/115853.613:WARNING:dns_config_service_win.cc(672)] Failed to read DnsConfig.
+[1021/115854.574:WARNING:dns_config_service_win.cc(672)] Failed to read DnsConfig.
+[1021/115858.615:WARNING:dns_config_service_win.cc(672)] Failed to read DnsConfig.
+[1021/115859.576:WARNING:dns_config_service_win.cc(672)] Failed to read DnsConfig.
+[1021/115903.618:WARNING:dns_config_service_win.cc(672)] Failed to read DnsConfig.
+[1021/115904.579:WARNING:dns_config_service_win.cc(672)] Failed to read DnsConfig.
+[1021/115908.620:WARNING:dns_config_service_win.cc(672)] Failed to read DnsConfig.
+[1021/115909.580:WARNING:dns_config_service_win.cc(672)] Failed to read DnsConfig.
+[1021/115913.623:WARNING:dns_config_service_win.cc(672)] Failed to read DnsConfig.
+[1021/115914.583:WARNING:dns_config_service_win.cc(672)] Failed to read DnsConfig.
+[1021/115918.624:WARNING:dns_config_service_win.cc(672)] Failed to read DnsConfig.
+[1021/115919.585:WARNING:dns_config_service_win.cc(672)] Failed to read DnsConfig.
+[1021/115923.627:WARNING:dns_config_service_win.cc(672)] Failed to read DnsConfig.
+[1021/115924.587:WARNING:dns_config_service_win.cc(672)] Failed to read DnsConfig.
+[1021/115928.629:WARNING:dns_config_service_win.cc(672)] Failed to read DnsConfig.
+[1021/115929.589:WARNING:dns_config_service_win.cc(672)] Failed to read DnsConfig.
+[1021/115933.632:WARNING:dns_config_service_win.cc(672)] Failed to read DnsConfig.
+[1021/115934.591:WARNING:dns_config_service_win.cc(672)] Failed to read DnsConfig.
+[1021/115938.634:WARNING:dns_config_service_win.cc(672)] Failed to read DnsConfig.
+[1021/120100.526:WARNING:dns_config_service_win.cc(672)] Failed to read DnsConfig.
+[1021/120101.286:WARNING:dns_config_service_win.cc(672)] Failed to read DnsConfig.
+[1021/120105.529:WARNING:dns_config_service_win.cc(672)] Failed to read DnsConfig.
+[1021/120106.289:WARNING:dns_config_service_win.cc(672)] Failed to read DnsConfig.
+[1021/120110.530:WARNING:dns_config_service_win.cc(672)] Failed to read DnsConfig.
+[1021/120111.291:WARNING:dns_config_service_win.cc(672)] Failed to read DnsConfig.
+[1021/120115.533:WARNING:dns_config_service_win.cc(672)] Failed to read DnsConfig.
+[1021/120116.294:WARNING:dns_config_service_win.cc(672)] Failed to read DnsConfig.
+[1021/120120.063:WARNING:backend_impl.cc(1846)] Destroying invalid entry.
+[1021/120120.535:WARNING:dns_config_service_win.cc(672)] Failed to read DnsConfig.
+[1021/120121.295:WARNING:dns_config_service_win.cc(672)] Failed to read DnsConfig.
+[1021/120125.538:WARNING:dns_config_service_win.cc(672)] Failed to read DnsConfig.
+[1021/120126.298:WARNING:dns_config_service_win.cc(672)] Failed to read DnsConfig.
+[1021/120130.539:WARNING:dns_config_service_win.cc(672)] Failed to read DnsConfig.
+[1021/120131.300:WARNING:dns_config_service_win.cc(672)] Failed to read DnsConfig.
+[1021/120135.543:WARNING:dns_config_service_win.cc(672)] Failed to read DnsConfig.
+[1021/120136.303:WARNING:dns_config_service_win.cc(672)] Failed to read DnsConfig.
+[1021/120140.545:WARNING:dns_config_service_win.cc(672)] Failed to read DnsConfig.
+[1021/120141.304:WARNING:dns_config_service_win.cc(672)] Failed to read DnsConfig.
+[1021/120145.548:WARNING:dns_config_service_win.cc(672)] Failed to read DnsConfig.
+[1021/120146.307:WARNING:dns_config_service_win.cc(672)] Failed to read DnsConfig.
+[1021/120150.550:WARNING:dns_config_service_win.cc(672)] Failed to read DnsConfig.
+[1021/120151.308:WARNING:dns_config_service_win.cc(672)] Failed to read DnsConfig.
+[1021/120155.552:WARNING:dns_config_service_win.cc(672)] Failed to read DnsConfig.
+[1021/120156.311:WARNING:dns_config_service_win.cc(672)] Failed to read DnsConfig.
+[1021/120223.536:WARNING:dns_config_service_win.cc(672)] Failed to read DnsConfig.
+[1021/120231.986:WARNING:dns_config_service_win.cc(672)] Failed to read DnsConfig.
+[1021/120232.969:WARNING:dns_config_service_win.cc(672)] Failed to read DnsConfig.
+[1021/120236.991:WARNING:dns_config_service_win.cc(672)] Failed to read DnsConfig.
+[1021/120237.984:WARNING:dns_config_service_win.cc(672)] Failed to read DnsConfig.
+[1021/120241.817:WARNING:backend_impl.cc(1846)] Destroying invalid entry.
+[1021/120241.992:WARNING:dns_config_service_win.cc(672)] Failed to read DnsConfig.
+[1021/120242.232:INFO:CONSOLE(9049)] "Download the Vue Devtools extension for a better development experience:
+https://github.com/vuejs/vue-devtools", source: file:///D:/Projects/R-VueJsCourse/VueJsTemplate/libs/vue.2.6.10.js (9049)
+[1021/120242.232:INFO:CONSOLE(9058)] "You are running Vue in development mode.
+Make sure to turn on production mode when deploying for production.
+See more tips at https://vuejs.org/guide/deployment.html", source: file:///D:/Projects/R-VueJsCourse/VueJsTemplate/libs/vue.2.6.10.js (9058)
+[1021/120242.987:WARNING:dns_config_service_win.cc(672)] Failed to read DnsConfig.
+[1021/120246.995:WARNING:dns_config_service_win.cc(672)] Failed to read DnsConfig.
+[1021/120247.989:WARNING:dns_config_service_win.cc(672)] Failed to read DnsConfig.
+[1021/120252.938:INFO:CONSOLE(9049)] "Download the Vue Devtools extension for a better development experience:
+https://github.com/vuejs/vue-devtools", source: file:///D:/Projects/R-VueJsCourse/VueJsTemplate/libs/vue.2.6.10.js (9049)
+[1021/120252.938:INFO:CONSOLE(9058)] "You are running Vue in development mode.
+Make sure to turn on production mode when deploying for production.
+See more tips at https://vuejs.org/guide/deployment.html", source: file:///D:/Projects/R-VueJsCourse/VueJsTemplate/libs/vue.2.6.10.js (9058)
+[1021/120316.624:ERROR:browser_process_sub_thread.cc(221)] Waited 178 ms for network service
+[1021/120334.683:INFO:CONSOLE(120)] "Uncaught ReferenceError: host is not defined", source: sharpbrowser://storage/downloads.html (120)
+[1021/120337.082:ERROR:browser_process_sub_thread.cc(221)] Waited 255 ms for network service
