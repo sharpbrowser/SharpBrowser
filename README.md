@@ -31,7 +31,7 @@ Ctrl+F		| Open search bar (Enter to find next, Esc to close)
 
 ## Code
 
-- SharpBrowser uses CefSharp 71, NET Framework 4.6
+- SharpBrowser uses CefSharp 75, NET Framework 4.6
 - `MainForm.cs` - main web browser UI and related functionality
 - `Handlers` - various handlers that we have registered with CefSharp that enable deeper integration between us and CefSharp
 - `Data/JSON.cs` - fast JSON serializer/deserializer
