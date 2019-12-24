@@ -282,6 +282,18 @@
             user attempts to set after browser created)
             </summary>
         </member>
+        <member name="F:CefSharp.WinForms.ChromiumWebBrowser.disposeSignaled">
+            <summary>
+            The value for disposal, if it's 1 (one) then this instance is either disposed
+            or in the process of getting disposed
+            </summary>
+        </member>
+        <member name="P:CefSharp.WinForms.ChromiumWebBrowser.IsDisposed">
+            <summary>
+            Gets a value indicating whether this instance is disposed.
+            </summary>
+            <value><see langword="true" /> if this instance is disposed; otherwise, <see langword="false" />.</value>
+        </member>
         <member name="P:CefSharp.WinForms.ChromiumWebBrowser.IsActivating">
             <summary>
             Set to true while handing an activating WM_ACTIVATE message.
@@ -294,6 +306,14 @@
             Gets or sets the browser settings.
             </summary>
             <value>The browser settings.</value>
+        </member>
+        <member name="P:CefSharp.WinForms.ChromiumWebBrowser.ActivateBrowserOnCreation">
+            <summary>
+            Activates browser upon creation, the default value is false. Prior to version 73
+            the default behaviour was to activate browser on creation (Equivilent of setting this property to true).
+            To restore this behaviour set this value to true immediately after you create the <see cref="T:CefSharp.WinForms.ChromiumWebBrowser"/> instance.
+            https://bitbucket.org/chromiumembedded/cef/issues/1856/branch-2526-cef-activates-browser-window
+            </summary>
         </member>
         <member name="P:CefSharp.WinForms.ChromiumWebBrowser.RequestContext">
             <summary>
@@ -390,6 +410,11 @@
             </summary>
             <value>The find handler.</value>
         </member>
+        <member name="P:CefSharp.WinForms.ChromiumWebBrowser.AudioHandler">
+            <summary>
+            Implement <see cref="T:CefSharp.IAudioHandler" /> to handle audio events.
+            </summary>
+        </member>
         <member name="P:CefSharp.WinForms.ChromiumWebBrowser.FocusHandler">
             <summary>
             The <see cref="T:CefSharp.IFocusHandler" /> for this ChromiumWebBrowser.
@@ -407,9 +432,9 @@
             </summary>
             <value>The drag handler.</value>
         </member>
-        <member name="P:CefSharp.WinForms.ChromiumWebBrowser.ResourceHandlerFactory">
+        <member name="P:CefSharp.WinForms.ChromiumWebBrowser.ResourceRequestHandlerFactory">
             <summary>
-            Implement <see cref="T:CefSharp.IResourceHandlerFactory" /> and control the loading of resources
+            Implement <see cref="T:CefSharp.IResourceRequestHandlerFactory" /> and control the loading of resources
             </summary>
             <value>The resource handler factory.</value>
         </member>
@@ -497,6 +522,11 @@
             To access UI elements you'll need to Invoke/Dispatch onto the UI Thread.
             </summary>
         </member>
+        <member name="E:CefSharp.WinForms.ChromiumWebBrowser.JavascriptMessageReceived">
+            <summary>
+            Event handler that will get called when the message that originates from CefSharp.PostMessage
+            </summary>
+        </member>
         <member name="P:CefSharp.WinForms.ChromiumWebBrowser.CanGoForward">
             <summary>
             A flag that indicates whether the state of the control currently supports the GoForward action (true) or not (false).
@@ -556,6 +586,14 @@
             when attempting to access some of the properties immediately after instantiation. 
             </summary>
         </member>
+        <member name="M:CefSharp.WinForms.ChromiumWebBrowser.#ctor(CefSharp.Web.HtmlString,CefSharp.IRequestContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:CefSharp.WinForms.ChromiumWebBrowser"/> class.
+            </summary>
+            <param name="html">html string to be initially loaded in the browser.</param>
+            <param name="requestContext">Request context that will be used for this browser instance,
+            if null the Global Request Context will be used</param>
+        </member>
         <member name="M:CefSharp.WinForms.ChromiumWebBrowser.#ctor(System.String,CefSharp.IRequestContext)">
             <summary>
             Initializes a new instance of the <see cref="T:CefSharp.WinForms.ChromiumWebBrowser"/> class.
@@ -573,50 +611,24 @@
         </member>
         <member name="M:CefSharp.WinForms.ChromiumWebBrowser.Dispose(System.Boolean)">
             <summary>
-            Releases the unmanaged resources used by the <see cref="T:System.Windows.Forms.Control" /> and its child controls and optionally releases the managed resources.
+            If not in design mode; Releases unmanaged and - optionally - managed resources for the <see cref="T:CefSharp.WinForms.ChromiumWebBrowser"/>
             </summary>
-            <param name="disposing">true to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
+            <param name="disposing"><see langword="true" /> to release both managed and unmanaged resources; <see langword="false" /> to release only unmanaged resources.</param>
         </member>
-        <member name="M:CefSharp.WinForms.ChromiumWebBrowser.RemoveFromListOfCefBrowsers">
+        <member name="M:CefSharp.WinForms.ChromiumWebBrowser.InternalDispose(System.Boolean)">
             <summary>
-            Required for designer support - this method cannot be inlined as the designer
-            will attempt to load libcef.dll and will subsiquently throw an exception.
+            Releases unmanaged and - optionally - managed resources for the <see cref="T:CefSharp.WinForms.ChromiumWebBrowser"/>
             </summary>
-        </member>
-        <member name="M:CefSharp.WinForms.ChromiumWebBrowser.FreeUnmanagedResources">
-            <summary>
-            Required for designer support - this method cannot be inlined as the designer
-            will attempt to load libcef.dll and will subsiquently throw an exception.
-            </summary>
+            <param name="disposing"><see langword="true" /> to release both managed and unmanaged resources; <see langword="false" /> to release only unmanaged resources.</param>
+            <remarks>
+            This method cannot be inlined as the designer will attempt to load libcef.dll and will subsiquently throw an exception.
+            </remarks>
         </member>
         <member name="M:CefSharp.WinForms.ChromiumWebBrowser.Load(System.String)">
             <summary>
             Loads the specified URL.
             </summary>
             <param name="url">The URL to be loaded.</param>
-        </member>
-        <member name="M:CefSharp.WinForms.ChromiumWebBrowser.RegisterJsObject(System.String,System.Object,CefSharp.BindingOptions)">
-            <summary>
-            Registers a Javascript object in this specific browser instance.
-            </summary>
-            <param name="name">The name of the object. (e.g. "foo", if you want the object to be accessible as window.foo).</param>
-            <param name="objectToBind">The object to be made accessible to Javascript.</param>
-            <param name="options">binding options - camelCaseJavascriptNames default to true </param>
-            <exception cref="T:System.Exception">Browser is already initialized. RegisterJsObject must be +
-                                                called before the underlying CEF browser is created.</exception>
-        </member>
-        <member name="M:CefSharp.WinForms.ChromiumWebBrowser.RegisterAsyncJsObject(System.String,System.Object,CefSharp.BindingOptions)">
-            <summary>
-            <para>Asynchronously registers a Javascript object in this specific browser instance.</para>
-            <para>Only methods of the object will be availabe.</para>
-            </summary>
-            <param name="name">The name of the object. (e.g. "foo", if you want the object to be accessible as window.foo).</param>
-            <param name="objectToBind">The object to be made accessible to Javascript.</param>
-            <param name="options">binding options - camelCaseJavascriptNames default to true </param>
-            <exception cref="T:System.Exception">Browser is already initialized. RegisterJsObject must be +
-                                                called before the underlying CEF browser is created.</exception>
-            <remarks>The registered methods can only be called in an async way, they will all return immeditaly and the resulting
-            object will be a standard javascript Promise object which is usable to wait for completion or failure.</remarks>
         </member>
         <member name="P:CefSharp.WinForms.ChromiumWebBrowser.JavascriptObjectRepository">
             <summary>
@@ -629,6 +641,7 @@
             </summary>
             <param name="e">An <see cref="T:System.EventArgs" /> that contains the event data.</param>
         </member>
+        <!-- Badly formed XML comment ignored for member "M:CefSharp.WinForms.ChromiumWebBrowser.CreateBrowserWindowInfo(System.IntPtr)" -->
         <member name="M:CefSharp.WinForms.ChromiumWebBrowser.CefSharp#Internals#IWebBrowserInternal#OnAfterBrowserCreated(CefSharp.IBrowser)">
             <summary>
             Called after browser created.
