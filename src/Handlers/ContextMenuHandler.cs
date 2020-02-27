@@ -18,7 +18,7 @@ namespace SharpBrowser {
 		private const int OpenLinkInNewTab = 26507;
 		private const int CloseTab = 40007;
 		private const int RefreshTab = 40008;
-		MainForm myForm;
+		readonly MainForm myForm;
 
 		private string lastSelText = "";
 
