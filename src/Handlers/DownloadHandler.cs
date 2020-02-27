@@ -2,7 +2,7 @@
 
 namespace SharpBrowser {
 	internal class DownloadHandler : IDownloadHandler {
-		MainForm myForm;
+		readonly MainForm myForm;
 
 		public DownloadHandler(MainForm form) {
 			myForm = form;
@@ -18,19 +18,17 @@ namespace SharpBrowser {
 					string path = myForm.CalcDownloadPath(item);
 
 					// if file should not be saved, path will be null, so skip file
-					if (path != null) {
+					if (path == null) {
 
 						// skip file
 						callback.Continue(path, false);
 
-					} else {
-
-						// download file
-						callback.Dispose();
+					}
+					else {
 
 						// open the downloads tab
 						myForm.OpenDownloadsTab();
-
+						callback.Continue(path, true);
 					}
 
 				}

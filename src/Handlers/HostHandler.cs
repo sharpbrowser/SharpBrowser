@@ -21,7 +21,6 @@ namespace SharpBrowser {
 		public string getDownloads() {
 			lock (myForm.downloads) {
 				string x = JSON.Instance.ToJSON(myForm.downloads);
-				//MessageBox.Show(x);
 				return x;
 			}
 		}
