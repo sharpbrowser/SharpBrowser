@@ -133,7 +133,7 @@
       <Version>79.1.36</Version>
     </PackageReference>
     <PackageReference Include="CefSharp.Common">
-      <Version>79.1.360</Version>
+      <Version>85.3.130</Version>
     </PackageReference>
     <PackageReference Include="CefSharp.WinForms">
       <Version>79.1.360</Version>
