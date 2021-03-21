@@ -924,11 +924,17 @@ namespace SharpBrowser {
 			}
 		}
 
-		#endregion
 
 
+        #endregion
 
-	}
+        #region Home Button
+        private void BtnHome_Click(object sender, EventArgs e)
+        {
+			CurBrowser.Load(HomepageURL);
+        }
+        #endregion
+    }
 }
 
 /// <summary>

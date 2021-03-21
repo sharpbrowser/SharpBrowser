@@ -18,6 +18,7 @@ namespace SharpBrowser {
 		private const int OpenLinkInNewTab = 26507;
 		private const int CloseTab = 40007;
 		private const int RefreshTab = 40008;
+		private const int Print = 26508;
 		readonly MainForm myForm;
 
 		private string lastSelText = "";
@@ -69,6 +70,10 @@ namespace SharpBrowser {
 
 			model.AddItem((CefMenuCommand)RefreshTab, "Refresh tab");
 			model.AddItem((CefMenuCommand)CloseTab, "Close tab");
+			model.AddSeparator();
+
+			model.AddItem((CefMenuCommand)SaveAsPdf, "Save as PDF");
+			model.AddItem((CefMenuCommand)Print, "Print Page");
 
 		}
 
@@ -103,6 +108,25 @@ namespace SharpBrowser {
 				myForm.InvokeOnParent(delegate () {
 					myForm.RefreshActiveTab();
 				});
+			}
+			if (id == SaveAsPdf)
+			{
+
+				SaveFileDialog sfd = new SaveFileDialog();
+				sfd.Filter = "PDF Files | *.pdf";
+				if (sfd.ShowDialog() == DialogResult.OK)
+				{
+					//string path = Path.GetFileName(sfd.FileName);
+					browser.PrintToPdfAsync(sfd.FileName, new PdfPrintSettings()
+					{
+						SelectionOnly = false,
+						BackgroundsEnabled = true
+					});
+				}
+			}
+			if (id == Print)
+			{
+				browser.Print();
 			}
 
 			return false;
