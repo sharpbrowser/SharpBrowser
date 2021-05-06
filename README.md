@@ -30,6 +30,15 @@ Ctrl+Shift+Tab	| Switch to the previous tab
 Ctrl+F		| Open search bar (Enter to find next, Esc to close)
 
 
+## System requirements
+
+- You need [VC++ 2015 Runtime](https://www.microsoft.com/en-in/download/details.aspx?id=48145) 32-bit and 64-bit versions
+
+- You need .NET Framework 4.6.
+
+- You need to install the version of VC++ Runtime that CEFSharp needs. Since we are using CefSharp 89, according to [this](https://github.com/cefsharp/CefSharp/#release-branches) we need the above versions
+
+
 ## Getting started
 
 1. Download the project as a ZIP from Github
@@ -40,14 +49,6 @@ Ctrl+F		| Open search bar (Enter to find next, Esc to close)
 
 4. If you have any issues with CefSharp, delete all the files in the `bin` folder (except the `storage` subfolder) and run a Nuget restore by building (F5) or manually restoring (`nuget restore` command).
 
-
-## System requirements
-
-- You need [VC++ 2015 Runtime](https://www.microsoft.com/en-in/download/details.aspx?id=48145) 32-bit and 64-bit versions
-
-- You need .NET Framework 4.6.
-
-- You need to install the version of VC++ Runtime that CEFSharp needs. Since we are using CefSharp 89, according to [this](https://github.com/cefsharp/CefSharp/#release-branches) we need the above versions
 
 ## Code
 
