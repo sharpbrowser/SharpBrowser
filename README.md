@@ -34,7 +34,7 @@ Ctrl+F		| Open search bar (Enter to find next, Esc to close)
 
 1. Download the project as a ZIP from Github
 
-2. You need to unpack **src\bin.zip** to create the `src\bin` folder which contains important CefSharp binaries. The project will not work properly without this!
+2. You need to unpack **`src\bin.zip`** to create the `src\bin` folder which contains important CefSharp binaries. The project will not work properly without this!
 
 3. Open the main solution `SharpBrowser.sln` and run it.
 
