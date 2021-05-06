@@ -29,9 +29,19 @@ Ctrl+Tab	| Switch to the next tab
 Ctrl+Shift+Tab	| Switch to the previous tab
 Ctrl+F		| Open search bar (Enter to find next, Esc to close)
 
-## System requirements
 
-- **IMPORTANT!** After downloading the source code, you need to unpack **src\bin.zip** to create the `src\bin` folder which contains important CefSharp binaries. The project will not work properly without this!
+## Getting started
+
+1. Download the project as a ZIP from Github
+
+2. You need to unpack **src\bin.zip** to create the `src\bin` folder which contains important CefSharp binaries. The project will not work properly without this!
+
+3. Open the main solution `SharpBrowser.sln` and run it.
+
+4. If you have any issues with CefSharp, delete all the files in the `bin` folder (except the `storage` subfolder) and run a Nuget restore by building (F5) or manually restoring (`nuget restore` command).
+
+
+## System requirements
 
 - You need [VC++ 2015 Runtime](https://www.microsoft.com/en-in/download/details.aspx?id=48145) 32-bit and 64-bit versions
 
