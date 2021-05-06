@@ -9,7 +9,7 @@ using System.Linq;
 using System.Web;
 using CefSharp;
 using CefSharp.WinForms;
-using FarsiLibrary.Win;
+using SharpBrowser.BrowserTabStrip;
 using Timer = System.Windows.Forms.Timer;
 using System.Drawing;
 using System.Reflection;
@@ -28,7 +28,7 @@ namespace SharpBrowser {
 		public static MainForm Instance;
 
 		public static string Branding = "SharpBrowser";
-		public static string UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36";
+		public static string UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36";
 		public static string AcceptLanguage = "en-US,en;q=0.9";
 		public static string HomepageURL = "https://www.google.com";
 		public static string NewTabURL = "about:blank";
@@ -137,8 +137,8 @@ namespace SharpBrowser {
 
 		#region Web Browser & Tabs
 
-		private FATabStripItem newStrip;
-		private FATabStripItem downloadsStrip;
+		private BrowserTabStripItem newStrip;
+		private BrowserTabStripItem downloadsStrip;
 
 		private string currentFullURL;
 		private string currentCleanURL;
@@ -339,7 +339,7 @@ namespace SharpBrowser {
 			return (ChromiumWebBrowser)this.Invoke((Func<ChromiumWebBrowser>)delegate {
 
 				// check if already exists
-				foreach (FATabStripItem tab in TabPages.Items) {
+				foreach (BrowserTabStripItem tab in TabPages.Items) {
 					SharpTab tab2 = (SharpTab)tab.Tag;
 					if (tab2 != null && (tab2.CurURL == url)) {
 						TabPages.SelectedItem = tab;
@@ -347,7 +347,7 @@ namespace SharpBrowser {
 					}
 				}
 
-				FATabStripItem tabStrip = new FATabStripItem();
+				BrowserTabStripItem tabStrip = new BrowserTabStripItem();
 				tabStrip.Title = "New Tab";
 				TabPages.Items.Insert(TabPages.Items.Count - 1, tabStrip);
 				newStrip = tabStrip;
@@ -358,7 +358,7 @@ namespace SharpBrowser {
 				return newTab.Browser;
 			});
 		}
-		private SharpTab AddNewBrowser(FATabStripItem tabStrip, String url) {
+		private SharpTab AddNewBrowser(BrowserTabStripItem tabStrip, String url) {
 			if (url == "") url = NewTabURL;
 			ChromiumWebBrowser browser = new ChromiumWebBrowser(url);
 
@@ -403,7 +403,7 @@ namespace SharpBrowser {
 		}
 
 		public SharpTab GetTabByBrowser(IWebBrowser browser) {
-			foreach (FATabStripItem tab2 in TabPages.Items) {
+			foreach (BrowserTabStripItem tab2 in TabPages.Items) {
 				SharpTab tab = (SharpTab)(tab2.Tag);
 				if (tab != null && tab.Browser == browser) {
 					return tab;
@@ -434,7 +434,7 @@ namespace SharpBrowser {
 			
 		}
 
-		private void OnTabClosing(FarsiLibrary.Win.TabStripItemClosingEventArgs e) {
+		private void OnTabClosing(SharpBrowser.BrowserTabStrip.TabStripItemClosingEventArgs e) {
 
 			// exit if invalid tab
 			if (CurTab == null){
@@ -571,7 +571,7 @@ namespace SharpBrowser {
 			browser.Tag = text;
 
 			// get tab of given browser
-			FATabStripItem tabStrip = (FATabStripItem)browser.Parent;
+			BrowserTabStripItem tabStrip = (BrowserTabStripItem)browser.Parent;
 			tabStrip.Title = text;
 
 
@@ -638,7 +638,7 @@ namespace SharpBrowser {
 			} catch (System.Exception ex) { }
 
 
-			if (e.ChangeType == FATabStripItemChangeTypes.SelectionChanged) {
+			if (e.ChangeType == BrowserTabStripItemChangeTypes.SelectionChanged) {
 				if (TabPages.SelectedItem == tabStripAdd) {
 					AddBlankTab();
 				} else {
@@ -655,14 +655,14 @@ namespace SharpBrowser {
 				}
 			}
 
-			if (e.ChangeType == FATabStripItemChangeTypes.Removed) {
+			if (e.ChangeType == BrowserTabStripItemChangeTypes.Removed) {
 				if (e.Item == downloadsStrip) downloadsStrip = null;
 				if (browser != null) {
 					browser.Dispose();
 				}
 			}
 
-			if (e.ChangeType == FATabStripItemChangeTypes.Changed) {
+			if (e.ChangeType == BrowserTabStripItemChangeTypes.Changed) {
 				if (browser != null) {
 					if (currentFullURL != "about:blank") {
 						browser.Focus();
@@ -682,11 +682,11 @@ namespace SharpBrowser {
 		}
 
 		private void menuCloseOtherTabs_Click(object sender, EventArgs e) {
-			List<FATabStripItem> listToClose = new List<FATabStripItem>();
-			foreach (FATabStripItem tab in TabPages.Items) {
+			List<BrowserTabStripItem> listToClose = new List<BrowserTabStripItem>();
+			foreach (BrowserTabStripItem tab in TabPages.Items) {
 				if (tab != tabStripAdd && tab != TabPages.SelectedItem) listToClose.Add(tab);
 			}
-			foreach (FATabStripItem tab in listToClose) {
+			foreach (BrowserTabStripItem tab in listToClose) {
 				TabPages.RemoveTab(tab);
 			}
 
@@ -852,7 +852,7 @@ namespace SharpBrowser {
 				TabPages.SelectedItem = downloadsStrip;
 			} else {
 				ChromiumWebBrowser brw = AddNewBrowserTab(DownloadsURL);
-				downloadsStrip = (FATabStripItem)brw.Parent;
+				downloadsStrip = (BrowserTabStripItem)brw.Parent;
 			}
 		}
 
@@ -952,7 +952,7 @@ internal class SharpTab {
 
 	public DateTime DateCreated;
 
-	public FATabStripItem Tab;
+	public BrowserTabStripItem Tab;
 	public ChromiumWebBrowser Browser;
 
 }

@@ -15,6 +15,9 @@ namespace SharpBrowser {
 		public ResourceRequestHandler(MainForm form) {
 			myForm = form;
 		}
+		public void Dispose() {
+
+		}
 
 		//
 		// Summary:
@@ -231,7 +234,7 @@ namespace SharpBrowser {
 
 
 				// if CANNOT CONNECT
-				if (code == 0 || code == 444 || (code >= 500 && code <= 599)) {
+				if (code == 444 || (code >= 500 && code <= 599)) {
 
 					// show offline "cannot connect to server" page
 					frame.LoadUrl(MainForm.CannotConnectURL);

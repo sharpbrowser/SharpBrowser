@@ -15,7 +15,7 @@
     </TargetFrameworkProfile>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-	<CefSharpAnyCpuSupport>true</CefSharpAnyCpuSupport>
+    <CefSharpAnyCpuSupport>true</CefSharpAnyCpuSupport>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -70,6 +70,26 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="BrowserTabStrip\BaseStyledPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="BrowserTabStrip\Data\CollectionChange.cs" />
+    <Compile Include="BrowserTabStrip\Data\CollectionClear.cs" />
+    <Compile Include="BrowserTabStrip\Data\CollectionWithEvents.cs" />
+    <Compile Include="BrowserTabStrip\BrowserTabStrip.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="BrowserTabStrip\BrowserTabStripCloseButton.cs" />
+    <Compile Include="BrowserTabStrip\BrowserTabStripItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="BrowserTabStrip\Enums\BrowserTabStripItemChangeTypes.cs" />
+    <Compile Include="BrowserTabStrip\Data\BrowserTabStripItemCollection.cs" />
+    <Compile Include="BrowserTabStrip\Enums\HitTestResult.cs" />
+    <Compile Include="BrowserTabStrip\Events\BrowserTabStripItemChangedEventArgs.cs" />
+    <Compile Include="BrowserTabStrip\Events\BrowserTabStripItemChangedHandler.cs" />
+    <Compile Include="BrowserTabStrip\Events\BrowserTabStripItemClosingEventArgs.cs" />
+    <Compile Include="BrowserTabStrip\Events\BrowserTabStripItemClosingHandler.cs" />
     <Compile Include="Utils\MiscUtils.cs" />
     <Compile Include="Handlers\HostHandler.cs" />
     <Compile Include="Handlers\RequestHandler.cs" />
@@ -121,22 +141,13 @@
     <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.XML" />
-    <Reference Include="TabStrip">
-      <HintPath>bin\TabStrip.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="cef.redist.x64">
-      <Version>79.1.36</Version>
-    </PackageReference>
-    <PackageReference Include="cef.redist.x86">
-      <Version>79.1.36</Version>
-    </PackageReference>
     <PackageReference Include="CefSharp.Common">
-      <Version>79.1.360</Version>
+      <Version>89.0.170</Version>
     </PackageReference>
     <PackageReference Include="CefSharp.WinForms">
-      <Version>79.1.360</Version>
+      <Version>89.0.170</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
