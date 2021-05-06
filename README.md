@@ -31,6 +31,8 @@ Ctrl+F		| Open search bar (Enter to find next, Esc to close)
 
 ## System requirements
 
+- **IMPORTANT!** After downloading the source code, you need to unpack **bin.zip** to create the `bin` folder which contains important CefSharp binaries. The project will not work properly without this!
+
 - You need [VC++ 2015 Runtime](https://www.microsoft.com/en-in/download/details.aspx?id=48145) 32-bit and 64-bit versions
 
 - You need .NET Framework 4.6.
