@@ -29,17 +29,30 @@ Ctrl+Tab	| Switch to the next tab
 Ctrl+Shift+Tab	| Switch to the previous tab
 Ctrl+F		| Open search bar (Enter to find next, Esc to close)
 
+
 ## System requirements
 
 - You need [VC++ 2015 Runtime](https://www.microsoft.com/en-in/download/details.aspx?id=48145) 32-bit and 64-bit versions
 
 - You need .NET Framework 4.6.
 
-- You need to install the version of VC++ Runtime that CEFSharp needs. Since we are using CefSharp 79, according to [this](https://github.com/cefsharp/CefSharp/#release-branches) we need the above versions
+- You need to install the version of VC++ Runtime that CEFSharp needs. Since we are using CefSharp 89, according to [this](https://github.com/cefsharp/CefSharp/#release-branches) we need the above versions
+
+
+## Getting started
+
+1. Download the project as a ZIP from Github
+
+2. You need to unpack **`src\bin.zip`** to create the `src\bin` folder which contains important CefSharp binaries. The project will not work properly without this!
+
+3. Open the main solution `SharpBrowser.sln` and run it.
+
+4. If you have any issues with CefSharp, delete all the files in the `bin` folder (except the `storage` subfolder) and run a Nuget restore by building (F5) or manually restoring (`nuget restore` command).
+
 
 ## Code
 
-- SharpBrowser uses CefSharp 79 and is built on NET Framework 4.6
+- SharpBrowser uses CefSharp 89 and is built on NET Framework 4.6
 - SharpBrowser supports AnyCPU as well as x86/x64 specific builds
 - `MainForm.cs` - main web browser UI and related functionality
 - `Handlers` - various handlers that we have registered with CefSharp that enable deeper integration between us and CefSharp

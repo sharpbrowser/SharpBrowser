@@ -41,9 +41,9 @@
             this.BtnDownloads = new System.Windows.Forms.Button();
             this.TxtURL = new System.Windows.Forms.TextBox();
             this.PanelToolbar = new System.Windows.Forms.Panel();
-            this.TabPages = new FarsiLibrary.Win.FATabStrip();
-            this.tabStrip1 = new FarsiLibrary.Win.FATabStripItem();
-            this.tabStripAdd = new FarsiLibrary.Win.FATabStripItem();
+            this.TabPages = new SharpBrowser.BrowserTabStrip.BrowserTabStrip();
+            this.tabStrip1 = new SharpBrowser.BrowserTabStrip.BrowserTabStripItem();
+            this.tabStripAdd = new SharpBrowser.BrowserTabStrip.BrowserTabStripItem();
             this.PanelStatus = new System.Windows.Forms.Panel();
             this.PanelSearch = new System.Windows.Forms.Panel();
             this.BtnNextSearch = new System.Windows.Forms.Button();
@@ -193,7 +193,7 @@
             this.TabPages.ContextMenuStrip = this.menuStripTab;
             this.TabPages.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TabPages.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TabPages.Items.AddRange(new FarsiLibrary.Win.FATabStripItem[] {
+            this.TabPages.Items.AddRange(new SharpBrowser.BrowserTabStrip.BrowserTabStripItem[] {
             this.tabStrip1,
             this.tabStripAdd});
             this.TabPages.Location = new System.Drawing.Point(0, 30);
@@ -202,7 +202,7 @@
             this.TabPages.Size = new System.Drawing.Size(934, 621);
             this.TabPages.TabIndex = 4;
             this.TabPages.Text = "faTabStrip1";
-            this.TabPages.TabStripItemSelectionChanged += new FarsiLibrary.Win.TabStripItemChangedHandler(this.OnTabsChanged);
+            this.TabPages.TabStripItemSelectionChanged += new SharpBrowser.BrowserTabStrip.TabStripItemChangedHandler(this.OnTabsChanged);
             this.TabPages.TabStripItemClosed += new System.EventHandler(this.OnTabClosed);
             this.TabPages.MouseClick += new System.Windows.Forms.MouseEventHandler(this.tabPages_MouseClick);
             // 
@@ -350,9 +350,9 @@
 
         #endregion
 
-		private FarsiLibrary.Win.FATabStrip TabPages;
-        private FarsiLibrary.Win.FATabStripItem tabStrip1;
-        private FarsiLibrary.Win.FATabStripItem tabStripAdd;
+		private SharpBrowser.BrowserTabStrip.BrowserTabStrip TabPages;
+        private SharpBrowser.BrowserTabStrip.BrowserTabStripItem tabStrip1;
+        private SharpBrowser.BrowserTabStrip.BrowserTabStripItem tabStripAdd;
 		private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.ContextMenuStrip menuStripTab;
         private System.Windows.Forms.ToolStripMenuItem menuCloseTab;

@@ -34,10 +34,12 @@ namespace SharpBrowser {
 
 		public static bool CheckIfFilePath(this string path) {
 
-			if (path[1] == ':') {
-				if (path[2] == '\\') {
-					if (Char.IsLetter(path[0])) {
-						return true;
+			if (path.Length >= 3) {
+				if (path[1] == ':') {
+					if (path[2] == '\\') {
+						if (Char.IsLetter(path[0])) {
+							return true;
+						}
 					}
 				}
 			}
@@ -46,10 +48,12 @@ namespace SharpBrowser {
 
 		public static bool CheckIfFilePath2(this string path) {
 
-			if (path[1] == ':') {
-				if (path[2] == '/') {
-					if (Char.IsLetter(path[0])) {
-						return true;
+			if (path.Length >= 3) {
+				if (path[1] == ':') {
+					if (path[2] == '/') {
+						if (Char.IsLetter(path[0])) {
+							return true;
+						}
 					}
 				}
 			}
