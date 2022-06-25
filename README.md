@@ -68,7 +68,7 @@ Ctrl+F		| Open search bar (Enter to find next, Esc to close)
 
 ## Screenshots
 
-### Apple Homepage
+### Apple.com
 
 ![](https://github.com/sharpbrowser/SharpBrowser/raw/master/images/1.png)
 
