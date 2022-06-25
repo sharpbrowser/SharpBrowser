@@ -76,13 +76,13 @@ Ctrl+F		| Open search bar (Enter to find next, Esc to close)
 
 ![](https://github.com/sharpbrowser/SharpBrowser/raw/master/images/2.png)
 
-### YouTube
-
-![](https://github.com/sharpbrowser/SharpBrowser/raw/master/images/6.png)
-
 ### WebAssembly & WebGL
 
 ![](https://github.com/sharpbrowser/SharpBrowser/raw/master/images/5.png)
+
+### YouTube
+
+![](https://github.com/sharpbrowser/SharpBrowser/raw/master/images/6.png)
 
 ### Search Bar
 
