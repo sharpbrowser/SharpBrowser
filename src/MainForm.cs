@@ -156,9 +156,9 @@ namespace SharpBrowser {
 		/// </summary>
 		private void InitBrowser() {
 
-			CefSharpSettings.LegacyJavascriptBindingEnabled = true;
+			//CefSharpSettings.LegacyJavascriptBindingEnabled = true;
 			CefSharpSettings.WcfEnabled = false;
-
+			Cef.EnableHighDPISupport();
 			CefSettings settings = new CefSettings();
 
 			settings.RegisterScheme(new CefCustomScheme {
@@ -196,11 +196,11 @@ namespace SharpBrowser {
 
 			BrowserSettings config = new BrowserSettings();
 
-			config.FileAccessFromFileUrls = (!CrossDomainSecurity).ToCefState();
-			config.UniversalAccessFromFileUrls = (!CrossDomainSecurity).ToCefState();
-			config.WebSecurity = WebSecurity.ToCefState();
+			//config.FileAccessFromFileUrls = (!CrossDomainSecurity).ToCefState();
+			//config.UniversalAccessFromFileUrls = (!CrossDomainSecurity).ToCefState();
+			//config.WebSecurity = WebSecurity.ToCefState();
 			config.WebGl = WebGL.ToCefState();
-			config.ApplicationCache = ApplicationCache.ToCefState();
+			//config.ApplicationCache = ApplicationCache.ToCefState();
 
 			browser.BrowserSettings = config;
 
