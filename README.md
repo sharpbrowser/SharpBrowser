@@ -4,7 +4,7 @@ SharpBrowser is the fastest open source C# web browser there is! Slightly faster
 
 ## Features
 
-- HTML5, CSS3, JS, HTML5 Video, WebGL 3D, etc
+- HTML5, CSS3, JS, HTML5 Video, WebGL 3D, WebAssembly, etc
 - Tabbed browsing
 - Address bar (also opens Google)
 - Back, Forward, Stop, Refresh
@@ -75,6 +75,10 @@ Ctrl+F		| Open search bar (Enter to find next, Esc to close)
 ### Google Maps
 
 ![](https://github.com/sharpbrowser/SharpBrowser/raw/master/images/2.png)
+
+### WebAssembly & WebGL
+
+![](https://github.com/sharpbrowser/SharpBrowser/raw/master/images/5.png)
 
 ### Search Bar
 
