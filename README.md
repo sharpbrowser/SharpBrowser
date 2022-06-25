@@ -72,10 +72,6 @@ Ctrl+F		| Open search bar (Enter to find next, Esc to close)
 
 ![](https://github.com/sharpbrowser/SharpBrowser/raw/master/images/1.png)
 
-### Google Maps
-
-![](https://github.com/sharpbrowser/SharpBrowser/raw/master/images/2.png)
-
 ### WebAssembly & WebGL
 
 ![](https://github.com/sharpbrowser/SharpBrowser/raw/master/images/5.png)
@@ -83,6 +79,10 @@ Ctrl+F		| Open search bar (Enter to find next, Esc to close)
 ### YouTube
 
 ![](https://github.com/sharpbrowser/SharpBrowser/raw/master/images/6.png)
+
+### Google Maps
+
+![](https://github.com/sharpbrowser/SharpBrowser/raw/master/images/2.png)
 
 ### Search Bar
 
