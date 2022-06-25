@@ -27,6 +27,26 @@ namespace SharpBrowser {
 			myForm = form;
 		}
 
+		//
+		// Summary:
+		//     Called before a context menu is displayed. The model can be cleared to show no
+		//     context menu or modified to show a custom menu.
+		//
+		// Parameters:
+		//   chromiumWebBrowser:
+		//     the ChromiumWebBrowser control
+		//
+		//   browser:
+		//     the browser object
+		//
+		//   frame:
+		//     The frame the request is coming from
+		//
+		//   parameters:
+		//     provides information about the context menu state
+		//
+		//   model:
+		//     initially contains the default context menu
 		public void OnBeforeContextMenu(IWebBrowser browserControl, IBrowser browser, IFrame frame, IContextMenuParams parameters, IMenuModel model) {
 
 			// clear the menu
@@ -77,6 +97,33 @@ namespace SharpBrowser {
 
 		}
 
+		//
+		// Summary:
+		//     Called to execute a command selected from the context menu. See cef_menu_id_t
+		//     for the command ids that have default implementations. All user-defined command
+		//     ids should be between MENU_ID_USER_FIRST and MENU_ID_USER_LAST.
+		//
+		// Parameters:
+		//   chromiumWebBrowser:
+		//     the ChromiumWebBrowser control
+		//
+		//   browser:
+		//     the browser object
+		//
+		//   frame:
+		//     The frame the request is coming from
+		//
+		//   parameters:
+		//     will have the same values as what was passed to
+		//
+		//   commandId:
+		//     menu command id
+		//
+		//   eventFlags:
+		//     event flags
+		//
+		// Returns:
+		//     Return true if the command was handled or false for the default implementation.
 		public bool OnContextMenuCommand(IWebBrowser browserControl, IBrowser browser, IFrame frame, IContextMenuParams parameters, CefMenuCommand commandId, CefEventFlags eventFlags) {
 
 			int id = (int)commandId;
@@ -132,10 +179,53 @@ namespace SharpBrowser {
 			return false;
 		}
 
+		//
+		// Summary:
+		//     Called when the context menu is dismissed irregardless of whether the menu was
+		//     empty or a command was selected.
+		//
+		// Parameters:
+		//   chromiumWebBrowser:
+		//     the ChromiumWebBrowser control
+		//
+		//   browser:
+		//     the browser object
+		//
+		//   frame:
+		//     The frame the request is coming from
 		public void OnContextMenuDismissed(IWebBrowser browserControl, IBrowser browser, IFrame frame) {
 
 		}
 
+		//
+		// Summary:
+		//     Called to allow custom display of the context menu. For custom display return
+		//     true and execute callback either synchronously or asynchronously with the selected
+		//     command Id. For default display return false. Do not keep references to parameters
+		//     or model outside of this callback.
+		//
+		// Parameters:
+		//   chromiumWebBrowser:
+		//     the ChromiumWebBrowser control
+		//
+		//   browser:
+		//     the browser object
+		//
+		//   frame:
+		//     The frame the request is coming from
+		//
+		//   parameters:
+		//     provides information about the context menu state
+		//
+		//   model:
+		//     contains the context menu model resulting from OnBeforeContextMenu
+		//
+		//   callback:
+		//     the callback to execute for custom display
+		//
+		// Returns:
+		//     For custom display return true and execute callback either synchronously or asynchronously
+		//     with the selected command ID.
 		public bool RunContextMenu(IWebBrowser browserControl, IBrowser browser, IFrame frame, IContextMenuParams parameters, IMenuModel model, IRunContextMenuCallback callback) {
 
 			// show default menu

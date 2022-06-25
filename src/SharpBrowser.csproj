@@ -144,10 +144,10 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CefSharp.Common">
-      <Version>97.1.12</Version>
+      <Version>102.0.100</Version>
     </PackageReference>
     <PackageReference Include="CefSharp.WinForms">
-      <Version>97.1.12</Version>
+      <Version>102.0.100</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

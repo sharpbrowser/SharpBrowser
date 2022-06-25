@@ -904,7 +904,7 @@ namespace SharpBrowser {
 			bool first = lastSearch != TxtSearch.Text;
 			lastSearch = TxtSearch.Text;
 			if (lastSearch.CheckIfValid()) {
-				CurBrowser.GetBrowser().Find(0, lastSearch, true, false, !first);
+				CurBrowser.GetBrowser().Find(lastSearch, true, false, !first);
 			} else {
 				CurBrowser.GetBrowser().StopFinding(true);
 			}
