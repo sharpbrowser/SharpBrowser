@@ -28,8 +28,8 @@ namespace SharpBrowser {
 		public static MainForm Instance;
 
 		public static string Branding = "SharpBrowser";
-		public static string UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36";
 		public static string AcceptLanguage = "en-US,en;q=0.9";
+        public static string UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36 /CefSharp Browser" + Cef.CefSharpVersion;		public static string AcceptLanguage = "en-US,en;q=0.9";
 		public static string HomepageURL = "https://www.google.com";
 		public static string NewTabURL = "about:blank";
 		public static string InternalURL = "sharpbrowser";
