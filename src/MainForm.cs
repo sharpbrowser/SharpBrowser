@@ -509,6 +509,15 @@ namespace SharpBrowser {
 				}
 			}
 		}
+		public List<SharpTab> GetAllTabs() {
+			List<SharpTab> tabs = new List<SharpTab>();
+			foreach (BrowserTabStripItem tabPage in TabPages.Items) {
+				if (tabPage.Tag != null) {
+					tabs.Add((SharpTab)tabPage.Tag);
+				}
+			}
+			return tabs;
+		}
 
 		public int CurTabLoadingDur {
 			get {
