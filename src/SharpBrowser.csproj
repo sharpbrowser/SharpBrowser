@@ -143,10 +143,10 @@
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="CefSharp.WinForms">
+    <PackageReference Include="CefSharp.Common">
       <Version>103.0.120</Version>
     </PackageReference>
-<PackageReference Include="CefSharp.Common">
+    <PackageReference Include="CefSharp.WinForms">
       <Version>103.0.120</Version>
     </PackageReference>
   </ItemGroup>
