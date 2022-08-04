@@ -1,11 +1,12 @@
-## SharpBrowser Setup
+# SharpBrowser Setup
 
-# Usage
+## For Users
 
-These setup files are manually produced with Inno Setup and made available on Github. 
 
-Simply run the executable and it should install.
+Simply run the executable `SharpBrowserSetup.exe` and it should install.
 
-# For Developers
+This only works on Windows.
+
+## For Developers
 
 To recreate the setup file, install [InnoSetup](https://jrsoftware.org/isinfo.php) and run the InnoSetup script in the `setup` folder.
