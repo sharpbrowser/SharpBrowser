@@ -1,4 +1,4 @@
-SHARPBROWSER INSTALLER DOCUMENTATION
+SharpBrowser Setup
 =================================================================
 
 These setup files are manually produced with Inno Setup and made available on Github. 
