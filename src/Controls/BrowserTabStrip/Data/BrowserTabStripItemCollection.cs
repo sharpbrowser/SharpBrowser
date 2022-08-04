@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel;
 
-namespace SharpBrowser.BrowserTabStrip {
+namespace SharpBrowser.Controls.BrowserTabStrip {
 	public class BrowserTabStripItemCollection : CollectionWithEvents {
 		private int lockUpdate;
 

@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using CefSharp;
-
+using SharpBrowser.Browser.Model;
 
 namespace SharpBrowser {
 	internal class KeyboardHandler : IKeyboardHandler {
 		MainForm myForm;
 
-		public static List<SharpHotKey> Hotkeys = new List<SharpHotKey>();
+		public static List<BrowserHotKey> Hotkeys = new List<BrowserHotKey>();
 		public static void AddHotKey(Form form, Action function, Keys key, bool ctrl = false, bool shift = false, bool alt = false) {
 			Utils.AddHotKey(form, function, key, ctrl, shift, alt);
-			Hotkeys.Add(new SharpHotKey(function, key, ctrl, shift, alt));
+			Hotkeys.Add(new BrowserHotKey(function, key, ctrl, shift, alt));
 		}
 
 		public KeyboardHandler(MainForm form) {
@@ -105,7 +105,7 @@ namespace SharpBrowser {
 				bool altDown = mod.IsBitmaskOn((int)CefEventFlags.AltDown);
 
 				// per registered hotkey
-				foreach (SharpHotKey key in Hotkeys) {
+				foreach (BrowserHotKey key in Hotkeys) {
 					if (key.KeyCode == windowsKeyCode) {
 						if (key.Ctrl == ctrlDown && key.Shift == shiftDown && key.Alt == altDown) {
 							myForm.InvokeOnParent(delegate () {

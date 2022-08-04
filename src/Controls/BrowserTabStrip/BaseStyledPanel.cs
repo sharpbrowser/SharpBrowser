@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 
-namespace SharpBrowser.BrowserTabStrip {
+namespace SharpBrowser.Controls.BrowserTabStrip {
 	[ToolboxItem(false)]
 	public class BaseStyledPanel : ContainerControl {
 		private static ToolStripProfessionalRenderer renderer;

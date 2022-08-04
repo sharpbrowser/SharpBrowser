@@ -1,7 +1,7 @@
 using System.Collections;
 using System.ComponentModel;
 
-namespace SharpBrowser.BrowserTabStrip {
+namespace SharpBrowser.Controls.BrowserTabStrip {
 	public abstract class CollectionWithEvents : CollectionBase {
 		private int _suspendCount;
 

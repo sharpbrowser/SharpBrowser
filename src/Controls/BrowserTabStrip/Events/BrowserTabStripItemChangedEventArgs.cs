@@ -1,6 +1,6 @@
 using System;
 
-namespace SharpBrowser.BrowserTabStrip {
+namespace SharpBrowser.Controls.BrowserTabStrip {
 	public class TabStripItemChangedEventArgs : EventArgs {
 		private BrowserTabStripItem itm;
 

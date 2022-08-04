@@ -8,6 +8,7 @@ using CefSharp;
 using System.Windows.Forms;
 using System.Drawing;
 using CefSharp.Callback;
+using SharpBrowser.Browser;
 
 namespace SharpBrowser {
 	internal class ResourceRequestHandler : IResourceRequestHandler {
@@ -214,7 +215,7 @@ namespace SharpBrowser {
 				else {
 
 					// show offline "file not found" page
-					frame.LoadUrl(MainForm.FileNotFoundURL + "?path=" + request.Url.EncodeURL());
+					frame.LoadUrl(BrowserConfig.FileNotFoundURL + "?path=" + request.Url.EncodeURL());
 				}
 
 			}
@@ -226,7 +227,7 @@ namespace SharpBrowser {
 				if (path.FileNotExists()) {
 
 					// show offline "file not found" page
-					frame.LoadUrl(MainForm.FileNotFoundURL + "?path=" + path.EncodeURL());
+					frame.LoadUrl(BrowserConfig.FileNotFoundURL + "?path=" + path.EncodeURL());
 
 				}
 			}
@@ -237,7 +238,7 @@ namespace SharpBrowser {
 				if (code == 444 || (code >= 500 && code <= 599)) {
 
 					// show offline "cannot connect to server" page
-					frame.LoadUrl(MainForm.CannotConnectURL);
+					frame.LoadUrl(BrowserConfig.CannotConnectURL);
 				}
 
 			}

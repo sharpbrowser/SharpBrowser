@@ -9,16 +9,18 @@ using System.Linq;
 using System.Web;
 using CefSharp;
 using CefSharp.WinForms;
-using SharpBrowser.BrowserTabStrip;
+using SharpBrowser.Controls.BrowserTabStrip;
 using Timer = System.Windows.Forms.Timer;
 using System.Drawing;
 using System.Reflection;
+using SharpBrowser.Browser;
+using SharpBrowser.Browser.Model;
 
 namespace SharpBrowser {
 
 	/// <summary>
 	/// The main SharpBrowser form, supporting multiple tabs.
-	/// We used the x86 version of CefSharp V51, so the app works on 32-bit and 64-bit machines.
+	/// We used the x86 version of CefSharp, so the app works on 32-bit and 64-bit machines.
 	/// If you would only like to support 64-bit machines, simply change the DLL references.
 	/// </summary>
 	internal partial class MainForm : Form {
@@ -26,22 +28,6 @@ namespace SharpBrowser {
 		private string appPath = Path.GetDirectoryName(Application.ExecutablePath) + @"\";
 
 		public static MainForm Instance;
-
-		public static string Branding = "SharpBrowser";
-		public static string AcceptLanguage = "en-US,en;q=0.9";
-        public static string UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.134 Safari/537.36 /CefSharp Browser" + Cef.CefSharpVersion; // UserAgent to fix issue with Google account authentication		
-		public static string HomepageURL = "https://www.google.com";
-		public static string NewTabURL = "about:blank";
-		public static string InternalURL = "sharpbrowser";
-		public static string DownloadsURL = "sharpbrowser://storage/downloads.html";
-		public static string FileNotFoundURL = "sharpbrowser://storage/errors/notFound.html";
-		public static string CannotConnectURL = "sharpbrowser://storage/errors/cannotConnect.html";
-		public static string SearchURL = "https://www.google.com/search?q=";
-
-		public bool WebSecurity = true;
-		public bool CrossDomainSecurity = true;
-		public bool WebGL = true;
-		public bool ApplicationCache = true;
 
 
 
@@ -162,12 +148,12 @@ namespace SharpBrowser {
 			CefSettings settings = new CefSettings();
 
 			settings.RegisterScheme(new CefCustomScheme {
-				SchemeName = InternalURL,
+				SchemeName = BrowserConfig.InternalURL,
 				SchemeHandlerFactory = new SchemeHandlerFactory()
 			});
 
-			settings.UserAgent = UserAgent;
-			settings.AcceptLanguageList = AcceptLanguage;
+			settings.UserAgent = BrowserConfig.UserAgent;
+			settings.AcceptLanguageList = BrowserConfig.AcceptLanguage;
 
 			settings.IgnoreCertificateErrors = true;
 			
@@ -185,7 +171,7 @@ namespace SharpBrowser {
 
 			host = new HostHandler(this);
 
-			AddNewBrowser(tabStrip1, HomepageURL);
+			AddNewBrowser(tabStrip1, BrowserConfig.HomepageURL);
 
 		}
 
@@ -199,7 +185,7 @@ namespace SharpBrowser {
 			//config.FileAccessFromFileUrls = (!CrossDomainSecurity).ToCefState();
 			//config.UniversalAccessFromFileUrls = (!CrossDomainSecurity).ToCefState();
 			//config.WebSecurity = WebSecurity.ToCefState();
-			config.WebGl = WebGL.ToCefState();
+			config.WebGl = BrowserConfig.WebGL.ToCefState();
 			//config.ApplicationCache = ApplicationCache.ToCefState();
 
 			browser.BrowserSettings = config;
@@ -210,9 +196,9 @@ namespace SharpBrowser {
 		private static string GetAppDir(string name) {
 			string winXPDir = @"C:\Documents and Settings\All Users\Application Data\";
 			if (Directory.Exists(winXPDir)) {
-				return winXPDir + Branding + @"\" + name + @"\";
+				return winXPDir + BrowserConfig.Branding + @"\" + name + @"\";
 			}
-			return @"C:\ProgramData\" + Branding + @"\" + name + @"\";
+			return @"C:\ProgramData\" + BrowserConfig.Branding + @"\" + name + @"\";
 
 		}
 
@@ -237,11 +223,11 @@ namespace SharpBrowser {
 
 				Uri.TryCreate(url, UriKind.Absolute, out outUri);
 
-				if (!(urlLower.StartsWith("http") || urlLower.StartsWith(InternalURL))) {
+				if (!(urlLower.StartsWith("http") || urlLower.StartsWith(BrowserConfig.InternalURL))) {
 					if (outUri == null || outUri.Scheme != Uri.UriSchemeFile) newUrl = "http://" + url;
 				}
 
-				if (urlLower.StartsWith(InternalURL + ":") ||
+				if (urlLower.StartsWith(BrowserConfig.InternalURL + ":") ||
 
 					// load URL if it seems valid
 					(Uri.TryCreate(newUrl, UriKind.Absolute, out outUri)
@@ -250,7 +236,7 @@ namespace SharpBrowser {
 				} else {
 
 					// run search if unknown URL
-					newUrl = SearchURL + HttpUtility.UrlEncode(url);
+					newUrl = BrowserConfig.SearchURL + HttpUtility.UrlEncode(url);
 
 				}
 
@@ -272,12 +258,12 @@ namespace SharpBrowser {
 
 			if (tabName.CheckIfValid()) {
 
-				this.Text = tabName + " - " + Branding;
+				this.Text = tabName + " - " + BrowserConfig.Branding;
 				currentTitle = tabName;
 
 			} else {
 
-				this.Text = Branding;
+				this.Text = BrowserConfig.Branding;
 				currentTitle = "New Tab";
 			}
 
@@ -310,7 +296,7 @@ namespace SharpBrowser {
 			return (url == "" || url == "about:blank");
 		}
 		private bool IsBlankOrSystem(string url) {
-			return (url == "" || url.BeginsWith("about:") || url.BeginsWith("chrome:") || url.BeginsWith(InternalURL + ":"));
+			return (url == "" || url.BeginsWith("about:") || url.BeginsWith("chrome:") || url.BeginsWith(BrowserConfig.InternalURL + ":"));
 		}
 
 		public void AddBlankWindow() {
@@ -340,7 +326,7 @@ namespace SharpBrowser {
 
 				// check if already exists
 				foreach (BrowserTabStripItem tab in TabPages.Items) {
-					SharpTab tab2 = (SharpTab)tab.Tag;
+					BrowserTab tab2 = (BrowserTab)tab.Tag;
 					if (tab2 != null && (tab2.CurURL == url)) {
 						TabPages.SelectedItem = tab;
 						return tab2.Browser;
@@ -352,14 +338,14 @@ namespace SharpBrowser {
 				TabPages.Items.Insert(TabPages.Items.Count - 1, tabStrip);
 				newStrip = tabStrip;
 
-				SharpTab newTab = AddNewBrowser(newStrip, url);
+				BrowserTab newTab = AddNewBrowser(newStrip, url);
 				newTab.RefererURL = refererUrl;
 				if (focusNewTab) timer1.Enabled = true;
 				return newTab.Browser;
 			});
 		}
-		private SharpTab AddNewBrowser(BrowserTabStripItem tabStrip, String url) {
-			if (url == "") url = NewTabURL;
+		private BrowserTab AddNewBrowser(BrowserTabStripItem tabStrip, String url) {
+			if (url == "") url = BrowserConfig.NewTabURL;
 			ChromiumWebBrowser browser = new ChromiumWebBrowser(url);
 
 			// set config
@@ -383,7 +369,7 @@ namespace SharpBrowser {
 			browser.RequestHandler = rHandler;
 
 			// new tab obj
-			SharpTab tab = new SharpTab {
+			BrowserTab tab = new BrowserTab {
 				IsOpen = true,
 				Browser = browser,
 				Tab = tabStrip,
@@ -396,15 +382,15 @@ namespace SharpBrowser {
 			// save tab obj in tabstrip
 			tabStrip.Tag = tab;
 
-			if (url.StartsWith(InternalURL + ":")) {
+			if (url.StartsWith(BrowserConfig.InternalURL + ":")) {
 				browser.JavascriptObjectRepository.Register("host", host, true, BindingOptions.DefaultBinder);
 			}
 			return tab;
 		}
 
-		public SharpTab GetTabByBrowser(IWebBrowser browser) {
+		public BrowserTab GetTabByBrowser(IWebBrowser browser) {
 			foreach (BrowserTabStripItem tab2 in TabPages.Items) {
-				SharpTab tab = (SharpTab)(tab2.Tag);
+				BrowserTab tab = (BrowserTab)(tab2.Tag);
 				if (tab != null && tab.Browser == browser) {
 					return tab;
 				}
@@ -434,7 +420,7 @@ namespace SharpBrowser {
 			
 		}
 
-		private void OnTabClosing(SharpBrowser.BrowserTabStrip.TabStripItemClosingEventArgs e) {
+		private void OnTabClosing(SharpBrowser.Controls.BrowserTabStrip.TabStripItemClosingEventArgs e) {
 
 			// exit if invalid tab
 			if (CurTab == null){
@@ -493,27 +479,27 @@ namespace SharpBrowser {
 		public ChromiumWebBrowser CurBrowser {
 			get {
 				if (TabPages.SelectedItem != null && TabPages.SelectedItem.Tag != null) {
-					return ((SharpTab)TabPages.SelectedItem.Tag).Browser;
+					return ((BrowserTab)TabPages.SelectedItem.Tag).Browser;
 				} else {
 					return null;
 				}
 			}
 		}
 
-		public SharpTab CurTab {
+		public BrowserTab CurTab {
 			get {
 				if (TabPages.SelectedItem != null && TabPages.SelectedItem.Tag != null) {
-					return ((SharpTab)TabPages.SelectedItem.Tag);
+					return ((BrowserTab)TabPages.SelectedItem.Tag);
 				} else {
 					return null;
 				}
 			}
 		}
-		public List<SharpTab> GetAllTabs() {
-			List<SharpTab> tabs = new List<SharpTab>();
+		public List<BrowserTab> GetAllTabs() {
+			List<BrowserTab> tabs = new List<BrowserTab>();
 			foreach (BrowserTabStripItem tabPage in TabPages.Items) {
 				if (tabPage.Tag != null) {
-					tabs.Add((SharpTab)tabPage.Tag);
+					tabs.Add((BrowserTab)tabPage.Tag);
 				}
 			}
 			return tabs;
@@ -720,7 +706,7 @@ namespace SharpBrowser {
 		}
 
 		private void bDownloads_Click(object sender, EventArgs e) {
-			AddNewBrowserTab(DownloadsURL);
+			AddNewBrowserTab(BrowserConfig.DownloadsURL);
 		}
 
 		private void bRefresh_Click(object sender, EventArgs e) {
@@ -857,10 +843,10 @@ namespace SharpBrowser {
 		}
 
 		public void OpenDownloadsTab() {
-			if (downloadsStrip != null && ((ChromiumWebBrowser)downloadsStrip.Controls[0]).Address == DownloadsURL) {
+			if (downloadsStrip != null && ((ChromiumWebBrowser)downloadsStrip.Controls[0]).Address == BrowserConfig.DownloadsURL) {
 				TabPages.SelectedItem = downloadsStrip;
 			} else {
-				ChromiumWebBrowser brw = AddNewBrowserTab(DownloadsURL);
+				ChromiumWebBrowser brw = AddNewBrowserTab(BrowserConfig.DownloadsURL);
 				downloadsStrip = (BrowserTabStripItem)brw.Parent;
 			}
 		}
@@ -940,52 +926,11 @@ namespace SharpBrowser {
         #region Home Button
         private void BtnHome_Click(object sender, EventArgs e)
         {
-			CurBrowser.Load(HomepageURL);
+			CurBrowser.Load(BrowserConfig.HomepageURL);
         }
         #endregion
     }
 }
 
-/// <summary>
-/// POCO created for holding data per tab
-/// </summary>
-internal class SharpTab {
 
-	public bool IsOpen;
 
-	public string OrigURL;
-	public string CurURL;
-	public string Title;
-
-	public string RefererURL;
-
-	public DateTime DateCreated;
-
-	public BrowserTabStripItem Tab;
-	public ChromiumWebBrowser Browser;
-
-}
-
-/// <summary>
-/// POCO for holding hotkey data
-/// </summary>
-internal class SharpHotKey {
-
-	public Keys Key;
-	public int KeyCode;
-	public bool Ctrl;
-	public bool Shift;
-	public bool Alt;
-
-	public Action Callback;
-
-	public SharpHotKey(Action callback, Keys key, bool ctrl = false, bool shift = false, bool alt = false) {
-		Callback = callback;
-		Key = key;
-		KeyCode = (int)key;
-		Ctrl = ctrl;
-		Shift = shift;
-		Alt = alt;
-	}
-
-}

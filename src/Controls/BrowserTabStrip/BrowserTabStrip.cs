@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
-namespace SharpBrowser.BrowserTabStrip {
+namespace SharpBrowser.Controls.BrowserTabStrip {
 	[DefaultEvent("TabStripItemSelectionChanged")]
 	[DefaultProperty("Items")]
 	[ToolboxItem(true)]

@@ -1,6 +1,6 @@
 using System;
 
-namespace SharpBrowser.BrowserTabStrip {
+namespace SharpBrowser.Controls.BrowserTabStrip {
 	public class TabStripItemClosingEventArgs : EventArgs {
 		private bool _cancel;
 

@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace SharpBrowser.BrowserTabStrip {
+namespace SharpBrowser.Controls.BrowserTabStrip {
 	[ToolboxItem(false)]
 	[DefaultProperty("Title")]
 	[DefaultEvent("Changed")]

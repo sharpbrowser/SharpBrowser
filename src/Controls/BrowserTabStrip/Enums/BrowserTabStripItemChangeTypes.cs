@@ -1,4 +1,4 @@
-namespace SharpBrowser.BrowserTabStrip {
+namespace SharpBrowser.Controls.BrowserTabStrip {
 	public enum BrowserTabStripItemChangeTypes {
 		Added,
 		Removed,

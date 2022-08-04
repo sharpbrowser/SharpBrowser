@@ -63,6 +63,9 @@
     <StartupObject>SharpBrowser.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Browser\BrowserConfig.cs" />
+    <Compile Include="Browser\Model\BrowserHotKey.cs" />
+    <Compile Include="Browser\Model\BrowserTab.cs" />
     <Compile Include="Data\JSON.cs" />
     <Compile Include="Handlers\ResourceRequestHandler.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -70,26 +73,26 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="BrowserTabStrip\BaseStyledPanel.cs">
+    <Compile Include="Controls\BrowserTabStrip\BaseStyledPanel.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="BrowserTabStrip\Data\CollectionChange.cs" />
-    <Compile Include="BrowserTabStrip\Data\CollectionClear.cs" />
-    <Compile Include="BrowserTabStrip\Data\CollectionWithEvents.cs" />
-    <Compile Include="BrowserTabStrip\BrowserTabStrip.cs">
+    <Compile Include="Controls\BrowserTabStrip\Data\CollectionChange.cs" />
+    <Compile Include="Controls\BrowserTabStrip\Data\CollectionClear.cs" />
+    <Compile Include="Controls\BrowserTabStrip\Data\CollectionWithEvents.cs" />
+    <Compile Include="Controls\BrowserTabStrip\BrowserTabStrip.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="BrowserTabStrip\BrowserTabStripCloseButton.cs" />
-    <Compile Include="BrowserTabStrip\BrowserTabStripItem.cs">
+    <Compile Include="Controls\BrowserTabStrip\BrowserTabStripCloseButton.cs" />
+    <Compile Include="Controls\BrowserTabStrip\BrowserTabStripItem.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="BrowserTabStrip\Enums\BrowserTabStripItemChangeTypes.cs" />
-    <Compile Include="BrowserTabStrip\Data\BrowserTabStripItemCollection.cs" />
-    <Compile Include="BrowserTabStrip\Enums\HitTestResult.cs" />
-    <Compile Include="BrowserTabStrip\Events\BrowserTabStripItemChangedEventArgs.cs" />
-    <Compile Include="BrowserTabStrip\Events\BrowserTabStripItemChangedHandler.cs" />
-    <Compile Include="BrowserTabStrip\Events\BrowserTabStripItemClosingEventArgs.cs" />
-    <Compile Include="BrowserTabStrip\Events\BrowserTabStripItemClosingHandler.cs" />
+    <Compile Include="Controls\BrowserTabStrip\Enums\BrowserTabStripItemChangeTypes.cs" />
+    <Compile Include="Controls\BrowserTabStrip\Data\BrowserTabStripItemCollection.cs" />
+    <Compile Include="Controls\BrowserTabStrip\Enums\HitTestResult.cs" />
+    <Compile Include="Controls\BrowserTabStrip\Events\BrowserTabStripItemChangedEventArgs.cs" />
+    <Compile Include="Controls\BrowserTabStrip\Events\BrowserTabStripItemChangedHandler.cs" />
+    <Compile Include="Controls\BrowserTabStrip\Events\BrowserTabStripItemClosingEventArgs.cs" />
+    <Compile Include="Controls\BrowserTabStrip\Events\BrowserTabStripItemClosingHandler.cs" />
     <Compile Include="Utils\MiscUtils.cs" />
     <Compile Include="Handlers\HostHandler.cs" />
     <Compile Include="Handlers\RequestHandler.cs" />

@@ -1,7 +1,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace SharpBrowser.BrowserTabStrip {
+namespace SharpBrowser.Controls.BrowserTabStrip {
 	internal class BrowserTabStripCloseButton {
 		public Rectangle Rect = Rectangle.Empty;
 
