@@ -11,7 +11,7 @@ namespace SharpBrowser.Browser {
 
 		public static string Branding = "SharpBrowser";
 		public static string AcceptLanguage = "en-US,en;q=0.9";
-		public static string UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.134 Safari/537.36 /CefSharp Browser" + Cef.CefSharpVersion; // UserAgent to fix issue with Google account authentication		
+		public static string UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.81 Safari/537.36 /CefSharp Browser" + Cef.CefSharpVersion; // UserAgent to fix issue with Google account authentication		
 		public static string HomepageURL = "https://www.google.com";
 		public static string NewTabURL = "about:blank";
 		public static string InternalURL = "sharpbrowser";
