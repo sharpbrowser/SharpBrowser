@@ -50,6 +50,13 @@ Ctrl+F		| Open search bar (Enter to find next, Esc to close)
 4. If you have any issues with CefSharp, delete all the files in the `bin` folder (except the `storage` subfolder) and run a Nuget restore by building (F5) or manually restoring (`nuget restore` command).
 
 
+## Documentation
+
+- [Compilation Guide](docs/Compilation.md)
+- [Configuration Guide](docs/Configuration.md)
+- [Distribution Guide](docs/Distribution.md)
+
+
 ## Code
 
 - SharpBrowser uses CefSharp 104 and is built on NET Framework 4.8

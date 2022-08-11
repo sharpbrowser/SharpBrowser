@@ -1,3 +1,5 @@
+# How to customize SharpBrowser
+
 Options:
 ### Branding
 The title of the window and application in Windows
@@ -20,9 +22,10 @@ The cannot correct error url
 ### SearchURL
 The search string; it must be the string before the search result
 Examples:
-
+```
 https://www.google.com/search?q=
 
 https://www.bing.com/search?q=
 
 https://duckduckgo.com/?q=
+```
