@@ -41,13 +41,7 @@ Ctrl+F		| Open search bar (Enter to find next, Esc to close)
 
 ## Getting started
 
-1. Download the project as a ZIP from Github
-
-2. You need to unpack **`src\bin.zip`** to create the `src\bin` folder which contains important CefSharp binaries. The project will not work properly without this!
-
-3. Open the main solution `SharpBrowser.sln` and run it.
-
-4. If you have any issues with CefSharp, delete all the files in the `bin` folder (except the `storage` subfolder) and run a Nuget restore by building (F5) or manually restoring (`nuget restore` command).
+- See the [Compilation Guide](docs/Compilation.md) for steps to get started.
 
 
 ## Documentation
