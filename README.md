@@ -52,6 +52,7 @@ Ctrl+F		| Open search bar (Enter to find next, Esc to close)
 
 ## Documentation
 
+- [User Guide](docs/Users.md)
 - [Compilation Guide](docs/Compilation.md)
 - [Configuration Guide](docs/Configuration.md)
 - [Distribution Guide](docs/Distribution.md)
