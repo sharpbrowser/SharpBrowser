@@ -2,7 +2,8 @@
 
 #### Step 1: Fork sharpbrowser
 
-Fork the sharpbrowser repository on GitHub
+Fork the sharpbrowser repository on GitHub.
+
 ![image](https://user-images.githubusercontent.com/104514709/183603613-65eff2a1-0d80-4e70-83d8-805edecd2c0c.png)
 
 #### Step 2: Install Visual Studio
