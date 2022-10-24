@@ -143,7 +143,7 @@ namespace SharpBrowser {
 		private void InitBrowser() {
 
 			//CefSharpSettings.LegacyJavascriptBindingEnabled = true;
-			CefSharpSettings.WcfEnabled = false;
+			
 			Cef.EnableHighDPISupport();
 			CefSettings settings = new CefSettings();
 
@@ -383,7 +383,7 @@ namespace SharpBrowser {
 			tabStrip.Tag = tab;
 
 			if (url.StartsWith(BrowserConfig.InternalURL + ":")) {
-				browser.JavascriptObjectRepository.Register("host", host, true, BindingOptions.DefaultBinder);
+				browser.JavascriptObjectRepository.Register("host", host, BindingOptions.DefaultBinder);
 			}
 			return tab;
 		}
