@@ -159,6 +159,12 @@ namespace SharpBrowser {
 			
 			settings.CachePath = GetAppDir("Cache");
 
+			if (BrowserConfig.Proxy) {
+				CefSharpSettings.Proxy = new ProxyOptions(BrowserConfig.ProxyIP,
+					BrowserConfig.ProxyPort.ToString(), BrowserConfig.ProxyUsername,
+					BrowserConfig.ProxyPassword, BrowserConfig.ProxyBypassList);
+			}
+
 			Cef.Initialize(settings);
 
 			dHandler = new DownloadHandler(this);

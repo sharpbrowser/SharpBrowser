@@ -25,7 +25,12 @@ namespace SharpBrowser.Browser {
 		public static bool WebGL = true;
 		public static bool ApplicationCache = true;
 
-
+		public static bool Proxy = false;
+		public static string ProxyIP = "123.123.123.123";
+		public static int ProxyPort = 123;
+		public static string ProxyUsername = "username";
+		public static string ProxyPassword = "pass";
+		public static string ProxyBypassList = "";
 
 	}
 }
