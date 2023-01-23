@@ -15,6 +15,7 @@ using System.Drawing;
 using System.Reflection;
 using SharpBrowser.Browser;
 using SharpBrowser.Browser.Model;
+using System.Windows.Forms.VisualStyles;
 
 namespace SharpBrowser {
 
@@ -94,6 +95,7 @@ namespace SharpBrowser {
 			KeyboardHandler.AddHotKey(this, OpenSearch, Keys.F, true);
 			KeyboardHandler.AddHotKey(this, CloseSearch, Keys.Escape);
 			KeyboardHandler.AddHotKey(this, StopActiveTab, Keys.Escape);
+			KeyboardHandler.AddHotKey(this, ToggleFullscreen, Keys.F11);
 
 
 		}
@@ -193,7 +195,7 @@ namespace SharpBrowser {
 			//config.WebSecurity = WebSecurity.ToCefState();
 			config.WebGl = BrowserConfig.WebGL.ToCefState();
 			//config.ApplicationCache = ApplicationCache.ToCefState();
-
+			
 			browser.BrowserSettings = config;
 
 		}
@@ -419,6 +421,28 @@ namespace SharpBrowser {
 				if ((TabPages.Items.Count - 1) > index) {
 					TabPages.SelectedItem = TabPages.Items[index];
 				}
+			}
+		}
+		private FormWindowState oldWindowState;
+        private FormBorderStyle oldBorderStyle;
+		private bool isFullScreen = false;
+
+        private void ToggleFullscreen()
+		{            
+
+			if (!isFullScreen)
+			{
+				oldWindowState = this.WindowState;
+				oldBorderStyle = this.FormBorderStyle;
+				this.FormBorderStyle = FormBorderStyle.None;
+				this.WindowState = FormWindowState.Maximized;
+				isFullScreen = true;
+			}
+			else
+			{
+				this.FormBorderStyle = oldBorderStyle;
+				this.WindowState = oldWindowState;
+				isFullScreen = false;
 			}
 		}
 
