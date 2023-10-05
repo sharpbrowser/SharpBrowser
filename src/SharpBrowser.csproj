@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net6.0-windows</TargetFramework>
     <OutputType>WinExe</OutputType>
@@ -33,7 +33,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CefSharp.Common" Version="106.0.260" />
-    <PackageReference Include="CefSharp.Common.NETCore" Version="106.0.260" />
+    <PackageReference Include="CefSharp.Common.NETCore" Version="117.2.20" />
     <PackageReference Include="CefSharp.WinForms.NETCore" Version="106.0.260" />
   </ItemGroup>
   <ItemGroup>
