@@ -274,6 +274,6 @@ __pycache__/
 *.odx.cs
 *.xsd.cs
 
-# Allow storage directory which has JS scripts
-src/bin/
-!src/bin/net7.0-windows/storage
+# Exclude build but include storage dir
+src/bin/net7.0-windows/runtimes
+src/bin/net7.0-windows/*.*
