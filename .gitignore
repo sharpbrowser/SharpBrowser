@@ -12,7 +12,6 @@
 bld/
 [Oo]bj/
 [Ll]og/
-src/bin/
 
 # Visual Studio 2015 cache/options directory
 .vs/
@@ -276,4 +275,5 @@ __pycache__/
 *.xsd.cs
 
 # Allow storage directory which has JS scripts
+src/bin/
 !src/bin/net7.0-windows/storage
