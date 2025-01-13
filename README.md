@@ -32,11 +32,12 @@ Ctrl+F		| Open search bar (Enter to find next, Esc to close)
 
 ## System requirements
 
-- You need [VC++ 2019 Runtime](https://aka.ms/vs/17/release/vc_redist.x64.exe) 32-bit and 64-bit versions
+- You need .NET 7.
 
-- You need .NET 6.
+- You need [VC++ 2019 Runtime](https://aka.ms/vs/17/release/vc_redist.x64.exe) (64-bit)
+- You might need [VC++ 2017 Runtime](https://www.microsoft.com/en-in/download/details.aspx?id=48145) (64-bit)
 
-- You need to install the version of VC++ Runtime that CEFSharp needs. Since we are using CefSharp 106, according to [this](https://github.com/cefsharp/CefSharp/#release-branches) we need the above versions
+- You need to install the version of VC++ Runtime that CEFSharp needs. As per our CefSharp version, according to [this](https://github.com/cefsharp/CefSharp/#release-branches), we need the above versions
 
 
 ## Getting started
@@ -54,7 +55,7 @@ Ctrl+F		| Open search bar (Enter to find next, Esc to close)
 
 ## Code
 
-- SharpBrowser uses CefSharp 106 and is built on NET 6
+- SharpBrowser uses CefSharp 131 and is built on NET 7
 - SharpBrowser supports AnyCPU as well as x86/x64 specific builds
 - `MainForm.cs` - main web browser UI and related functionality
 - `Handlers` - various handlers that we have registered with CefSharp that enable deeper integration between us and CefSharp
