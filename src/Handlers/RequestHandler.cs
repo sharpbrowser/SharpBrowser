@@ -177,7 +177,8 @@ namespace SharpBrowser {
 		// Parameters:
 		//   status:
 		//     indicates how the process terminated.
-		public void OnRenderProcessTerminated(IWebBrowser browserControl, IBrowser browser, CefTerminationStatus status) {
+		public void OnRenderProcessTerminated(IWebBrowser chromiumWebBrowser, IBrowser browser, CefTerminationStatus status, int errorCode, string errorMessage) {
+			
 		}
 		//
 		// Summary:
@@ -280,7 +281,6 @@ namespace SharpBrowser {
 
 		}
 
-
-
+		
 	}
 }

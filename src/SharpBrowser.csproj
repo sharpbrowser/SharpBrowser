@@ -1,14 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFramework>net7.0-windows</TargetFramework>
     <OutputType>WinExe</OutputType>
-    <CefSharpAnyCpuSupport>true</CefSharpAnyCpuSupport>
+    <CefSharpAnyCpuSupport>false</CefSharpAnyCpuSupport>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <UseWindowsForms>true</UseWindowsForms>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
     <OutputPath>bin\</OutputPath>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <Platforms>AnyCPU;x64</Platforms>
+    <Platforms>x64</Platforms>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>Resources\sharpbrowser.ico</ApplicationIcon>
@@ -32,9 +32,10 @@
     <EmbeddedResource Include="Resources\sharpbrowser.ico" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="CefSharp.Common" Version="106.0.260" />
-    <PackageReference Include="CefSharp.Common.NETCore" Version="106.0.260" />
-    <PackageReference Include="CefSharp.WinForms.NETCore" Version="106.0.260" />
+    <PackageReference Include="CefSharp.Common" Version="131.3.50" />
+    <PackageReference Include="CefSharp.Common.NETCore" Version="131.3.50" />
+    <PackageReference Include="CefSharp.WinForms.NETCore" Version="131.3.50" />
+    <PackageReference Include="chromiumembeddedframework.runtime.win-x64" Version="131.3.5" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Net" />

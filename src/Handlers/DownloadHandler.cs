@@ -49,7 +49,8 @@ namespace SharpBrowser {
 		//
 		//   callback:
 		//     Callback interface used to asynchronously continue a download.
-		public void OnBeforeDownload(IWebBrowser webBrowser, IBrowser browser, DownloadItem item, IBeforeDownloadCallback callback) {
+
+		public bool OnBeforeDownload(IWebBrowser chromiumWebBrowser, IBrowser browser, DownloadItem item, IBeforeDownloadCallback callback) {
 			if (!callback.IsDisposed) {
 				using (callback) {
 
@@ -63,6 +64,7 @@ namespace SharpBrowser {
 
 						// skip file
 						callback.Continue(path, false);
+						return false;
 
 					}
 					else {
@@ -70,10 +72,12 @@ namespace SharpBrowser {
 						// open the downloads tab
 						myForm.OpenDownloadsTab();
 						callback.Continue(path, true);
+						return true;
 					}
 
 				}
 			}
+			return false;
 		}
 
 		//
@@ -100,5 +104,6 @@ namespace SharpBrowser {
 			}
 			//Console.WriteLine(downloadItem.Url + " %" + downloadItem.PercentComplete + " complete");
 		}
+
 	}
 }
