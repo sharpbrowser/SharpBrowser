@@ -51,6 +51,7 @@
             BtnPrevSearch = new System.Windows.Forms.Button();
             BtnCloseSearch = new System.Windows.Forms.Button();
             TxtSearch = new System.Windows.Forms.TextBox();
+            btn_Menu = new System.Windows.Forms.Button();
             menuStripTab.SuspendLayout();
             PanelToolbar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)TabPages).BeginInit();
@@ -85,10 +86,10 @@
             BtnRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             BtnRefresh.ForeColor = System.Drawing.Color.White;
             BtnRefresh.Image = (System.Drawing.Image)resources.GetObject("BtnRefresh.Image");
-            BtnRefresh.Location = new System.Drawing.Point(107, 12);
+            BtnRefresh.Location = new System.Drawing.Point(133, 11);
             BtnRefresh.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             BtnRefresh.Name = "BtnRefresh";
-            BtnRefresh.Size = new System.Drawing.Size(25, 30);
+            BtnRefresh.Size = new System.Drawing.Size(36, 30);
             BtnRefresh.TabIndex = 3;
             BtnRefresh.UseVisualStyleBackColor = true;
             BtnRefresh.Click += bRefresh_Click;
@@ -98,7 +99,7 @@
             BtnStop.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             BtnStop.ForeColor = System.Drawing.Color.White;
             BtnStop.Image = (System.Drawing.Image)resources.GetObject("BtnStop.Image");
-            BtnStop.Location = new System.Drawing.Point(107, 12);
+            BtnStop.Location = new System.Drawing.Point(133, 11);
             BtnStop.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             BtnStop.Name = "BtnStop";
             BtnStop.Size = new System.Drawing.Size(25, 30);
@@ -111,10 +112,10 @@
             BtnForward.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             BtnForward.ForeColor = System.Drawing.Color.White;
             BtnForward.Image = (System.Drawing.Image)resources.GetObject("BtnForward.Image");
-            BtnForward.Location = new System.Drawing.Point(50, 12);
+            BtnForward.Location = new System.Drawing.Point(65, 11);
             BtnForward.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             BtnForward.Name = "BtnForward";
-            BtnForward.Size = new System.Drawing.Size(25, 30);
+            BtnForward.Size = new System.Drawing.Size(36, 30);
             BtnForward.TabIndex = 1;
             BtnForward.UseVisualStyleBackColor = true;
             BtnForward.Click += bForward_Click;
@@ -124,10 +125,10 @@
             BtnBack.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             BtnBack.ForeColor = System.Drawing.Color.White;
             BtnBack.Image = (System.Drawing.Image)resources.GetObject("BtnBack.Image");
-            BtnBack.Location = new System.Drawing.Point(14, 12);
+            BtnBack.Location = new System.Drawing.Point(14, 11);
             BtnBack.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             BtnBack.Name = "BtnBack";
-            BtnBack.Size = new System.Drawing.Size(25, 30);
+            BtnBack.Size = new System.Drawing.Size(36, 30);
             BtnBack.TabIndex = 0;
             BtnBack.UseVisualStyleBackColor = true;
             BtnBack.Click += bBack_Click;
@@ -143,10 +144,10 @@
             BtnDownloads.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             BtnDownloads.ForeColor = System.Drawing.Color.White;
             BtnDownloads.Image = (System.Drawing.Image)resources.GetObject("BtnDownloads.Image");
-            BtnDownloads.Location = new System.Drawing.Point(806, 12);
+            BtnDownloads.Location = new System.Drawing.Point(746, 11);
             BtnDownloads.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             BtnDownloads.Name = "BtnDownloads";
-            BtnDownloads.Size = new System.Drawing.Size(25, 30);
+            BtnDownloads.Size = new System.Drawing.Size(36, 30);
             BtnDownloads.TabIndex = 4;
             BtnDownloads.Tag = "Downloads";
             BtnDownloads.UseVisualStyleBackColor = true;
@@ -157,10 +158,10 @@
             TxtURL.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             TxtURL.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             TxtURL.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
-            TxtURL.Location = new System.Drawing.Point(142, 10);
+            TxtURL.Location = new System.Drawing.Point(175, 9);
             TxtURL.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             TxtURL.Name = "TxtURL";
-            TxtURL.Size = new System.Drawing.Size(658, 34);
+            TxtURL.Size = new System.Drawing.Size(565, 34);
             TxtURL.TabIndex = 5;
             TxtURL.Click += txtUrl_Click;
             TxtURL.TextChanged += txtUrl_TextChanged;
@@ -169,13 +170,14 @@
             // PanelToolbar
             // 
             PanelToolbar.BackColor = System.Drawing.Color.FromArgb(247, 247, 247);
+            PanelToolbar.Controls.Add(btn_Menu);
             PanelToolbar.Controls.Add(BtnHome);
-            PanelToolbar.Controls.Add(TxtURL);
             PanelToolbar.Controls.Add(BtnDownloads);
             PanelToolbar.Controls.Add(BtnForward);
             PanelToolbar.Controls.Add(BtnBack);
             PanelToolbar.Controls.Add(BtnRefresh);
             PanelToolbar.Controls.Add(BtnStop);
+            PanelToolbar.Controls.Add(TxtURL);
             PanelToolbar.Dock = System.Windows.Forms.DockStyle.Top;
             PanelToolbar.Location = new System.Drawing.Point(0, 0);
             PanelToolbar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -189,10 +191,10 @@
             BtnHome.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             BtnHome.ForeColor = System.Drawing.Color.White;
             BtnHome.Image = (System.Drawing.Image)resources.GetObject("BtnHome.Image");
-            BtnHome.Location = new System.Drawing.Point(897, 12);
+            BtnHome.Location = new System.Drawing.Point(816, 11);
             BtnHome.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             BtnHome.Name = "BtnHome";
-            BtnHome.Size = new System.Drawing.Size(25, 30);
+            BtnHome.Size = new System.Drawing.Size(36, 30);
             BtnHome.TabIndex = 6;
             BtnHome.Tag = "Home";
             BtnHome.UseVisualStyleBackColor = true;
@@ -318,6 +320,23 @@
             TxtSearch.TextChanged += TxtSearch_TextChanged;
             TxtSearch.KeyDown += TxtSearch_KeyDown;
             // 
+            // btn_Menu
+            // 
+            btn_Menu.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            btn_Menu.FlatAppearance.BorderSize = 0;
+            btn_Menu.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Silver;
+            btn_Menu.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(224, 224, 224);
+            btn_Menu.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            btn_Menu.ForeColor = System.Drawing.Color.Black;
+            btn_Menu.Location = new System.Drawing.Point(885, 11);
+            btn_Menu.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            btn_Menu.Name = "btn_Menu";
+            btn_Menu.Size = new System.Drawing.Size(36, 30);
+            btn_Menu.TabIndex = 7;
+            btn_Menu.Tag = "Home";
+            btn_Menu.Text = "...";
+            btn_Menu.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -367,6 +386,7 @@
 		private System.Windows.Forms.Button BtnPrevSearch;
 		private System.Windows.Forms.Button BtnNextSearch;
         private System.Windows.Forms.Button BtnHome;
+        private System.Windows.Forms.Button btn_Menu;
     }
 }
 
