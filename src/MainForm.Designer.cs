@@ -168,7 +168,7 @@
             // 
             // PanelToolbar
             // 
-            PanelToolbar.BackColor = System.Drawing.Color.White;
+            PanelToolbar.BackColor = System.Drawing.Color.FromArgb(247, 247, 247);
             PanelToolbar.Controls.Add(BtnHome);
             PanelToolbar.Controls.Add(TxtURL);
             PanelToolbar.Controls.Add(BtnDownloads);
