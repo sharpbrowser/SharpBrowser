@@ -263,6 +263,9 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 			Invalidate();
 		}
 
+		//Brush brush_TabBackColor = SystemBrushes.GradientInactiveCaption;
+		//Color color_TabBackColor = Color.FromArgb(232, 232, 232);
+		SolidBrush brush_TabBackColor = new SolidBrush(Color.FromArgb(232, 232, 232));
 		protected override void OnPaint(PaintEventArgs e) {
 			SetDefaultSelected();
 			Rectangle clientRectangle = base.ClientRectangle;
@@ -271,7 +274,7 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 			DEF_START_POS = 10;
 			e.Graphics.DrawRectangle(SystemPens.ControlDark, clientRectangle);
 			e.Graphics.FillRectangle(Brushes.White, clientRectangle);
-			e.Graphics.FillRectangle(SystemBrushes.GradientInactiveCaption, new Rectangle(clientRectangle.X, clientRectangle.Y, clientRectangle.Width, 28));
+			e.Graphics.FillRectangle(brush_TabBackColor, new Rectangle(clientRectangle.X, clientRectangle.Y, clientRectangle.Width, 28));
 			e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
 			for (int i = 0; i < Items.Count; i++) {
 				BrowserTabStripItem fATabStripItem = Items[i];
