@@ -277,3 +277,5 @@ __pycache__/
 # Exclude build but include storage dir
 src/bin/net7.0-windows/runtimes
 src/bin/net7.0-windows/*.*
+/src/bin/net8.0-windows
+/setup
