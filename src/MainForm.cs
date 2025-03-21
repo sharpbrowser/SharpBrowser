@@ -44,13 +44,30 @@ namespace SharpBrowser {
 
 		}
 
-		private void MainForm_Load(object sender, EventArgs e) {
+
+		Panel pnlToolbarOverlay;
+        private void MainForm_Load(object sender, EventArgs e) {
 
 			InitAppIcon();
 			InitTooltips(this.Controls);
 			InitHotkeys();
 
-		}
+
+            //cant  do this on gui. paneltoolbar gets deleted. buggy designer 
+            //PanelToolbar location Fix -2025
+            PanelToolbar.Dock = DockStyle.None;
+			PanelToolbar.BringToFront();
+			PanelToolbar.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+			PanelToolbar.Location = new Point(0,29); //for different dpi, need stable way to get it.				 
+			PanelToolbar.Width = this.Width;
+			PanelToolbar.Width = pnlToolbarOverlay.Width;
+            
+
+            if (Debugger.IsAttached)
+                pnlToolbarOverlay.BackColor = Color.Cyan;
+
+
+        }
 
 		#region App Icon
 
@@ -362,7 +379,7 @@ namespace SharpBrowser {
 			// set layout
 			browser.Dock = DockStyle.Fill;
 			tabStrip.Controls.Add(browser);
-			var pnlToolbarOverlay = new Panel()
+			pnlToolbarOverlay = new Panel()
 			{
 				Width = PanelToolbar.Width,
 				Height= PanelToolbar.Height,
