@@ -362,6 +362,13 @@ namespace SharpBrowser {
 			// set layout
 			browser.Dock = DockStyle.Fill;
 			tabStrip.Controls.Add(browser);
+			var pnlToolbarOverlay = new Panel()
+			{
+				Width = PanelToolbar.Width,
+				Height= PanelToolbar.Height,
+				Dock = DockStyle.Top,
+			};
+            tabStrip.Controls.Add(pnlToolbarOverlay);
 			browser.BringToFront();
 
 			// add events
