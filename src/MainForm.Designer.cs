@@ -41,6 +41,7 @@
             BtnDownloads = new System.Windows.Forms.Button();
             TxtURL = new System.Windows.Forms.TextBox();
             PanelToolbar = new System.Windows.Forms.Panel();
+            btn_Menu = new System.Windows.Forms.Button();
             BtnHome = new System.Windows.Forms.Button();
             TabPages = new Controls.BrowserTabStrip.BrowserTabStrip();
             tabStrip1 = new Controls.BrowserTabStrip.BrowserTabStripItem();
@@ -51,7 +52,6 @@
             BtnPrevSearch = new System.Windows.Forms.Button();
             BtnCloseSearch = new System.Windows.Forms.Button();
             TxtSearch = new System.Windows.Forms.TextBox();
-            btn_Menu = new System.Windows.Forms.Button();
             menuStripTab.SuspendLayout();
             PanelToolbar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)TabPages).BeginInit();
@@ -184,6 +184,23 @@
             PanelToolbar.Name = "PanelToolbar";
             PanelToolbar.Size = new System.Drawing.Size(934, 52);
             PanelToolbar.TabIndex = 6;
+            // 
+            // btn_Menu
+            // 
+            btn_Menu.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+            btn_Menu.FlatAppearance.BorderSize = 0;
+            btn_Menu.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Silver;
+            btn_Menu.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(224, 224, 224);
+            btn_Menu.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            btn_Menu.ForeColor = System.Drawing.Color.Black;
+            btn_Menu.Location = new System.Drawing.Point(885, 11);
+            btn_Menu.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            btn_Menu.Name = "btn_Menu";
+            btn_Menu.Size = new System.Drawing.Size(36, 30);
+            btn_Menu.TabIndex = 7;
+            btn_Menu.Tag = "Menu3dot";
+            btn_Menu.Text = "...";
+            btn_Menu.UseVisualStyleBackColor = true;
             // 
             // BtnHome
             // 
@@ -320,23 +337,6 @@
             TxtSearch.TextChanged += TxtSearch_TextChanged;
             TxtSearch.KeyDown += TxtSearch_KeyDown;
             // 
-            // btn_Menu
-            // 
-            btn_Menu.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
-            btn_Menu.FlatAppearance.BorderSize = 0;
-            btn_Menu.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Silver;
-            btn_Menu.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(224, 224, 224);
-            btn_Menu.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            btn_Menu.ForeColor = System.Drawing.Color.Black;
-            btn_Menu.Location = new System.Drawing.Point(885, 11);
-            btn_Menu.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            btn_Menu.Name = "btn_Menu";
-            btn_Menu.Size = new System.Drawing.Size(36, 30);
-            btn_Menu.TabIndex = 7;
-            btn_Menu.Tag = "Home";
-            btn_Menu.Text = "...";
-            btn_Menu.UseVisualStyleBackColor = true;
-            // 
             // MainForm
             // 
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -362,6 +362,7 @@
             PanelSearch.PerformLayout();
             ResumeLayout(false);
         }
+
 
         #endregion
 
