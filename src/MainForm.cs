@@ -430,11 +430,9 @@ namespace SharpBrowser {
 			return null;
 		}
 
-		public void RefreshActiveTab() {
-			CurBrowser.Load(CurBrowser.Address);
-		}
+        public void RefreshActiveTab() => CurBrowser.Load(CurBrowser.Address);
 
-		public void CloseActiveTab() {
+        public void CloseActiveTab() {
 			if (CurTab != null/* && TabPages.Items.Count > 2*/) {
 
 				// remove tab and save its index
@@ -470,9 +468,7 @@ namespace SharpBrowser {
 			}
 		}
 
-		private void OnTabClosed(object sender, EventArgs e) {
-			
-		}
+		private void OnTabClosed(object sender, EventArgs e) { }
 
 		private void OnTabClosing(SharpBrowser.Controls.BrowserTabStrip.TabStripItemClosingEventArgs e) {
 
@@ -490,11 +486,9 @@ namespace SharpBrowser {
 
 		}
 
-		private void StopActiveTab() {
-			CurBrowser.Stop();
-		}
+        private void StopActiveTab() => CurBrowser.Stop();
 
-		private bool IsOnFirstTab() {
+        private bool IsOnFirstTab() {
 			return TabPages.SelectedItem == TabPages.Items[0];
 		}
 		private bool IsOnLastTab() {
@@ -671,14 +665,10 @@ namespace SharpBrowser {
 			}
 		}
 
-		private void EnableBackButton(bool canGoBack) {
-			InvokeIfNeeded(() => BtnBack.Enabled = canGoBack);
-		}
-		private void EnableForwardButton(bool canGoForward) {
-			InvokeIfNeeded(() => BtnForward.Enabled = canGoForward);
-		}
+        private void EnableBackButton(bool canGoBack) => InvokeIfNeeded(() => BtnBack.Enabled = canGoBack);
+        private void EnableForwardButton(bool canGoForward) => InvokeIfNeeded(() => BtnForward.Enabled = canGoForward);
 
-		private void OnTabsChanged(TabStripItemChangedEventArgs e) {
+        private void OnTabsChanged(TabStripItemChangedEventArgs e) {
 
 
 			ChromiumWebBrowser browser = null;
@@ -726,11 +716,9 @@ namespace SharpBrowser {
 			timer1.Enabled = false;
 		}
 
-		private void menuCloseTab_Click(object sender, EventArgs e) {
-			CloseActiveTab();
-		}
+        private void menuCloseTab_Click(object sender, EventArgs e) => CloseActiveTab();
 
-		private void menuCloseOtherTabs_Click(object sender, EventArgs e) {
+        private void menuCloseOtherTabs_Click(object sender, EventArgs e) {
 			List<BrowserTabStripItem> listToClose = new List<BrowserTabStripItem>();
 			foreach (BrowserTabStripItem tab in TabPages.Items) {
 				if (tab != tabStripAdd && tab != TabPages.SelectedItem) listToClose.Add(tab);
@@ -741,36 +729,21 @@ namespace SharpBrowser {
 
 		}
 
-		public List<int> CancelRequests {
-			get {
-				return downloadCancelRequests;
-			}
-		}
+        public List<int> CancelRequests => downloadCancelRequests;
 
-		private void bBack_Click(object sender, EventArgs e) {
-			CurBrowser.Back();
-		}
+        private void bBack_Click(object sender, EventArgs e) => CurBrowser.Back();
 
-		private void bForward_Click(object sender, EventArgs e) {
-			CurBrowser.Forward();
-		}
+        private void bForward_Click(object sender, EventArgs e) => CurBrowser.Forward();
 
-		private void txtUrl_TextChanged(object sender, EventArgs e) {
 
-		}
 
-		private void bDownloads_Click(object sender, EventArgs e) {
-			AddNewBrowserTab(BrowserConfig.DownloadsURL);
-		}
+        private void bDownloads_Click(object sender, EventArgs e) => AddNewBrowserTab(BrowserConfig.DownloadsURL);
 
-		private void bRefresh_Click(object sender, EventArgs e) {
-			RefreshActiveTab();
-		}
+        private void bRefresh_Click(object sender, EventArgs e) => RefreshActiveTab();
 
-		private void bStop_Click(object sender, EventArgs e) {
-			StopActiveTab();
-		}
-		private void TxtURL_KeyDown(object sender, KeyEventArgs e) {
+        private void bStop_Click(object sender, EventArgs e) => StopActiveTab();
+
+        private void TxtURL_KeyDown(object sender, KeyEventArgs e) {
 
 			// if ENTER or CTRL+ENTER pressed
 			if (e.IsHotkey(Keys.Enter) || e.IsHotkey(Keys.Enter, true)) {
@@ -802,11 +775,9 @@ namespace SharpBrowser {
 			}
 		}
 
-		private void OpenDeveloperTools() {
-			CurBrowser.ShowDevTools();
-		}
+        private void OpenDeveloperTools() => CurBrowser.ShowDevTools();
 
-		private void tabPages_MouseClick(object sender, MouseEventArgs e) {
+        private void tabPages_MouseClick(object sender, MouseEventArgs e) {
 			/*if (e.Button == System.Windows.Forms.MouseButtons.Right) {
 				tabPages.GetTabItemByPoint(this.mouse
 			}*/
@@ -851,13 +822,9 @@ namespace SharpBrowser {
 
 		}
 
-		public Dictionary<int, DownloadItem> Downloads {
-			get {
-				return downloads;
-			}
-		}
+        public Dictionary<int, DownloadItem> Downloads => downloads;
 
-		public void UpdateDownloadItem(DownloadItem item) {
+        public void UpdateDownloadItem(DownloadItem item) {
 			lock (downloads) {
 
 				// SuggestedFileName comes full only in the first attempt so keep it somewhere
@@ -876,11 +843,9 @@ namespace SharpBrowser {
 			}
 		}
 
-		public string CalcDownloadPath(DownloadItem item) {
-			return item.SuggestedFileName;
-		}
+        public string CalcDownloadPath(DownloadItem item) => item.SuggestedFileName;
 
-		public bool DownloadsInProgress() {
+        public bool DownloadsInProgress() {
 			foreach (DownloadItem item in downloads.Values) {
 				if (item.IsInProgress) {
 					return true;
@@ -889,14 +854,12 @@ namespace SharpBrowser {
 			return false;
 		}
 
-		/// <summary>
-		/// open a new tab with the downloads URL
-		/// </summary>
-		private void btnDownloads_Click(object sender, EventArgs e) {
-			OpenDownloadsTab();
-		}
+        /// <summary>
+        /// open a new tab with the downloads URL
+        /// </summary>
+        private void btnDownloads_Click(object sender, EventArgs e) => OpenDownloadsTab();
 
-		public void OpenDownloadsTab() {
+        public void OpenDownloadsTab() {
 			if (downloadsStrip != null && ((ChromiumWebBrowser)downloadsStrip.Controls[0]).Address == BrowserConfig.DownloadsURL) {
 				TabPages.SelectedItem = downloadsStrip;
 			} else {
@@ -938,18 +901,12 @@ namespace SharpBrowser {
 			}
 		}
 
-		private void BtnClearSearch_Click(object sender, EventArgs e) {
-			CloseSearch();
-		}
+        private void BtnClearSearch_Click(object sender, EventArgs e) => CloseSearch();
 
-		private void BtnPrevSearch_Click(object sender, EventArgs e) {
-			FindTextOnPage(false);
-		}
-		private void BtnNextSearch_Click(object sender, EventArgs e) {
-			FindTextOnPage(true);
-		}
+        private void BtnPrevSearch_Click(object sender, EventArgs e) => FindTextOnPage(false);
+        private void BtnNextSearch_Click(object sender, EventArgs e) => FindTextOnPage(true);
 
-		private void FindTextOnPage(bool next = true) {
+        private void FindTextOnPage(bool next = true) {
 			bool first = lastSearch != TxtSearch.Text;
 			lastSearch = TxtSearch.Text;
 			if (lastSearch.CheckIfValid()) {
@@ -960,11 +917,9 @@ namespace SharpBrowser {
 			TxtSearch.Focus();
 		}
 
-		private void TxtSearch_TextChanged(object sender, EventArgs e) {
-			FindTextOnPage(true);
-		}
+        private void TxtSearch_TextChanged(object sender, EventArgs e) => FindTextOnPage(true);
 
-		private void TxtSearch_KeyDown(object sender, KeyEventArgs e) {
+        private void TxtSearch_KeyDown(object sender, KeyEventArgs e) {
 			if (e.IsHotkey(Keys.Enter)) {
 				FindTextOnPage(true);
 			}
@@ -978,10 +933,7 @@ namespace SharpBrowser {
         #endregion
 
         #region Home Button
-        private void BtnHome_Click(object sender, EventArgs e)
-        {
-			CurBrowser.Load(BrowserConfig.HomepageURL);
-        }
+        private void BtnHome_Click(object sender, EventArgs e) => CurBrowser.Load(BrowserConfig.HomepageURL);
         #endregion
     }
 }
