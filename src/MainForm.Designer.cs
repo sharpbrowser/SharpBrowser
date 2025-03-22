@@ -163,8 +163,8 @@
             TxtURL.Name = "TxtURL";
             TxtURL.Size = new System.Drawing.Size(565, 34);
             TxtURL.TabIndex = 5;
-            TxtURL.Click += txtUrl_Click;
-            TxtURL.TextChanged += txtUrl_TextChanged;
+            TxtURL.Click += TxtURL_Click;
+            TxtURL.Enter += TxtURL_Enter;
             TxtURL.KeyDown += TxtURL_KeyDown;
             // 
             // PanelToolbar

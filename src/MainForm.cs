@@ -15,7 +15,6 @@ using System.Drawing;
 using System.Reflection;
 using SharpBrowser.Browser;
 using SharpBrowser.Browser.Model;
-using System.Windows.Forms.VisualStyles;
 
 namespace SharpBrowser {
 
@@ -769,13 +768,24 @@ namespace SharpBrowser {
 			}
 		}
 
-		private void txtUrl_Click(object sender, EventArgs e) {
-			if (!Utils.HasSelection(TxtURL)) {
+		//-----urlbar selection behavior---
+		private bool TxtURL_JustEntered = false;
+		private void TxtURL_Enter(object sender, EventArgs e)
+		{
+			TxtURL.SelectAll();
+			TxtURL_JustEntered = true;
+		}
+		private void TxtURL_Click(object sender, EventArgs e)
+		{
+			if (TxtURL_JustEntered)
+			{
 				TxtURL.SelectAll();
 			}
+			TxtURL_JustEntered = false;
 		}
 
-        private void OpenDeveloperTools() => CurBrowser.ShowDevTools();
+
+		private void OpenDeveloperTools() => CurBrowser.ShowDevTools();
 
         private void tabPages_MouseClick(object sender, MouseEventArgs e) {
 			/*if (e.Button == System.Windows.Forms.MouseButtons.Right) {
