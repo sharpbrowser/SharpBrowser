@@ -57,7 +57,7 @@ namespace SharpBrowser {
             PanelToolbar.Dock = DockStyle.None;
 			PanelToolbar.BringToFront();
 			PanelToolbar.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-			PanelToolbar.Location = new Point(0,29); //for different dpi, need stable way to get it.				 
+			PanelToolbar.Location = new Point(0,TabPages.TabButton_Height+1); //for different dpi, need stable way to get it.				 
 			PanelToolbar.Width = this.Width;
 			PanelToolbar.Width = pnlToolbarOverlay.Width;
             
