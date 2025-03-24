@@ -151,11 +151,9 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 			return HitTestResult.None;
 		}
 
-		public void AddTab(BrowserTabStripItem tabItem) {
-			AddTab(tabItem, autoSelect: false);
-		}
+        public void AddTab(BrowserTabStripItem tabItem) => AddTab(tabItem, autoSelect: false);
 
-		public void AddTab(BrowserTabStripItem tabItem, bool autoSelect) {
+        public void AddTab(BrowserTabStripItem tabItem, bool autoSelect) {
 			tabItem.Dock = DockStyle.Fill;
 			Items.Add(tabItem);
 			if ((autoSelect && tabItem.Visible) || (tabItem.Visible && Items.DrawnCount < 1)) {
@@ -196,8 +194,7 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 			return result;
 		}
 
-		public virtual void ShowMenu() {
-		}
+		public virtual void ShowMenu() { }
 
 		internal void UnDrawAll() {
 			for (int i = 0; i < Items.Count; i++) {
@@ -211,30 +208,18 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 			tabItem.Selected = true;
 		}
 
-		internal void UnSelectItem(BrowserTabStripItem tabItem) {
-			tabItem.Selected = false;
-		}
+        internal void UnSelectItem(BrowserTabStripItem tabItem) => tabItem.Selected = false;
 
-		protected internal virtual void OnTabStripItemClosing(TabStripItemClosingEventArgs e) {
-			if (this.TabStripItemClosing != null) {
-				this.TabStripItemClosing(e);
-			}
-		}
+        protected internal virtual void OnTabStripItemClosing(TabStripItemClosingEventArgs e) => this.TabStripItemClosing?.Invoke(e);
 
-		protected internal virtual void OnTabStripItemClosed(EventArgs e) {
+        protected internal virtual void OnTabStripItemClosed(EventArgs e) {
 			selectedItem = null;
-			if (this.TabStripItemClosed != null) {
-				this.TabStripItemClosed(this, e);
-			}
-		}
+            this.TabStripItemClosed?.Invoke(this, e);
+        }
 
-		protected virtual void OnMenuItemsLoading(HandledEventArgs e) {
-			if (this.MenuItemsLoading != null) {
-				this.MenuItemsLoading(this, e);
-			}
-		}
+        protected virtual void OnMenuItemsLoading(HandledEventArgs e) => this.MenuItemsLoading?.Invoke(this, e);
 
-		protected virtual void OnMenuItemsLoaded(EventArgs e) {
+        protected virtual void OnMenuItemsLoaded(EventArgs e) {
 			if (this.MenuItemsLoaded != null) {
 				this.MenuItemsLoaded(this, e);
 			}
@@ -563,34 +548,14 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 			Invalidate();
 		}
 
-		public bool ShouldSerializeFont() {
-			if (Font != null) {
-				return !Font.Equals(defaultFont);
-			}
-			return false;
-		}
+        public bool ShouldSerializeFont() => !Font?.Equals(defaultFont) ?? false;
+        public bool ShouldSerializeSelectedItem() => true;
+        public bool ShouldSerializeItems() => items.Count > 0;
+        public new void ResetFont() => Font = defaultFont;
+        public void BeginInit() => isIniting = true;
+        public void EndInit() => isIniting = false;
 
-		public bool ShouldSerializeSelectedItem() {
-			return true;
-		}
-
-		public bool ShouldSerializeItems() {
-			return items.Count > 0;
-		}
-
-		public new void ResetFont() {
-			Font = defaultFont;
-		}
-
-		public void BeginInit() {
-			isIniting = true;
-		}
-
-		public void EndInit() {
-			isIniting = false;
-		}
-
-		protected override void Dispose(bool disposing) {
+        protected override void Dispose(bool disposing) {
 			if (disposing) {
 				items.CollectionChanged -= OnCollectionChanged;
 				menu.ItemClicked -= OnMenuItemClicked;
