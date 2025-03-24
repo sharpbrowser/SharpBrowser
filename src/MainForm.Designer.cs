@@ -46,12 +46,12 @@
             TabPages = new Controls.BrowserTabStrip.BrowserTabStrip();
             tabStrip1 = new Controls.BrowserTabStrip.BrowserTabStripItem();
             tabStripAdd = new Controls.BrowserTabStrip.BrowserTabStripItem();
-            PanelStatus = new System.Windows.Forms.Panel();
             PanelSearch = new System.Windows.Forms.Panel();
             BtnNextSearch = new System.Windows.Forms.Button();
             BtnPrevSearch = new System.Windows.Forms.Button();
             BtnCloseSearch = new System.Windows.Forms.Button();
             TxtSearch = new System.Windows.Forms.TextBox();
+            PanelStatus = new System.Windows.Forms.Panel();
             menuStripTab.SuspendLayout();
             PanelToolbar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)TabPages).BeginInit();
@@ -64,20 +64,20 @@
             menuStripTab.ImageScalingSize = new System.Drawing.Size(20, 20);
             menuStripTab.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { menuCloseTab, menuCloseOtherTabs });
             menuStripTab.Name = "menuStripTab";
-            menuStripTab.Size = new System.Drawing.Size(198, 52);
+            menuStripTab.Size = new System.Drawing.Size(170, 48);
             // 
             // menuCloseTab
             // 
             menuCloseTab.Name = "menuCloseTab";
             menuCloseTab.ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F4;
-            menuCloseTab.Size = new System.Drawing.Size(197, 24);
+            menuCloseTab.Size = new System.Drawing.Size(169, 22);
             menuCloseTab.Text = "Close tab";
             menuCloseTab.Click += menuCloseTab_Click;
             // 
             // menuCloseOtherTabs
             // 
             menuCloseOtherTabs.Name = "menuCloseOtherTabs";
-            menuCloseOtherTabs.Size = new System.Drawing.Size(197, 24);
+            menuCloseOtherTabs.Size = new System.Drawing.Size(169, 22);
             menuCloseOtherTabs.Text = "Close other tabs";
             menuCloseOtherTabs.Click += menuCloseOtherTabs_Click;
             // 
@@ -144,7 +144,7 @@
             BtnDownloads.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             BtnDownloads.ForeColor = System.Drawing.Color.White;
             BtnDownloads.Image = (System.Drawing.Image)resources.GetObject("BtnDownloads.Image");
-            BtnDownloads.Location = new System.Drawing.Point(746, 11);
+            BtnDownloads.Location = new System.Drawing.Point(708, 11);
             BtnDownloads.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             BtnDownloads.Name = "BtnDownloads";
             BtnDownloads.Size = new System.Drawing.Size(36, 30);
@@ -161,7 +161,7 @@
             TxtURL.Location = new System.Drawing.Point(175, 9);
             TxtURL.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             TxtURL.Name = "TxtURL";
-            TxtURL.Size = new System.Drawing.Size(565, 34);
+            TxtURL.Size = new System.Drawing.Size(527, 29);
             TxtURL.TabIndex = 5;
             TxtURL.Click += TxtURL_Click;
             TxtURL.Enter += TxtURL_Enter;
@@ -182,7 +182,7 @@
             PanelToolbar.Location = new System.Drawing.Point(0, 0);
             PanelToolbar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             PanelToolbar.Name = "PanelToolbar";
-            PanelToolbar.Size = new System.Drawing.Size(934, 52);
+            PanelToolbar.Size = new System.Drawing.Size(896, 52);
             PanelToolbar.TabIndex = 6;
             // 
             // btn_Menu
@@ -193,7 +193,7 @@
             btn_Menu.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(224, 224, 224);
             btn_Menu.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             btn_Menu.ForeColor = System.Drawing.Color.Black;
-            btn_Menu.Location = new System.Drawing.Point(885, 11);
+            btn_Menu.Location = new System.Drawing.Point(847, 11);
             btn_Menu.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             btn_Menu.Name = "btn_Menu";
             btn_Menu.Size = new System.Drawing.Size(36, 30);
@@ -208,7 +208,7 @@
             BtnHome.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             BtnHome.ForeColor = System.Drawing.Color.White;
             BtnHome.Image = (System.Drawing.Image)resources.GetObject("BtnHome.Image");
-            BtnHome.Location = new System.Drawing.Point(816, 11);
+            BtnHome.Location = new System.Drawing.Point(778, 11);
             BtnHome.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             BtnHome.Name = "BtnHome";
             BtnHome.Size = new System.Drawing.Size(36, 30);
@@ -225,9 +225,9 @@
             TabPages.Items.AddRange(new Controls.BrowserTabStrip.BrowserTabStripItem[] { tabStrip1, tabStripAdd });
             TabPages.Location = new System.Drawing.Point(0, 52);
             TabPages.Name = "TabPages";
-            TabPages.Padding = new System.Windows.Forms.Padding(1, 29, 1, 1);
+            TabPages.Padding = new System.Windows.Forms.Padding(1, 49, 1, 1);
             TabPages.SelectedItem = tabStrip1;
-            TabPages.Size = new System.Drawing.Size(934, 573);
+            TabPages.Size = new System.Drawing.Size(896, 400);
             TabPages.TabIndex = 4;
             TabPages.Text = "faTabStrip1";
             TabPages.TabStripItemSelectionChanged += OnTabsChanged;
@@ -238,10 +238,10 @@
             // 
             tabStrip1.Dock = System.Windows.Forms.DockStyle.Fill;
             tabStrip1.IsDrawn = true;
-            tabStrip1.Location = new System.Drawing.Point(1, 29);
+            tabStrip1.Location = new System.Drawing.Point(1, 49);
             tabStrip1.Name = "tabStrip1";
             tabStrip1.Selected = true;
-            tabStrip1.Size = new System.Drawing.Size(932, 543);
+            tabStrip1.Size = new System.Drawing.Size(894, 350);
             tabStrip1.TabIndex = 0;
             tabStrip1.Title = "Loading...";
             // 
@@ -256,14 +256,6 @@
             tabStripAdd.TabIndex = 1;
             tabStripAdd.Title = "+";
             // 
-            // PanelStatus
-            // 
-            PanelStatus.Dock = System.Windows.Forms.DockStyle.Bottom;
-            PanelStatus.Location = new System.Drawing.Point(0, 625);
-            PanelStatus.Name = "PanelStatus";
-            PanelStatus.Size = new System.Drawing.Size(934, 20);
-            PanelStatus.TabIndex = 8;
-            // 
             // PanelSearch
             // 
             PanelSearch.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
@@ -273,7 +265,7 @@
             PanelSearch.Controls.Add(BtnPrevSearch);
             PanelSearch.Controls.Add(BtnCloseSearch);
             PanelSearch.Controls.Add(TxtSearch);
-            PanelSearch.Location = new System.Drawing.Point(622, 85);
+            PanelSearch.Location = new System.Drawing.Point(572, 115);
             PanelSearch.Name = "PanelSearch";
             PanelSearch.Size = new System.Drawing.Size(307, 49);
             PanelSearch.TabIndex = 9;
@@ -329,18 +321,26 @@
             TxtSearch.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
             TxtSearch.BorderStyle = System.Windows.Forms.BorderStyle.None;
             TxtSearch.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
-            TxtSearch.Location = new System.Drawing.Point(10, 8);
+            TxtSearch.Location = new System.Drawing.Point(9, 8);
             TxtSearch.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             TxtSearch.Name = "TxtSearch";
-            TxtSearch.Size = new System.Drawing.Size(181, 31);
+            TxtSearch.Size = new System.Drawing.Size(181, 25);
             TxtSearch.TabIndex = 6;
             TxtSearch.TextChanged += TxtSearch_TextChanged;
             TxtSearch.KeyDown += TxtSearch_KeyDown;
             // 
+            // PanelStatus
+            // 
+            PanelStatus.Dock = System.Windows.Forms.DockStyle.Bottom;
+            PanelStatus.Location = new System.Drawing.Point(0, 452);
+            PanelStatus.Name = "PanelStatus";
+            PanelStatus.Size = new System.Drawing.Size(896, 20);
+            PanelStatus.TabIndex = 8;
+            // 
             // MainForm
             // 
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            ClientSize = new System.Drawing.Size(934, 645);
+            ClientSize = new System.Drawing.Size(896, 472);
             Controls.Add(PanelSearch);
             Controls.Add(TabPages);
             Controls.Add(PanelToolbar);
