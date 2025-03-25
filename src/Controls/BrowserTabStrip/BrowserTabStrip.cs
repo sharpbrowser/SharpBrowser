@@ -252,55 +252,7 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 			Invalidate();
 		}
 
-		//Brush brush_TabBackColor = SystemBrushes.GradientInactiveCaption;
-		//Color color_TabBackColor = Color.FromArgb(232, 232, 232);
-		SolidBrush brush_TabBackColor = new SolidBrush(Color.FromArgb(232, 232, 232));
-		protected override void OnPaint(PaintEventArgs e) {
-			SetDefaultSelected();
-			Rectangle clientRectangle = base.ClientRectangle;
-			clientRectangle.Width--;
-			clientRectangle.Height--;
-			DEF_START_POS_forOnPaint = DEF_START_POS;
-			e.Graphics.DrawRectangle(SystemPens.ControlDark, clientRectangle);
-			e.Graphics.FillRectangle(Brushes.White, clientRectangle);
-			e.Graphics.FillRectangle(brush_TabBackColor,new Rectangle(clientRectangle.X, clientRectangle.Y, clientRectangle.Width, DEF_BUTTON_HEIGHT));
-			//int radius = 5;
-			//e.Graphics.DrawRoundRectangle(SystemPens.ControlDark, clientRectangle, radius);
-			//e.Graphics.FillRoundRectangle(Brushes.White, clientRectangle, radius);
-			//e.Graphics.FillRoundRectangle(brush_TabBackColor,new Rectangle(clientRectangle.X, clientRectangle.Y, clientRectangle.Width, DEF_BUTTON_HEIGHT),radius);
-			e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-			for (int i = 0; i < Items.Count; i++) {
-				BrowserTabStripItem fATabStripItem = Items[i];
-				if (fATabStripItem.Visible || base.DesignMode) {
-					OnCalcTabPage(e.Graphics, fATabStripItem);
-					fATabStripItem.IsDrawn = false;
-					OnDrawTabButton(e.Graphics, fATabStripItem);
-				}
-			}
-			if (selectedItem != null) {
-				OnDrawTabButton(e.Graphics, selectedItem,true);
-			}
-			if (Items.DrawnCount == 0 || Items.VisibleCount == 0) {
-				//e.Graphics.DrawLine(SystemPens.ControlDark, new Point(0, 28), new Point(base.ClientRectangle.Width, 28));
-				e.Graphics.DrawLine(Pens.Red, new Point(0, DEF_BUTTON_HEIGHT), new Point(base.ClientRectangle.Width, DEF_BUTTON_HEIGHT));
-			}
-			else if (SelectedItem != null && SelectedItem.IsDrawn) {
-				int num = (int)(SelectedItem.StripRect.Height / 4f);
-				Point point = new Point((int)SelectedItem.StripRect.Left - num, DEF_BUTTON_HEIGHT);
-				e.Graphics.DrawLine(SystemPens.ControlDark, new Point(0, DEF_BUTTON_HEIGHT), point);
-				point.X += (int)SelectedItem.StripRect.Width
-					+ num * 2;
-				e.Graphics.DrawLine(SystemPens.ControlDark, point, new Point(base.ClientRectangle.Width, DEF_BUTTON_HEIGHT));
-			}
-			if (SelectedItem != null && SelectedItem.CanClose) {
-				closeButton.IsVisible = true;
-				closeButton.CalcBounds(selectedItem);
-				closeButton.Draw(e.Graphics);
-			}
-			else {
-				closeButton.IsVisible = false;
-			}
-		}
+	
 
 		protected override void OnMouseDown(MouseEventArgs e) {
 			base.OnMouseDown(e);
@@ -377,7 +329,65 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 			}
 		}
 
-		int atright_reservedwidth = 200;
+        //Brush brush_TabBackColor = SystemBrushes.GradientInactiveCaption;
+        //Color color_TabBackColor = Color.FromArgb(232, 232, 232);
+        SolidBrush brush_TabBackColor = new SolidBrush(Color.FromArgb(232, 232, 232));
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            SetDefaultSelected();
+            Rectangle clientRectangle = base.ClientRectangle;
+            clientRectangle.Width--;
+            clientRectangle.Height--;
+            DEF_START_POS_forOnPaint = DEF_START_POS;
+            e.Graphics.DrawRectangle(SystemPens.ControlDark, clientRectangle);
+            e.Graphics.FillRectangle(Brushes.White, clientRectangle);
+            e.Graphics.FillRectangle(brush_TabBackColor, new Rectangle(clientRectangle.X, clientRectangle.Y, clientRectangle.Width, DEF_BUTTON_HEIGHT));
+            //int radius = 5;
+            //e.Graphics.DrawRoundRectangle(SystemPens.ControlDark, clientRectangle, radius);
+            //e.Graphics.FillRoundRectangle(Brushes.White, clientRectangle, radius);
+            //e.Graphics.FillRoundRectangle(brush_TabBackColor,new Rectangle(clientRectangle.X, clientRectangle.Y, clientRectangle.Width, DEF_BUTTON_HEIGHT),radius);
+            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            for (int i = 0; i < Items.Count; i++)
+            {
+                BrowserTabStripItem fATabStripItem = Items[i];
+                if (fATabStripItem.Visible || base.DesignMode)
+                {
+                    OnCalcTabPage(e.Graphics, fATabStripItem);
+                    fATabStripItem.IsDrawn = false;
+                    OnDrawTabButton(e.Graphics, fATabStripItem);
+                }
+            }
+            if (selectedItem != null)
+            {
+                OnDrawTabButton(e.Graphics, selectedItem, true);
+            }
+            if (Items.DrawnCount == 0 || Items.VisibleCount == 0)
+            {
+                //e.Graphics.DrawLine(SystemPens.ControlDark, new Point(0, 28), new Point(base.ClientRectangle.Width, 28));
+                e.Graphics.DrawLine(Pens.Red, new Point(0, DEF_BUTTON_HEIGHT), new Point(base.ClientRectangle.Width, DEF_BUTTON_HEIGHT));
+            }
+            else if (SelectedItem != null && SelectedItem.IsDrawn)
+            {
+                int num = (int)(SelectedItem.StripRect.Height / 4f);
+                Point point = new Point((int)SelectedItem.StripRect.Left - num, DEF_BUTTON_HEIGHT);
+                e.Graphics.DrawLine(SystemPens.ControlDark, new Point(0, DEF_BUTTON_HEIGHT), point);
+                point.X += (int)SelectedItem.StripRect.Width
+                    + num * 2;
+                e.Graphics.DrawLine(SystemPens.ControlDark, point, new Point(base.ClientRectangle.Width, DEF_BUTTON_HEIGHT));
+            }
+            if (SelectedItem != null && SelectedItem.CanClose)
+            {
+                closeButton.IsVisible = true;
+                closeButton.CalcBounds(selectedItem);
+                closeButton.Draw(e.Graphics);
+            }
+            else
+            {
+                closeButton.IsVisible = false;
+            }
+        }
+
+        int atright_reservedwidth = 250;
 		private void OnCalcTabPage(Graphics g, BrowserTabStripItem currentItem) {
 			//_ = Font;
 			int calcWidth = 0;
@@ -427,7 +437,7 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 			
 			//style not pill
 			if(styleNotPill)
-                tabDrawnRect.Height += 5;
+                tabDrawnRect.Height += 2;
 
             //g.FillRectangle(brush, tabDrawnRect);
             //g.DrawRectangle(SystemPens.ControlDark, tabDrawnRect);
