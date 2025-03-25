@@ -452,14 +452,12 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
             //g.DrawPath(SystemPens.ControlDark, tabpathNew);
 			//--white color requires more work...
             g.DrawPath(pen , tabpathNew);
-			//--draw ,tab seperator lines
+			//--draw ,tab seperator line:   | TAB1 | TAB2
 			if (!isActiveTab && !is_atRightof_ActiveTab) 
 			{
                 int margin = 14;
                 sr.Y += 2; //move rect down
-                g.DrawLine(SystemPens.ControlDark,
-                sr.X, sr.Y + margin,
-                sr.X, sr.Y + sr.Height - margin);
+                g.DrawLine(SystemPens.ControlDark, sr.X, sr.Y + margin, sr.X, sr.Y + sr.Height - margin);
             }
 			
 			//g.DrawPath(SystemPens.ControlDark, graphicsPath);
@@ -493,6 +491,7 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 		//int TabButton_Height = 10;
 		int TabButton_Height2 = 30;
 		private void UpdateLayout() {
+            //sf.Trimming = StringTrimming.Character;
             sf.Trimming = StringTrimming.EllipsisCharacter;
 			sf.FormatFlags = StringFormatFlags.NoWrap;
 			//sf.FormatFlags |= StringFormatFlags.DirectionRightToLeft; //this line causes multiline.//is this arabic??
