@@ -345,7 +345,7 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
             }
             if (selectedItem != null)
             {
-                OnDrawTabButton(e.Graphics, selectedItem, true);
+                OnDrawTabButton(e.Graphics, selectedItem);
             }
             if (Items.DrawnCount == 0 || Items.VisibleCount == 0)
             {
@@ -412,13 +412,18 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
         /// </summary>
         /// <param name="g"></param>
         /// <param name="currentItem"></param>
-        private void OnDrawTabButton(Graphics g, BrowserTabStripItem currentItem,bool isActiveTab=false)
+        private void OnDrawTabButton(Graphics g, BrowserTabStripItem currentItem)
         {
             Items.IndexOf(currentItem);
             Font font = Font;
+
+            bool isActiveTab = currentItem == SelectedItem;
+            bool is_atRightof_ActiveTab = Items.IndexOf(currentItem) == Items.IndexOf(selectedItem)+1; 
+
             RectangleF stripRect = currentItem.StripRect;
             var sr = stripRect;
             SolidBrush brush = new SolidBrush((currentItem == SelectedItem) ? color_TablButton_ActiveBG : color_TablButton_inActiveBG);
+            Pen pen = new Pen((currentItem == SelectedItem) ? color_TablButton_ActiveBG : color_TablButton_inActiveBG);
             var tabDrawnRect = new RectangleF(sr.Left, 1, sr.Width - 2, sr.Height - 2);
 			//tabDrawnRect.Height += 2; // hides bottom Line of Rect.
 			tabDrawnRect.Y += 8;  
@@ -440,10 +445,20 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 				tabDrawnRect.CreateTabPath_Roundtop_RoundBottomOut(TabRadius) :
 				tabDrawnRect.CreateTabPath_roundAll(TabRadius);
 
-			//tabpathNew = tabDrawnRect.CreateTabPath_roundAll(TabRadius);
             g.FillPath(brush, tabpathNew);
-            g.DrawPath(SystemPens.ControlDark, tabpathNew);
-
+            //g.DrawPath(SystemPens.ControlDark, tabpathNew);
+			//--white color requires more work...
+            g.DrawPath(pen , tabpathNew);
+			//--draw ,tab seperator lines
+			if (!isActiveTab && !is_atRightof_ActiveTab) 
+			{
+                int margin = 15;
+                sr.Y += 2; //move rect down
+                g.DrawLine(SystemPens.ControlDark,
+                sr.X, sr.Y + margin,
+                sr.X, sr.Y + sr.Height - margin);
+            }
+			
 			
 			//g.DrawPath(SystemPens.ControlDark, graphicsPath);
 			if (currentItem == SelectedItem)
