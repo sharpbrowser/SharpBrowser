@@ -354,13 +354,16 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
             }
             else if (SelectedItem != null && SelectedItem.IsDrawn)
             {
+                //var lineColorPen = SystemPens.ControlDark;
+                var lineColorPen = new Pen( color_TablButton_inActiveBG);
+
                 //int num = (int)(SelectedItem.StripRect.Height / 4f);
                 Point point = new Point((int)SelectedItem.StripRect.Left - TabRadius, DEF_BUTTON_HEIGHT);
-                e.Graphics.DrawLine(SystemPens.ControlDark, new Point(0, DEF_BUTTON_HEIGHT), point);
+                e.Graphics.DrawLine(lineColorPen, new Point(0, DEF_BUTTON_HEIGHT), point);
                 point.X += (int)SelectedItem.StripRect.Width
                     //+ num * 2;
                     + TabRadius+2;
-                e.Graphics.DrawLine(SystemPens.ControlDark, point, new Point(base.ClientRectangle.Width, DEF_BUTTON_HEIGHT));
+                e.Graphics.DrawLine(lineColorPen, point, new Point(base.ClientRectangle.Width, DEF_BUTTON_HEIGHT));
             }
             if (SelectedItem != null && SelectedItem.CanClose)
             {
