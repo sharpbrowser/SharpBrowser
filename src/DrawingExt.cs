@@ -198,55 +198,27 @@ namespace System.Drawing
             return path;
         }
 
-        public static GraphicsPath CreateTabPath_Roundtop_RoundBottomOut(this RectangleF tabRect, float cornerRadius)
+
+        public static GraphicsPath CreateTabPath_Active(Rectangle rect, int radius)
         {
             GraphicsPath path = new GraphicsPath();
+            // Ensure radius is not larger than half the width or height
+            radius = Math.Min(radius, Math.Min(rect.Width / 2, rect.Height / 2));
 
-            if (cornerRadius <= 0)
-            {
-                path.AddRectangle(tabRect);
-                return path;
-            }
+            //// Bottom-left arc
+            path.AddArc(rect.X - radius * 2, rect.Y + rect.Height - radius * 2, radius * 2, radius * 2, 90, -90);
+            //// Top-left arc
+            path.AddArc(rect.X, rect.Y, radius * 2, radius * 2, 180, 90);
+            // Top-right arc
+            path.AddArc(rect.X + rect.Width - radius * 2, rect.Y, radius * 2, radius * 2, 270, 90 );
+            // Bottom-right arc
+            path.AddArc(rect.X + rect.Width , rect.Y + rect.Height - radius * 2, radius * 2, radius * 2, -90*2, -90);
 
-            float diameter = cornerRadius * 2;
-            RectangleF arcRectTop = new RectangleF(tabRect.Location, new SizeF(diameter, diameter));
-            RectangleF arcRectBottom = new RectangleF(tabRect.Left, tabRect.Bottom - diameter, diameter, diameter); // For bottom round out
-
-            // Top-Left Arc (Inward Round - same as roundTop)
-            path.AddArc(arcRectTop, 180, 90);
-
-            // Top Line
-            PointF topRightCornerStart = new PointF(tabRect.Left + cornerRadius, tabRect.Top);
-            PointF topRightCornerEnd = new PointF(tabRect.Right - cornerRadius, tabRect.Top);
-            path.AddLine(topRightCornerStart, topRightCornerEnd);
-
-            // Top-Right Arc (Inward Round - same as roundTop)
-            arcRectTop.X = tabRect.Right - diameter;
-            path.AddArc(arcRectTop, 270, 90);
-
-            // Right Line (Connect top-right arc to bottom-right arc)
-            path.AddLine(new PointF(tabRect.Right, tabRect.Top + cornerRadius), new PointF(tabRect.Right, tabRect.Bottom - cornerRadius));
-
-            // Bottom-Right Arc (Outward Round - like roundAll)
-            arcRectBottom.X = tabRect.Right - diameter;
-            path.AddArc(arcRectBottom, 0, 90); // Start at 0 degrees (right), sweep 90 degrees clockwise (outward)
-
-
-            // Bottom Line (Not needed, arc goes to bottom-left corner)
-
-            // Bottom-Left Arc (Outward Round - like roundAll)
-            arcRectBottom.X = tabRect.Left; // X is already set
-            path.AddArc(arcRectBottom, 90, 90); // Start at 90 degrees (bottom), sweep 90 degrees clockwise (outward)
-
-
-            // Left Line (Connect bottom-left arc to top-left arc)
-            path.AddLine(new PointF(tabRect.Left, tabRect.Bottom - cornerRadius), new PointF(tabRect.Left, tabRect.Top + cornerRadius));
-
-
-            path.CloseFigure();
-
+            //path.CloseFigure(); // Close the path to connect the last and first points
             return path;
         }
+        public static GraphicsPath CreateTabPath_Roundtop_RoundBottomOut(this RectangleF tabRect, float cornerRadius) 
+            => CreateTabPath_Active(Rectangle.Round(tabRect), (int)cornerRadius);
 
 
 
