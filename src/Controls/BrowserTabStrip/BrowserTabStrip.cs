@@ -455,13 +455,12 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 			//--draw ,tab seperator lines
 			if (!isActiveTab && !is_atRightof_ActiveTab) 
 			{
-                int margin = 15;
+                int margin = 14;
                 sr.Y += 2; //move rect down
                 g.DrawLine(SystemPens.ControlDark,
                 sr.X, sr.Y + margin,
                 sr.X, sr.Y + sr.Height - margin);
             }
-			
 			
 			//g.DrawPath(SystemPens.ControlDark, graphicsPath);
 			if (currentItem == SelectedItem)
@@ -473,12 +472,14 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 			//if (Debugger.IsAttached)
 			//    ForeColorSel = Color.DarkCyan;
 
-			//margin for Tab Text + Verticalliy Center
+			//margin for Tab Text, Vertically Center
 			tabDrawnRect.X += 10;
 			tabDrawnRect.Width -= 10;
-            //sf.LineAlignment = StringAlignment.Center;
+            //sf.LineAlignment = StringAlignment.Center; 
             if (currentItem == SelectedItem)
             {
+                tabDrawnRect.Width -= 25;// dont block ellipsis via activeTab , Close Button
+                //g.DrawRectangle(Pens.Cyan, tabDrawnRect);
                 g.DrawString(currentItem.Title, font, new SolidBrush(ForeColorSel), tabDrawnRect, sf);
             }
             else
