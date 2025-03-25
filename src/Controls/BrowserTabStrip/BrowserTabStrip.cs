@@ -426,12 +426,15 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 			if(styleNotPill)
                 tabDrawnRect.Height += 2;
 
+            ////--Draw Rectange Tabs
             //g.FillRectangle(brush, tabDrawnRect);
             //g.DrawRectangle(SystemPens.ControlDark, tabDrawnRect);
+           
+			////--Draw Pill Style Tabs
             //g.FillRoundRectangle(brush, tabDrawnRect,TabRadius);
             //g.DrawRoundRectangle(SystemPens.ControlDark, tabDrawnRect, TabRadius);
-            //var tabpathNew = tabDrawnRect.CreateTabPath_roundTop(TabRadius);
 
+            ////--Draw Rounded Chrome Tabs
             var tabpathNew =
 				isActive ?
 				tabDrawnRect.CreateTabPath_Roundtop_RoundBottomOut(TabRadius) :
@@ -441,7 +444,6 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
             g.FillPath(brush, tabpathNew);
             g.DrawPath(SystemPens.ControlDark, tabpathNew);
 
-            
 			
 			//g.DrawPath(SystemPens.ControlDark, graphicsPath);
 			if (currentItem == SelectedItem)
@@ -449,15 +451,14 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
                 //g.DrawLine(new Pen(brush), sr_left + 19f, sr_height + 2f, sr_left + sr_width - 1f, sr_height + 2f);
             }
            
-
 			var ForeColorSel = ForeColor;
 			//if (Debugger.IsAttached)
 			//    ForeColorSel = Color.DarkCyan;
 
+			//margin for Tab Text + Verticalliy Center
 			tabDrawnRect.X += 10;
 			tabDrawnRect.Width -= 10;
             sf.LineAlignment = StringAlignment.Center;
-            //sf.Alignment = StringAlignment.Center;
             if (currentItem == SelectedItem)
             {
                 g.DrawString(currentItem.Title, font, new SolidBrush(ForeColorSel), tabDrawnRect, sf);
