@@ -3,14 +3,11 @@ using System.Windows.Forms;
 
 namespace SharpBrowser.Controls.BrowserTabStrip {
 	internal class BrowserTabStripCloseButton {
+		
 		public Rectangle Rect = Rectangle.Empty;
-
 		public Rectangle RedrawRect = Rectangle.Empty;
-
 		public bool IsMouseOver;
-
 		public bool IsVisible;
-
 		public ToolStripProfessionalRenderer Renderer;
 
 		internal BrowserTabStripCloseButton(ToolStripProfessionalRenderer renderer) {
@@ -42,5 +39,6 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 				pen.Dispose();
 			}
 		}
+
 	}
 }
