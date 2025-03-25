@@ -27,10 +27,10 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 
 		public void Draw(Graphics g) {
 			if (IsVisible) {
-				Color color = (IsMouseOver ? Color.White : Color.DarkGray);
+				Color color =  Color.DarkSlateGray;
 				g.FillRectangle(Brushes.White, Rect);
 				if (IsMouseOver) {
-					g.FillEllipse(Brushes.IndianRed, Rect);
+					g.FillRoundRectangle(Brushes.LightGray, Rect,5);
 				}
 				int num = 4;
 				Pen pen = new Pen(color, 1.6f);
