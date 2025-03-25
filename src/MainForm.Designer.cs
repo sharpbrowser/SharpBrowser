@@ -1,4 +1,6 @@
-﻿namespace SharpBrowser
+﻿using System.Windows.Forms;
+
+namespace SharpBrowser
 {
     partial class MainForm
     {
@@ -64,20 +66,20 @@
             menuStripTab.ImageScalingSize = new System.Drawing.Size(20, 20);
             menuStripTab.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { menuCloseTab, menuCloseOtherTabs });
             menuStripTab.Name = "menuStripTab";
-            menuStripTab.Size = new System.Drawing.Size(170, 48);
+            menuStripTab.Size = new System.Drawing.Size(198, 52);
             // 
             // menuCloseTab
             // 
             menuCloseTab.Name = "menuCloseTab";
             menuCloseTab.ShortcutKeys = System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F4;
-            menuCloseTab.Size = new System.Drawing.Size(169, 22);
+            menuCloseTab.Size = new System.Drawing.Size(197, 24);
             menuCloseTab.Text = "Close tab";
             menuCloseTab.Click += menuCloseTab_Click;
             // 
             // menuCloseOtherTabs
             // 
             menuCloseOtherTabs.Name = "menuCloseOtherTabs";
-            menuCloseOtherTabs.Size = new System.Drawing.Size(169, 22);
+            menuCloseOtherTabs.Size = new System.Drawing.Size(197, 24);
             menuCloseOtherTabs.Text = "Close other tabs";
             menuCloseOtherTabs.Click += menuCloseOtherTabs_Click;
             // 
@@ -156,7 +158,6 @@
             // TxtURL
             // 
             TxtURL.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
-            TxtURL.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             TxtURL.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
             TxtURL.Location = new System.Drawing.Point(175, 9);
             TxtURL.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -324,7 +325,7 @@
             TxtSearch.Location = new System.Drawing.Point(9, 8);
             TxtSearch.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             TxtSearch.Name = "TxtSearch";
-            TxtSearch.Size = new System.Drawing.Size(181, 25);
+            TxtSearch.Size = new System.Drawing.Size(181, 31);
             TxtSearch.TabIndex = 6;
             TxtSearch.TextChanged += TxtSearch_TextChanged;
             TxtSearch.KeyDown += TxtSearch_KeyDown;
@@ -355,7 +356,6 @@
             Load += MainForm_Load;
             menuStripTab.ResumeLayout(false);
             PanelToolbar.ResumeLayout(false);
-            PanelToolbar.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)TabPages).EndInit();
             TabPages.ResumeLayout(false);
             PanelSearch.ResumeLayout(false);
