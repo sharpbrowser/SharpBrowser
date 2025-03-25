@@ -11,44 +11,34 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 	[DefaultProperty("Items")]
 	[ToolboxItem(true)]
 	public class BrowserTabStrip : BaseStyledPanel, ISupportInitialize, IDisposable {
+		
 		private const int TEXT_LEFT_MARGIN = 15;
-
 		private const int TEXT_RIGHT_MARGIN = 10;
-
 		private const int DEF_HEADER_HEIGHT = 28;
+        private const int DEF_GLYPH_WIDTH = 40;
 
         //private const int DEF_BUTTON_HEIGHT = 28;
-        private const int DEF_BUTTON_HEIGHT = 48;
         public int TabButton_Height => DEF_BUTTON_HEIGHT;
-
-		private const int DEF_GLYPH_WIDTH = 40;
-
+        private const int DEF_BUTTON_HEIGHT = 48;
 		private int DEF_START_POS = 50;
 		private int DEF_START_POS_forOnPaint = 50; //volatile
 
-		private Rectangle stripButtonRect = Rectangle.Empty;
+        private Rectangle stripButtonRect = Rectangle.Empty;
 
 		private BrowserTabStripItem selectedItem;
-
 		private ContextMenuStrip menu;
-
 		private BrowserTabStripCloseButton closeButton;
-
 		private BrowserTabStripItemCollection items;
 
 		private StringFormat sf;
-
 		private static Font defaultFont = new Font("Tahoma", 8.25f, FontStyle.Regular);
 
-		private bool isIniting;
-
+        private bool isIniting;
 		private bool menuOpen;
-
 		public int MaxTabSize = 200;
-
 		public int AddButtonWidth = 40;
 
-		[RefreshProperties(RefreshProperties.All)]
+        [RefreshProperties(RefreshProperties.All)]
 		[DefaultValue(null)]
 		public BrowserTabStripItem SelectedItem {
 			get {
@@ -110,13 +100,9 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 		public new ControlCollection Controls => base.Controls;
 
 		public event TabStripItemClosingHandler TabStripItemClosing;
-
 		public event TabStripItemChangedHandler TabStripItemSelectionChanged;
-
 		public event HandledEventHandler MenuItemsLoading;
-
 		public event EventHandler MenuItemsLoaded;
-
 		public event EventHandler TabStripItemClosed;
 
 		public BrowserTabStrip() {
@@ -373,7 +359,7 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
                 e.Graphics.DrawLine(SystemPens.ControlDark, new Point(0, DEF_BUTTON_HEIGHT), point);
                 point.X += (int)SelectedItem.StripRect.Width
                     //+ num * 2;
-                    + TabRadius;
+                    + TabRadius+2;
                 e.Graphics.DrawLine(SystemPens.ControlDark, point, new Point(base.ClientRectangle.Width, DEF_BUTTON_HEIGHT));
             }
             if (SelectedItem != null && SelectedItem.CanClose)
@@ -388,15 +374,18 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
             }
         }
 
-        int atright_reservedwidth = 250;
-		private void OnCalcTabPage(Graphics g, BrowserTabStripItem currentItem) {
+        /// <summary>
+        /// ready for future use, (_ [] X) , titlebar buttons and tabButtons can be on the same Row
+        /// </summary>
+        int atRight_ReservedWidth = 250; 
+        private void OnCalcTabPage(Graphics g, BrowserTabStripItem currentItem) {
 			//_ = Font;
 			int calcWidth = 0;
 			if (currentItem.Title == "+") {
 				calcWidth = AddButtonWidth;
 			}
 			else {
-				calcWidth = (base.Width -atright_reservedwidth - (AddButtonWidth + 20)) / (items.Count - 1);
+				calcWidth = (base.Width -atRight_ReservedWidth - (AddButtonWidth + 20)) / (items.Count - 1);
 				if (calcWidth > MaxTabSize) {
 					calcWidth = MaxTabSize;
 				}
