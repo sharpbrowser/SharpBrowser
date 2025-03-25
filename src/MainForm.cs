@@ -15,6 +15,7 @@ using System.Drawing;
 using System.Reflection;
 using SharpBrowser.Browser;
 using SharpBrowser.Browser.Model;
+using SharpBrowser.Controls;
 
 namespace SharpBrowser {
 
@@ -44,7 +45,8 @@ namespace SharpBrowser {
 			InitTooltips(this.Controls);
 			InitHotkeys();
 
-
+			TxtURL.MakeTextbox_CustomBorderColor();
+            
             //cant  do this on gui. paneltoolbar gets deleted. buggy designer 
             //PanelToolbar location Fix -2025
             PanelToolbar.Dock = DockStyle.None;
@@ -760,7 +762,7 @@ namespace SharpBrowser {
 			}
 		}
 
-		//-----urlbar selection behavior---
+		//-----urlbar text selection behavior---
 		private bool TxtURL_JustEntered = false;
 		private void TxtURL_Enter(object sender, EventArgs e)
 		{
