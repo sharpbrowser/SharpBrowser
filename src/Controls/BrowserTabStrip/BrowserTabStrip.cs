@@ -476,7 +476,7 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 			//margin for Tab Text + Verticalliy Center
 			tabDrawnRect.X += 10;
 			tabDrawnRect.Width -= 10;
-            sf.LineAlignment = StringAlignment.Center;
+            //sf.LineAlignment = StringAlignment.Center;
             if (currentItem == SelectedItem)
             {
                 g.DrawString(currentItem.Title, font, new SolidBrush(ForeColorSel), tabDrawnRect, sf);
@@ -492,11 +492,12 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 		//int TabButton_Height = 10;
 		int TabButton_Height2 = 30;
 		private void UpdateLayout() {
-			sf.Trimming = StringTrimming.EllipsisCharacter;
-			sf.FormatFlags |= StringFormatFlags.NoWrap;
-			sf.FormatFlags &= StringFormatFlags.DirectionRightToLeft;
+            sf.Trimming = StringTrimming.EllipsisCharacter;
+			sf.FormatFlags = StringFormatFlags.NoWrap;
+			//sf.FormatFlags |= StringFormatFlags.DirectionRightToLeft; //this line causes multiline.//is this arabic??
+            sf.LineAlignment = StringAlignment.Center;
 
-			stripButtonRect = new Rectangle(0, 0, base.ClientSize.Width - 40 - 2, TabButton_Height);
+            stripButtonRect = new Rectangle(0, 0, base.ClientSize.Width - 40 - 2, TabButton_Height);
 			base.DockPadding.Top = DEF_BUTTON_HEIGHT+1;
 			base.DockPadding.Bottom = 1;
 			base.DockPadding.Right = 1;
