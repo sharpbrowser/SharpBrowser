@@ -23,28 +23,21 @@ namespace SharpBrowser {
 	/// We used the x86 version of CefSharp, so the app works on 32-bit and 64-bit machines.
 	/// If you would only like to support 64-bit machines, simply change the DLL references.
 	/// </summary>
-	internal partial class MainForm : Form {
-
+	internal partial class MainForm : Form 
+	{
 		private string appPath = Path.GetDirectoryName(Application.ExecutablePath) + @"\";
-
 		public static MainForm Instance;
 
-
-
 		public MainForm() {
-
 			Instance = this;
 
 			InitializeComponent();
 
 			InitBrowser();
-
 			SetFormTitle(null);
-
 		}
 
-
-		Panel pnlToolbarOverlay;
+        Panel pnlToolbarOverlay;
         private void MainForm_Load(object sender, EventArgs e) {
 
 			InitAppIcon();
@@ -64,7 +57,6 @@ namespace SharpBrowser {
 
             if (Debugger.IsAttached)
                 pnlToolbarOverlay.BackColor = Color.Cyan;
-
 
         }
 
