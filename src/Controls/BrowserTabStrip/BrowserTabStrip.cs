@@ -368,11 +368,12 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
             }
             else if (SelectedItem != null && SelectedItem.IsDrawn)
             {
-                int num = (int)(SelectedItem.StripRect.Height / 4f);
-                Point point = new Point((int)SelectedItem.StripRect.Left - num, DEF_BUTTON_HEIGHT);
+                //int num = (int)(SelectedItem.StripRect.Height / 4f);
+                Point point = new Point((int)SelectedItem.StripRect.Left - TabRadius, DEF_BUTTON_HEIGHT);
                 e.Graphics.DrawLine(SystemPens.ControlDark, new Point(0, DEF_BUTTON_HEIGHT), point);
                 point.X += (int)SelectedItem.StripRect.Width
-                    + num * 2;
+                    //+ num * 2;
+                    + TabRadius;
                 e.Graphics.DrawLine(SystemPens.ControlDark, point, new Point(base.ClientRectangle.Width, DEF_BUTTON_HEIGHT));
             }
             if (SelectedItem != null && SelectedItem.CanClose)
