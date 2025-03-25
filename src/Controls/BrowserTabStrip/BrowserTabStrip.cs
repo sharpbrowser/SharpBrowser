@@ -428,15 +428,12 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
             Items.IndexOf(currentItem);
             Font font = Font;
             RectangleF stripRect = currentItem.StripRect;
-            float sr_left, sr_width, sr_height;
-            GraphicsPath graphicsPath = OnDrawTabButton__getButtonShape(stripRect, out sr_left, out sr_width, out sr_height);
+            var sr = stripRect;
             SolidBrush brush = new SolidBrush((currentItem == SelectedItem) ? color_TablButton_ActiveBG : color_TablButton_inActiveBG);
-            var tabDrawnRect = new RectangleF(sr_left, 1, sr_width - 2, sr_height - 2);
+            var tabDrawnRect = new RectangleF(sr.Left, 1, sr.Width - 2, sr.Height - 2);
 			//tabDrawnRect.Height += 2; // hides bottom Line of Rect.
 			tabDrawnRect.Y += 8;  
             tabDrawnRect.Height -= 8;
-			
-			//style not pill
 			if(styleNotPill)
                 tabDrawnRect.Height += 2;
 
