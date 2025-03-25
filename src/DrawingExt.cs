@@ -112,7 +112,61 @@ namespace System.Drawing
             return path;
         }
 
+        /// <summary>
+        /// Gets the desired Capsular path. 
+        /// </summary>
+        private static GraphicsPath GetCapsule(this RectangleF baseRect)
+        {
+            float diameter;
+            RectangleF arc;
+            GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath();
+            try
+            {
+                if (baseRect.Width > baseRect.Height)
+                {
+                    // return horizontal capsule 
 
+                    diameter = baseRect.Height;
+                    SizeF sizeF = new SizeF(diameter, diameter);
+                    arc = new RectangleF(baseRect.Location, sizeF);
+                    path.AddArc(arc, 90, 180);
+                    arc.X = baseRect.Right - diameter;
+                    path.AddArc(arc, 270, 180);
+                }
+                else if (baseRect.Width < baseRect.Height)
+                {
+                    // return vertical capsule 
+
+                    diameter = baseRect.Width;
+                    SizeF sizeF = new SizeF(diameter, diameter);
+                    arc = new RectangleF(baseRect.Location, sizeF);
+                    path.AddArc(arc, 180, 180);
+                    arc.Y = baseRect.Bottom - diameter;
+                    path.AddArc(arc, 0, 180);
+                }
+                else
+                {
+                    // return circle 
+
+                    path.AddEllipse(baseRect);
+                }
+            }
+            catch (Exception ex)
+            {
+                path.AddEllipse(baseRect);
+            }
+            finally
+            {
+                path.CloseFigure();
+            }
+            return path;
+        }
+        
+    }
+
+
+    public static partial class GraphicsEx
+    {
         public static GraphicsPath CreateTabPath_roundTop(this RectangleF tabRect, float cornerRadius)
         {
             GraphicsPath path = new GraphicsPath();
@@ -151,7 +205,7 @@ namespace System.Drawing
 
             return path;
         }
-        public static GraphicsPath CreateTabPath_roundAll(this  RectangleF tabRect, float cornerRadius)
+        public static GraphicsPath CreateTabPath_roundAll(this RectangleF tabRect, float cornerRadius)
         {
             GraphicsPath path = new GraphicsPath();
 
@@ -210,67 +264,21 @@ namespace System.Drawing
             //// Top-left arc
             path.AddArc(rect.X, rect.Y, radius * 2, radius * 2, 180, 90);
             // Top-right arc
-            path.AddArc(rect.X + rect.Width - radius * 2, rect.Y, radius * 2, radius * 2, 270, 90 );
+            path.AddArc(rect.X + rect.Width - radius * 2, rect.Y, radius * 2, radius * 2, 270, 90);
             // Bottom-right arc
-            path.AddArc(rect.X + rect.Width , rect.Y + rect.Height - radius * 2, radius * 2, radius * 2, -90*2, -90);
+            path.AddArc(rect.X + rect.Width, rect.Y + rect.Height - radius * 2, radius * 2, radius * 2, -90 * 2, -90);
 
             //path.CloseFigure(); // Close the path to connect the last and first points
             return path;
         }
-        public static GraphicsPath CreateTabPath_Roundtop_RoundBottomOut(this RectangleF tabRect, float cornerRadius) 
+        public static GraphicsPath CreateTabPath_Roundtop_RoundBottomOut(this RectangleF tabRect, float cornerRadius)
             => CreateTabPath_Active(Rectangle.Round(tabRect), (int)cornerRadius);
 
 
+ 
 
-        /// <summary>
-        /// Gets the desired Capsular path. 
-        /// </summary>
-        private static GraphicsPath GetCapsule(this RectangleF baseRect)
-        {
-            float diameter;
-            RectangleF arc;
-            GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath();
-            try
-            {
-                if (baseRect.Width > baseRect.Height)
-                {
-                    // return horizontal capsule 
-
-                    diameter = baseRect.Height;
-                    SizeF sizeF = new SizeF(diameter, diameter);
-                    arc = new RectangleF(baseRect.Location, sizeF);
-                    path.AddArc(arc, 90, 180);
-                    arc.X = baseRect.Right - diameter;
-                    path.AddArc(arc, 270, 180);
-                }
-                else if (baseRect.Width < baseRect.Height)
-                {
-                    // return vertical capsule 
-
-                    diameter = baseRect.Width;
-                    SizeF sizeF = new SizeF(diameter, diameter);
-                    arc = new RectangleF(baseRect.Location, sizeF);
-                    path.AddArc(arc, 180, 180);
-                    arc.Y = baseRect.Bottom - diameter;
-                    path.AddArc(arc, 0, 180);
-                }
-                else
-                {
-                    // return circle 
-
-                    path.AddEllipse(baseRect);
-                }
-            }
-            catch (Exception ex)
-            {
-                path.AddEllipse(baseRect);
-            }
-            finally
-            {
-                path.CloseFigure();
-            }
-            return path;
-        }
-        
     }
+
+
+
 }
