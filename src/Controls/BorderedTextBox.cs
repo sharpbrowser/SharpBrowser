@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Reflection.Metadata;
 using System.Runtime.CompilerServices;
@@ -28,22 +30,27 @@ namespace SharpBrowser.Controls
 
             
             //restore them to Panel
-            var bordered_tbx = new BorderedTextBox(tbx);
-            bordered_tbx.Location = loc;
-            bordered_tbx.Size= size;
+            var panel = new BorderedTextBox(tbx);
+            panel.Location = loc;
+            panel.Size= size;
             //bordered_tbx.Height= size.Height+5;
-            bordered_tbx.Anchor = anchor;
-            bordered_tbx.Dock = dock;
-            tbxOriginalParent.Controls.Add(bordered_tbx);
+            panel.Anchor = anchor;
+            panel.Dock = dock;
+            tbxOriginalParent.Controls.Add(panel);
+
+
+            panel.BackColor = Color.Transparent;
+            ////debug
+            //panel.BackColor = Color.OrangeRed;
 
             //remove tbx min size. it causes tbx getting clipped.
-            if (tbx.MinimumSize.Height != 0 && tbx.MinimumSize.Height >= bordered_tbx.MinimumSize.Height)
+            if (tbx.MinimumSize.Height != 0 && tbx.MinimumSize.Height >= panel.MinimumSize.Height)
             {
                 tbx.MinimumSize = new Size();
             }
                 
 
-            return bordered_tbx;
+            return panel;
         }
     }
 
@@ -53,10 +60,11 @@ namespace SharpBrowser.Controls
         private TextBox textBox;
         private bool focusedAlways = false;
         private Color normalBorderColor = Color.LightGray;
-        private Color focusedBorderColor = Color.FromArgb(0,00,225);
         //private Color focusedBorderColor = Color.FromArgb(86,156,214);
+        //private Color focusedBorderColor = Color.FromArgb(0,00,225);
+        private Color focusedBorderColor = Color.FromArgb(11, 87, 208);
+        public int borderThickness = 2;
 
-       
         public TextBox TextBox
         {
             get { return textBox; }
@@ -71,7 +79,8 @@ namespace SharpBrowser.Controls
         public BorderedTextBox(TextBox tbx = null)
         {
             this.DoubleBuffered = true;
-            this.Padding = new Padding(2);
+            this.Padding = new Padding(1 +borderThickness*2);
+            this.Height += borderThickness *2; 
 
             if (tbx == null)
                 textBox = new TextBox();
@@ -91,7 +100,7 @@ namespace SharpBrowser.Controls
 
             //debug helper
             //this.TextBox.BorderStyle = BorderStyle.FixedSingle;
-            this.BackColor = Color.Red;
+            //this.BackColor = Color.Red;
 
         }
 
@@ -101,15 +110,48 @@ namespace SharpBrowser.Controls
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            e.Graphics.Clear(SystemColors.Window);
+            this.Padding = new Padding(
+                left:15+borderThickness,
+                right: 15 + borderThickness,
+                top:1+borderThickness+5,
+                bottom:borderThickness+5 
+                );
 
-            using (Pen borderPen = new Pen(this.TextBox.Focused || focusedAlways ?
-                focusedBorderColor : normalBorderColor))
+            this.AutoSize = false;
+            var txtHeight = MeasureHeight(textBox);
+            this.Height = txtHeight 
+                //+ borderThickness * 2 
+                + Padding.Top+ Padding.Bottom;
+
+
+            //absurd back color
+            //e.Graphics.Clear(SystemColors.Window);
+
+            var color = this.TextBox.Focused || focusedAlways ? focusedBorderColor : normalBorderColor;
+            using (Pen borderPen = new Pen(color, borderThickness))
             {
+                var brushbg = new SolidBrush(textBox.BackColor);
+
+                //if (Debugger.IsAttached)
+                //{
+                //    brushbg = new SolidBrush(Color.Green);
+                //    textBox.BackColor = Color.OrangeRed;
+                //}
+                
+
+                e.Graphics.FillRoundRectangle(brushbg,
+                    new Rectangle(0 + borderThickness, 0 + borderThickness,
+                    this.ClientSize.Width - borderThickness * 2,
+                    this.ClientSize.Height - borderThickness * 2)
+                    , 15);
+                e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+
                 //e.Graphics.DrawRectangle(borderPen,
                 e.Graphics.DrawRoundRectangle(borderPen,
-                    new Rectangle(0, 0, this.ClientSize.Width - 1, this.ClientSize.Height - 1)
-                    ,5);
+                    new Rectangle(0+borderThickness, 0 + borderThickness, 
+                    this.ClientSize.Width - borderThickness*2, 
+                    this.ClientSize.Height - borderThickness*2)
+                    ,15);
             }
             base.OnPaint(e);
         }
@@ -124,15 +166,22 @@ namespace SharpBrowser.Controls
         ///// fix Textbox.borderNone bottom gets clipped issue
         ///// </summary>
         ///// <param name="textbox"></param>
-        //static void RefreshHeight(TextBox textbox)
-        //{
-        //    return;
+        static void RefreshHeight(TextBox textbox)
+        {
 
-        //    textbox.Multiline = true;
-        //    Size s = TextRenderer.MeasureText("AĞÜüğGgpPa", textbox.Font, Size.Empty, TextFormatFlags.TextBoxControl);
-        //    textbox.MinimumSize = new Size(0, s.Height + 1 + 3);
-        //    textbox.Multiline = false;
-        //}
+            textbox.Multiline = true;
+            Size s = TextRenderer.MeasureText("AĞÜüğGgpPa", textbox.Font, Size.Empty, TextFormatFlags.TextBoxControl);
+            textbox.MinimumSize = new Size(0, s.Height + 1 + 3);
+            textbox.Multiline = false;
+            
+        }
+        static int MeasureHeight(TextBox textbox)
+        {
+            Size size = TextRenderer.MeasureText("AĞÜüğGgpPa", textbox.Font, Size.Empty, TextFormatFlags.TextBoxControl);
+            //textbox.MinimumSize = new Size(0, s.Height + 1 + 3);
+            return size.Height;
+
+        }
 
 
     }
