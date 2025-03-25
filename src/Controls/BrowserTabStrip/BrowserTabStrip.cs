@@ -412,7 +412,7 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
         /// </summary>
         /// <param name="g"></param>
         /// <param name="currentItem"></param>
-        private void OnDrawTabButton(Graphics g, BrowserTabStripItem currentItem,bool isActive=false)
+        private void OnDrawTabButton(Graphics g, BrowserTabStripItem currentItem,bool isActiveTab=false)
         {
             Items.IndexOf(currentItem);
             Font font = Font;
@@ -436,7 +436,7 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 
             ////--Draw Rounded Chrome Tabs
             var tabpathNew =
-				isActive ?
+				isActiveTab ?
 				tabDrawnRect.CreateTabPath_Roundtop_RoundBottomOut(TabRadius) :
 				tabDrawnRect.CreateTabPath_roundAll(TabRadius);
 
@@ -469,62 +469,7 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
             }
             currentItem.IsDrawn = true;
         }
-        private void OnDrawTabButton_old(Graphics g, BrowserTabStripItem currentItem)
-        {
-            Items.IndexOf(currentItem);
-            Font font = Font;
-            RectangleF stripRect = currentItem.StripRect;
-            float sr_left, sr_width, sr_height;
-            GraphicsPath graphicsPath = OnDrawTabButton__getButtonShape(stripRect, out sr_left, out sr_width, out sr_height);
-            SolidBrush brush = new SolidBrush((currentItem == SelectedItem) ? color_TablButton_ActiveBG : SystemColors.GradientInactiveCaption);
-            g.FillPath(brush, graphicsPath);
-            g.DrawPath(SystemPens.ControlDark, graphicsPath);
-            if (currentItem == SelectedItem)
-            {
-               //g.DrawLine(new Pen(brush), sr_left - 9f, sr_height + 2f, sr_left + sr_width - 1f, sr_height + 2f);
-            }
-            PointF location = new PointF(sr_left + 15f, 5f);
-            RectangleF layoutRectangle = stripRect;
-            layoutRectangle.Location = location;
-            layoutRectangle.Width = sr_width - (layoutRectangle.Left - sr_left) - 4f;
-            if (currentItem == selectedItem)
-            {
-                layoutRectangle.Width -= 15f;
-            }
-            layoutRectangle.Height = 23f;
-
-            var ForeColorSel = ForeColor;
-            if (Debugger.IsAttached)
-                ForeColorSel = Color.DarkCyan;
-
-            if (currentItem == SelectedItem)
-            {
-                g.DrawString(currentItem.Title, font, new SolidBrush(ForeColorSel), layoutRectangle, sf);
-            }
-            else
-            {
-                g.DrawString(currentItem.Title, font, new SolidBrush(ForeColorSel), layoutRectangle, sf);
-            }
-            currentItem.IsDrawn = true;
-        }
-        private static GraphicsPath OnDrawTabButton__getButtonShape(RectangleF stripRect, out float sr_left, out float sr_width, out float sr_height)
-        {
-            var graphicsPath = new GraphicsPath();
-            sr_left = stripRect.Left;
-            float right = stripRect.Right;
-            float num = 3f;
-            float sr_bottom = stripRect.Bottom - 1f;
-            sr_width = stripRect.Width;
-            sr_height = stripRect.Height;
-            float num5 = sr_height / 4f;
-            graphicsPath.AddLine(sr_left - num5, sr_bottom, sr_left + num5, num);
-            graphicsPath.AddLine(right - num5, num, right + num5, sr_bottom);
-            graphicsPath.CloseFigure();
-
-			return graphicsPath;
-        }
-
-
+      
 
 		//int TabButton_Height = 10;
 		int TabButton_Height2 = 30;
