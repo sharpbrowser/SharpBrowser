@@ -213,10 +213,8 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 		}
 
 		protected virtual void OnTabStripItemChanged(TabStripItemChangedEventArgs e) {
-			if (this.TabStripItemSelectionChanged != null) {
-				this.TabStripItemSelectionChanged(e);
-			}
-		}
+            this.TabStripItemSelectionChanged?.Invoke(e);
+        }
 
         protected virtual void OnMenuItemsLoad(EventArgs e) {
 			menu.RightToLeft = RightToLeft;
