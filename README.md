@@ -23,6 +23,7 @@ Hotkeys | Function
 Ctrl+T		| Add a new tab
 Ctrl+N		| Add a new window
 Ctrl+W		| Close active tab
+Ctrl+MiddleClick		| Close Tab
 F5			| Refresh active tab
 F12			| Open developer tools
 Ctrl+Tab	| Switch to the next tab
