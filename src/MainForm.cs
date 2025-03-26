@@ -16,6 +16,8 @@ using System.Reflection;
 using SharpBrowser.Browser;
 using SharpBrowser.Browser.Model;
 using SharpBrowser.Controls;
+using SharpBrowser.Properties;
+using System.Resources;
 
 namespace SharpBrowser {
 
@@ -45,6 +47,8 @@ namespace SharpBrowser {
 			InitTooltips(this.Controls);
 			InitHotkeys();
 
+			InitHandler_ButtonsDisabled_BGImage();
+
 			TxtURL.MakeTextbox_CustomBorderColor();
             
             //cant  do this on gui. paneltoolbar gets deleted. buggy designer 
@@ -62,13 +66,44 @@ namespace SharpBrowser {
 
         }
 
-		#region App Icon
+        #region InitHandler_ButtonsDisabled_BGImage
+        /// <summary>
+        /// btn.BackgorundImage Can AutoScale Img, But it doesnt Have Disabled Effect. :(
+        /// So we provide the effect here.
+        /// </summary>
+        private void InitHandler_ButtonsDisabled_BGImage()
+        {
+            BtnBack.EnabledChanged += BtnBack_EnabledChanged;
+            BtnForward.EnabledChanged += BtnForward_EnabledChanged;
+            BtnRefresh.EnabledChanged += BtnRefresh_EnabledChanged;
+            BtnStop.EnabledChanged += BtnStop_EnabledChanged;
+            BtnDownloads.EnabledChanged += BtnDownloads_EnabledChanged;
+            BtnHome.EnabledChanged += BtnHome_EnabledChanged;
+        }
+        private void handleDisabled_BGImage(object senderBTN, string res_imageName)
+        {
+            var btn = senderBTN as Button;
+            var myImage = (Bitmap)Resources.ResourceManager.GetObject(res_imageName);
+            btn.BackgroundImage = btn.Enabled ? myImage : myImage.Lighter(90, Color.White);
+        }
 
-		/// <summary>
-		/// embedding the resource using the Visual Studio designer results in a blurry icon.
-		/// the best way to get a non-blurry icon for Windows 7 apps.
-		/// </summary>
-		private void InitAppIcon() {
+        private void BtnBack_EnabledChanged(object sender, EventArgs e) => handleDisabled_BGImage(sender , "arrow_back_64dp_000000");
+        private void BtnForward_EnabledChanged(object sender, EventArgs e) => handleDisabled_BGImage(sender , "arrow_forward_64dp_000000");
+        private void BtnRefresh_EnabledChanged(object sender, EventArgs e) => handleDisabled_BGImage(sender , "refresh_64dp_000000");
+        private void BtnStop_EnabledChanged(object sender, EventArgs e) => handleDisabled_BGImage(sender , "close_64dp_000000");
+        private void BtnHome_EnabledChanged(object sender, EventArgs e) => handleDisabled_BGImage(sender, "home_64dp_000000");
+        private void BtnDownloads_EnabledChanged(object sender, EventArgs e) => handleDisabled_BGImage(sender , "download_64dp_000000");
+        #endregion
+
+
+
+        #region App Icon
+
+        /// <summary>
+        /// embedding the resource using the Visual Studio designer results in a blurry icon.
+        /// the best way to get a non-blurry icon for Windows 7 apps.
+        /// </summary>
+        private void InitAppIcon() {
 			assembly = Assembly.GetAssembly(typeof(MainForm));
 			Icon = new Icon(GetResourceStream("sharpbrowser.ico"), new Size(64, 64));
 		}
@@ -658,8 +693,14 @@ namespace SharpBrowser {
 			}
 		}
 
-        private void EnableBackButton(bool canGoBack) => InvokeIfNeeded(() => BtnBack.Enabled = canGoBack);
-        private void EnableForwardButton(bool canGoForward) => InvokeIfNeeded(() => BtnForward.Enabled = canGoForward);
+        private void EnableBackButton(bool canGoBack)
+        {
+            InvokeIfNeeded(() => BtnBack.Enabled = canGoBack);
+        }
+        private void EnableForwardButton(bool canGoForward)
+        {
+            InvokeIfNeeded(() => BtnForward.Enabled = canGoForward);
+        }
 
         private void OnTabsChanged(TabStripItemChangedEventArgs e) {
 
