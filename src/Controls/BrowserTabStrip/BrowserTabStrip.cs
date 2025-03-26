@@ -59,6 +59,7 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 				else {
 					selectedItem = value;
 				}
+
 				foreach (BrowserTabStripItem item in Items) {
 					if (item == selectedItem) {
 						SelectItem(item);
@@ -396,7 +397,7 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
         }
 
         /// <summary>
-        /// ready for future use, (_ [] X) , titlebar buttons and tabButtons can be on the same Row
+        /// ready for future use, (_ [] X) , if we put Tabs and Close/Minimize buttons on TitleBar 
         /// </summary>
         int atRight_ReservedWidth = 250; 
         private void OnCalcTabPage(Graphics g, BrowserTabStripItem currentItem) {
@@ -494,7 +495,7 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
             //sf.LineAlignment = StringAlignment.Center; 
             if (currentItem == SelectedItem)
             {
-                tabDrawnRect.Width -= 25;// dont block ellipsis via activeTab , Close Button
+                tabDrawnRect.Width -= 25;// dont overflow ellipsis "..." under the activeTab.CloseButton.
                 //g.DrawRectangle(Pens.Cyan, tabDrawnRect);
                 g.DrawString(currentItem.Title, font, new SolidBrush(ForeColorSel), tabDrawnRect, sf);
             }
