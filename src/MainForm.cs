@@ -84,8 +84,9 @@ namespace SharpBrowser {
         {
             var btn = senderBTN as Button;
             var myImage = (Bitmap)Resources.ResourceManager.GetObject(res_imageName);
-            btn.BackgroundImage = btn.Enabled ? myImage : myImage.Lighter(90, Color.White);
-        }
+			//btn.BackgroundImage = btn.Enabled ? myImage : myImage.Lighter(90, Color.White);
+			btn.BackgroundImage = btn.Enabled ? myImage : myImage.Lighter(90, PanelToolbar.BackColor);
+		}
 
         private void BtnBack_EnabledChanged(object sender, EventArgs e) => handleDisabled_BGImage(sender , "arrow_back_64dp_000000");
         private void BtnForward_EnabledChanged(object sender, EventArgs e) => handleDisabled_BGImage(sender , "arrow_forward_64dp_000000");
