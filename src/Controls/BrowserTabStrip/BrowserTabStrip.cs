@@ -249,7 +249,25 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 					SelectedItem = tabItemByPoint;
 					Invalidate();
 				}
-			}
+
+                //close if wheel click (aka middle)
+                if (e.Button == MouseButtons.Middle )
+                {
+                    //close action??
+                    if (SelectedItem != null)
+                    {
+                        TabStripItemClosingEventArgs tabStripItemClosingEventArgs = new TabStripItemClosingEventArgs(SelectedItem);
+                        OnTabStripItemClosing(tabStripItemClosingEventArgs);
+                        if (!tabStripItemClosingEventArgs.Cancel && SelectedItem.CanClose)
+                        {
+                            RemoveTab(SelectedItem);
+                            OnTabStripItemClosed(EventArgs.Empty);
+                        }
+                    }
+                    Invalidate();
+
+                }
+            }
 			else {
 				if (e.Button != MouseButtons.Left || hitTestResult != 0) {
 					return;
