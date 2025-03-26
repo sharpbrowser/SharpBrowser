@@ -85,52 +85,56 @@ namespace SharpBrowser
             // 
             // BtnRefresh
             // 
+            BtnRefresh.BackgroundImage = (System.Drawing.Image)resources.GetObject("BtnRefresh.BackgroundImage");
+            BtnRefresh.BackgroundImageLayout = ImageLayout.Zoom;
             BtnRefresh.FlatStyle = FlatStyle.Flat;
             BtnRefresh.ForeColor = System.Drawing.Color.White;
-            BtnRefresh.Image = (System.Drawing.Image)resources.GetObject("BtnRefresh.Image");
-            BtnRefresh.Location = new System.Drawing.Point(114, 11);
+            BtnRefresh.Location = new System.Drawing.Point(114, 9);
             BtnRefresh.Margin = new Padding(3, 4, 3, 4);
             BtnRefresh.Name = "BtnRefresh";
-            BtnRefresh.Size = new System.Drawing.Size(36, 30);
+            BtnRefresh.Size = new System.Drawing.Size(36, 34);
             BtnRefresh.TabIndex = 3;
             BtnRefresh.UseVisualStyleBackColor = true;
             BtnRefresh.Click += bRefresh_Click;
             // 
             // BtnStop
             // 
+            BtnStop.BackgroundImage = (System.Drawing.Image)resources.GetObject("BtnStop.BackgroundImage");
+            BtnStop.BackgroundImageLayout = ImageLayout.Zoom;
             BtnStop.FlatStyle = FlatStyle.Flat;
             BtnStop.ForeColor = System.Drawing.Color.White;
-            BtnStop.Image = (System.Drawing.Image)resources.GetObject("BtnStop.Image");
-            BtnStop.Location = new System.Drawing.Point(114, 11);
+            BtnStop.Location = new System.Drawing.Point(114, 9);
             BtnStop.Margin = new Padding(3, 4, 3, 4);
             BtnStop.Name = "BtnStop";
-            BtnStop.Size = new System.Drawing.Size(36, 30);
+            BtnStop.Size = new System.Drawing.Size(36, 34);
             BtnStop.TabIndex = 2;
             BtnStop.UseVisualStyleBackColor = true;
             BtnStop.Click += bStop_Click;
             // 
             // BtnForward
             // 
+            BtnForward.BackgroundImage = (System.Drawing.Image)resources.GetObject("BtnForward.BackgroundImage");
+            BtnForward.BackgroundImageLayout = ImageLayout.Zoom;
             BtnForward.FlatStyle = FlatStyle.Flat;
             BtnForward.ForeColor = System.Drawing.Color.White;
-            BtnForward.Image = (System.Drawing.Image)resources.GetObject("BtnForward.Image");
-            BtnForward.Location = new System.Drawing.Point(66, 11);
+            BtnForward.Location = new System.Drawing.Point(66, 9);
             BtnForward.Margin = new Padding(3, 4, 3, 4);
             BtnForward.Name = "BtnForward";
-            BtnForward.Size = new System.Drawing.Size(36, 30);
+            BtnForward.Size = new System.Drawing.Size(36, 34);
             BtnForward.TabIndex = 1;
             BtnForward.UseVisualStyleBackColor = true;
             BtnForward.Click += bForward_Click;
             // 
             // BtnBack
             // 
+            BtnBack.BackgroundImage = (System.Drawing.Image)resources.GetObject("BtnBack.BackgroundImage");
+            BtnBack.BackgroundImageLayout = ImageLayout.Zoom;
             BtnBack.FlatStyle = FlatStyle.Flat;
             BtnBack.ForeColor = System.Drawing.Color.White;
-            BtnBack.Image = (System.Drawing.Image)resources.GetObject("BtnBack.Image");
-            BtnBack.Location = new System.Drawing.Point(18, 11);
+            BtnBack.Location = new System.Drawing.Point(18, 9);
             BtnBack.Margin = new Padding(3, 4, 3, 4);
             BtnBack.Name = "BtnBack";
-            BtnBack.Size = new System.Drawing.Size(36, 30);
+            BtnBack.Size = new System.Drawing.Size(36, 34);
             BtnBack.TabIndex = 0;
             BtnBack.UseVisualStyleBackColor = true;
             BtnBack.Click += bBack_Click;
@@ -143,13 +147,14 @@ namespace SharpBrowser
             // BtnDownloads
             // 
             BtnDownloads.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            BtnDownloads.BackgroundImage = (System.Drawing.Image)resources.GetObject("BtnDownloads.BackgroundImage");
+            BtnDownloads.BackgroundImageLayout = ImageLayout.Zoom;
             BtnDownloads.FlatStyle = FlatStyle.Flat;
             BtnDownloads.ForeColor = System.Drawing.Color.White;
-            BtnDownloads.Image = (System.Drawing.Image)resources.GetObject("BtnDownloads.Image");
-            BtnDownloads.Location = new System.Drawing.Point(741, 11);
+            BtnDownloads.Location = new System.Drawing.Point(741, 9);
             BtnDownloads.Margin = new Padding(3, 4, 3, 4);
             BtnDownloads.Name = "BtnDownloads";
-            BtnDownloads.Size = new System.Drawing.Size(36, 30);
+            BtnDownloads.Size = new System.Drawing.Size(36, 34);
             BtnDownloads.TabIndex = 4;
             BtnDownloads.Tag = "Downloads";
             BtnDownloads.UseVisualStyleBackColor = true;
@@ -173,10 +178,10 @@ namespace SharpBrowser
             PanelToolbar.BackColor = System.Drawing.Color.FromArgb(247, 247, 247);
             PanelToolbar.Controls.Add(btn_Menu);
             PanelToolbar.Controls.Add(BtnHome);
+            PanelToolbar.Controls.Add(BtnRefresh);
             PanelToolbar.Controls.Add(BtnDownloads);
             PanelToolbar.Controls.Add(BtnForward);
             PanelToolbar.Controls.Add(BtnBack);
-            PanelToolbar.Controls.Add(BtnRefresh);
             PanelToolbar.Controls.Add(BtnStop);
             PanelToolbar.Controls.Add(TxtURL);
             PanelToolbar.Dock = DockStyle.Top;
@@ -189,15 +194,16 @@ namespace SharpBrowser
             // btn_Menu
             // 
             btn_Menu.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btn_Menu.FlatAppearance.BorderSize = 0;
+            btn_Menu.BackgroundImage = (System.Drawing.Image)resources.GetObject("btn_Menu.BackgroundImage");
+            btn_Menu.BackgroundImageLayout = ImageLayout.Zoom;
             btn_Menu.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Silver;
             btn_Menu.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(224, 224, 224);
             btn_Menu.FlatStyle = FlatStyle.Flat;
-            btn_Menu.ForeColor = System.Drawing.Color.Black;
-            btn_Menu.Location = new System.Drawing.Point(837, 11);
+            btn_Menu.ForeColor = System.Drawing.Color.White;
+            btn_Menu.Location = new System.Drawing.Point(837, 9);
             btn_Menu.Margin = new Padding(3, 4, 3, 4);
             btn_Menu.Name = "btn_Menu";
-            btn_Menu.Size = new System.Drawing.Size(36, 30);
+            btn_Menu.Size = new System.Drawing.Size(36, 34);
             btn_Menu.TabIndex = 7;
             btn_Menu.Tag = "Menu3dot";
             btn_Menu.Text = "...";
@@ -206,13 +212,14 @@ namespace SharpBrowser
             // BtnHome
             // 
             BtnHome.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            BtnHome.BackgroundImage = (System.Drawing.Image)resources.GetObject("BtnHome.BackgroundImage");
+            BtnHome.BackgroundImageLayout = ImageLayout.Zoom;
             BtnHome.FlatStyle = FlatStyle.Flat;
             BtnHome.ForeColor = System.Drawing.Color.White;
-            BtnHome.Image = (System.Drawing.Image)resources.GetObject("BtnHome.Image");
-            BtnHome.Location = new System.Drawing.Point(789, 11);
+            BtnHome.Location = new System.Drawing.Point(789, 9);
             BtnHome.Margin = new Padding(3, 4, 3, 4);
             BtnHome.Name = "BtnHome";
-            BtnHome.Size = new System.Drawing.Size(36, 30);
+            BtnHome.Size = new System.Drawing.Size(36, 34);
             BtnHome.TabIndex = 6;
             BtnHome.Tag = "Home";
             BtnHome.UseVisualStyleBackColor = true;
