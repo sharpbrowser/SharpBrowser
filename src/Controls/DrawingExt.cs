@@ -2,23 +2,8 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
 
-// A simple extension to the Graphics class for extended 
-// graphic routines, such, 
-// as for creating rounded rectangles. 
-// Because, Graphics class is an abstract class, 
-// that is why it can not be inherited. Although, 
-// I have provided a simple constructor 
-// that builds the ExtendedGraphics object around a 
-// previously created Graphics object. 
-// Please contact: aaronreginald@yahoo.com for the most 
-// recent implementations of
-// this class. 
 namespace System.Drawing
 {
-    /// <SUMMARY> 
-    /// Inherited child for the class Graphics encapsulating 
-    /// additional functionality for curves and rounded rectangles. 
-    /// </SUMMARY> 
 
     public static partial class GraphicsEx
     {
@@ -29,16 +14,16 @@ namespace System.Drawing
         /// <summary>
         /// Fills a Rounded Rectangle with integers. 
         public static void FillRoundRectangle(this Graphics g, Brush brush, Rectangle rect, int radius)
-            => g.FillRoundRectangle( brush, rect.X, rect.Y, rect.Width, rect.Height, radius);
+            => g.FillRoundRectangle(brush, rect.X, rect.Y, rect.Width, rect.Height, radius);
 
         /// <summary>
         /// Fills a Rounded Rectangle with continuous numbers.
         /// </summary>
-        public static void FillRoundRectangle(this Graphics g,  Brush brush, float x, float y,
+        public static void FillRoundRectangle(this Graphics g, Brush brush, float x, float y,
             float width, float height, int radius)
         {
             RectangleF rectangle = new RectangleF(x, y, width, height);
-            GraphicsPath path = rectangle.GetRoundedRect( radius);
+            GraphicsPath path = rectangle.GetRoundedRect(radius);
             g.FillPath(brush, path);
         }
 
@@ -208,10 +193,64 @@ namespace System.Drawing
             => CreateTabPath_Active(Rectangle.Round(tabRect), (int)cornerRadius);
 
 
- 
+
 
     }
 
+
+    public static class ImageExt
+    {
+        /// <summary>
+        ///    btn.BackgroundImage Has no Disabled Effect . wee need lighter
+        /// </summary>
+        /// <param name="imgLight"></param>
+        /// <param name="level">0 to 100</param>
+        /// <param name="nRed"></param>
+        /// <param name="nGreen"></param>
+        /// <param name="nBlue"></param>
+        /// <returns></returns>
+        public static Image Lighter(this Image imgLight, int level, int nRed, int nGreen, int nBlue)
+        {
+            //convert image to graphics object
+            Graphics graphics = Graphics.FromImage(imgLight);
+            int conversion = (5 * (level - 50)); //calculate new alpha value
+                                                 //create mask with blended alpha value and chosen color as pen 
+            Pen pLight = new Pen(Color.FromArgb(conversion, nRed, nGreen, nBlue), imgLight.Width * 2);
+            //apply created mask to graphics object
+            graphics.DrawLine(pLight, -1, -1, imgLight.Width, imgLight.Height);
+            //save created graphics object and modify image object by that
+            graphics.Save();
+            graphics.Dispose(); //dispose graphics object
+            return imgLight; //return modified image
+        }
+
+        /// <summary>
+        /// recommended defaults  level:90, color:Color.white
+        /// 90 level - fade effect is instense,
+        /// <para/> 10 level - has nearly no effect;
+        /// </summary>
+        /// <param name="imgLight"></param>
+        /// <param name="level"></param>
+        /// <param name="col"></param>
+        /// <returns></returns>
+        public static Image Lighter(this Image imgLight, int level, Color col ) 
+            => imgLight.Lighter(level, col.R, col.G, col.B);
+
+        /// <summary>
+        /// recommended defaults  level:90, color:Color.white
+        /// 90 level - fade effect is instense,
+        /// <para/> 10 level - has nearly no effect;
+        /// </summary>
+        /// <param name="imgLight"></param>
+        /// <param name="level"></param>
+        /// <param name="col"></param>
+        /// <returns></returns>
+        public static Image Lighter(this Image imgLight, int level = 90)
+        {
+            var col = Color.White;
+            return imgLight.Lighter(level, col.R, col.G, col.B);
+        }
+    }
 
 
 }
