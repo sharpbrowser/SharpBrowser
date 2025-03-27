@@ -1,49 +1,44 @@
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
+using static System.Windows.Forms.DataFormats;
 
 namespace SharpBrowser.Controls.BrowserTabStrip {
 	[DefaultEvent("TabStripItemSelectionChanged")]
 	[DefaultProperty("Items")]
 	[ToolboxItem(true)]
 	public class BrowserTabStrip : BaseStyledPanel, ISupportInitialize, IDisposable {
+		
 		private const int TEXT_LEFT_MARGIN = 15;
-
 		private const int TEXT_RIGHT_MARGIN = 10;
-
 		private const int DEF_HEADER_HEIGHT = 28;
+        private const int DEF_GLYPH_WIDTH = 40;
 
-		private const int DEF_BUTTON_HEIGHT = 28;
+        //private const int DEF_BUTTON_HEIGHT = 28;
+        public int TabButton_Height => DEF_BUTTON_HEIGHT;
+        private const int DEF_BUTTON_HEIGHT = 48;
+		private int DEF_START_POS = 50;
+		private int DEF_START_POS_forOnPaint = 50; //volatile
 
-		private const int DEF_GLYPH_WIDTH = 40;
-
-		private int DEF_START_POS = 10;
-
-		private Rectangle stripButtonRect = Rectangle.Empty;
+        private Rectangle stripButtonRect = Rectangle.Empty;
 
 		private BrowserTabStripItem selectedItem;
-
 		private ContextMenuStrip menu;
-
 		private BrowserTabStripCloseButton closeButton;
-
 		private BrowserTabStripItemCollection items;
 
 		private StringFormat sf;
-
 		private static Font defaultFont = new Font("Tahoma", 8.25f, FontStyle.Regular);
 
-		private bool isIniting;
-
+        private bool isIniting;
 		private bool menuOpen;
-
 		public int MaxTabSize = 200;
-
 		public int AddButtonWidth = 40;
 
-		[RefreshProperties(RefreshProperties.All)]
+        [RefreshProperties(RefreshProperties.All)]
 		[DefaultValue(null)]
 		public BrowserTabStripItem SelectedItem {
 			get {
@@ -64,6 +59,7 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 				else {
 					selectedItem = value;
 				}
+
 				foreach (BrowserTabStripItem item in Items) {
 					if (item == selectedItem) {
 						SelectItem(item);
@@ -105,13 +101,9 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 		public new ControlCollection Controls => base.Controls;
 
 		public event TabStripItemClosingHandler TabStripItemClosing;
-
 		public event TabStripItemChangedHandler TabStripItemSelectionChanged;
-
 		public event HandledEventHandler MenuItemsLoading;
-
 		public event EventHandler MenuItemsLoaded;
-
 		public event EventHandler TabStripItemClosed;
 
 		public BrowserTabStrip() {
@@ -146,11 +138,9 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 			return HitTestResult.None;
 		}
 
-		public void AddTab(BrowserTabStripItem tabItem) {
-			AddTab(tabItem, autoSelect: false);
-		}
+        public void AddTab(BrowserTabStripItem tabItem) => AddTab(tabItem, autoSelect: false);
 
-		public void AddTab(BrowserTabStripItem tabItem, bool autoSelect) {
+        public void AddTab(BrowserTabStripItem tabItem, bool autoSelect) {
 			tabItem.Dock = DockStyle.Fill;
 			Items.Add(tabItem);
 			if ((autoSelect && tabItem.Visible) || (tabItem.Visible && Items.DrawnCount < 1)) {
@@ -191,8 +181,7 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 			return result;
 		}
 
-		public virtual void ShowMenu() {
-		}
+		public virtual void ShowMenu() { }
 
 		internal void UnDrawAll() {
 			for (int i = 0; i < Items.Count; i++) {
@@ -206,42 +195,28 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 			tabItem.Selected = true;
 		}
 
-		internal void UnSelectItem(BrowserTabStripItem tabItem) {
-			tabItem.Selected = false;
-		}
+        internal void UnSelectItem(BrowserTabStripItem tabItem) => tabItem.Selected = false;
 
-		protected internal virtual void OnTabStripItemClosing(TabStripItemClosingEventArgs e) {
-			if (this.TabStripItemClosing != null) {
-				this.TabStripItemClosing(e);
-			}
-		}
+        protected internal virtual void OnTabStripItemClosing(TabStripItemClosingEventArgs e) => this.TabStripItemClosing?.Invoke(e);
 
-		protected internal virtual void OnTabStripItemClosed(EventArgs e) {
+        protected internal virtual void OnTabStripItemClosed(EventArgs e) {
 			selectedItem = null;
-			if (this.TabStripItemClosed != null) {
-				this.TabStripItemClosed(this, e);
-			}
-		}
+            this.TabStripItemClosed?.Invoke(this, e);
+        }
 
-		protected virtual void OnMenuItemsLoading(HandledEventArgs e) {
-			if (this.MenuItemsLoading != null) {
-				this.MenuItemsLoading(this, e);
-			}
-		}
+        protected virtual void OnMenuItemsLoading(HandledEventArgs e) => this.MenuItemsLoading?.Invoke(this, e);
 
-		protected virtual void OnMenuItemsLoaded(EventArgs e) {
+        protected virtual void OnMenuItemsLoaded(EventArgs e) {
 			if (this.MenuItemsLoaded != null) {
 				this.MenuItemsLoaded(this, e);
 			}
 		}
 
 		protected virtual void OnTabStripItemChanged(TabStripItemChangedEventArgs e) {
-			if (this.TabStripItemSelectionChanged != null) {
-				this.TabStripItemSelectionChanged(e);
-			}
-		}
+            this.TabStripItemSelectionChanged?.Invoke(e);
+        }
 
-		protected virtual void OnMenuItemsLoad(EventArgs e) {
+        protected virtual void OnMenuItemsLoad(EventArgs e) {
 			menu.RightToLeft = RightToLeft;
 			menu.Items.Clear();
 			for (int i = 0; i < Items.Count; i++) {
@@ -262,47 +237,6 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 			Invalidate();
 		}
 
-		protected override void OnPaint(PaintEventArgs e) {
-			SetDefaultSelected();
-			Rectangle clientRectangle = base.ClientRectangle;
-			clientRectangle.Width--;
-			clientRectangle.Height--;
-			DEF_START_POS = 10;
-			e.Graphics.DrawRectangle(SystemPens.ControlDark, clientRectangle);
-			e.Graphics.FillRectangle(Brushes.White, clientRectangle);
-			e.Graphics.FillRectangle(SystemBrushes.GradientInactiveCaption, new Rectangle(clientRectangle.X, clientRectangle.Y, clientRectangle.Width, 28));
-			e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-			for (int i = 0; i < Items.Count; i++) {
-				BrowserTabStripItem fATabStripItem = Items[i];
-				if (fATabStripItem.Visible || base.DesignMode) {
-					OnCalcTabPage(e.Graphics, fATabStripItem);
-					fATabStripItem.IsDrawn = false;
-					OnDrawTabButton(e.Graphics, fATabStripItem);
-				}
-			}
-			if (selectedItem != null) {
-				OnDrawTabButton(e.Graphics, selectedItem);
-			}
-			if (Items.DrawnCount == 0 || Items.VisibleCount == 0) {
-				e.Graphics.DrawLine(SystemPens.ControlDark, new Point(0, 28), new Point(base.ClientRectangle.Width, 28));
-			}
-			else if (SelectedItem != null && SelectedItem.IsDrawn) {
-				int num = (int)(SelectedItem.StripRect.Height / 4f);
-				Point point = new Point((int)SelectedItem.StripRect.Left - num, 28);
-				e.Graphics.DrawLine(SystemPens.ControlDark, new Point(0, 28), point);
-				point.X += (int)SelectedItem.StripRect.Width + num * 2;
-				e.Graphics.DrawLine(SystemPens.ControlDark, point, new Point(base.ClientRectangle.Width, 28));
-			}
-			if (SelectedItem != null && SelectedItem.CanClose) {
-				closeButton.IsVisible = true;
-				closeButton.CalcBounds(selectedItem);
-				closeButton.Draw(e.Graphics);
-			}
-			else {
-				closeButton.IsVisible = false;
-			}
-		}
-
 		protected override void OnMouseDown(MouseEventArgs e) {
 			base.OnMouseDown(e);
 			HitTestResult hitTestResult = HitTest(e.Location);
@@ -312,7 +246,25 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 					SelectedItem = tabItemByPoint;
 					Invalidate();
 				}
-			}
+
+                //close if wheel click (aka middle)
+                if (e.Button == MouseButtons.Middle )
+                {
+                    //close action??
+                    if (SelectedItem != null)
+                    {
+                        TabStripItemClosingEventArgs tabStripItemClosingEventArgs = new TabStripItemClosingEventArgs(SelectedItem);
+                        OnTabStripItemClosing(tabStripItemClosingEventArgs);
+                        if (!tabStripItemClosingEventArgs.Cancel && SelectedItem.CanClose)
+                        {
+                            RemoveTab(SelectedItem);
+                            OnTabStripItemClosed(EventArgs.Empty);
+                        }
+                    }
+                    Invalidate();
+
+                }
+            }
 			else {
 				if (e.Button != MouseButtons.Left || hitTestResult != 0) {
 					return;
@@ -328,7 +280,7 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 				Invalidate();
 			}
 		}
-
+		
 		protected override void OnMouseMove(MouseEventArgs e) {
 			base.OnMouseMove(e);
 			if (closeButton.IsVisible) {
@@ -378,72 +330,190 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 			}
 		}
 
-		private void OnCalcTabPage(Graphics g, BrowserTabStripItem currentItem) {
-			_ = Font;
-			int num = 0;
+        //Brush brush_TabBackColor = SystemBrushes.GradientInactiveCaption;
+        //Color color_TabBackColor = Color.FromArgb(232, 232, 232);
+        SolidBrush brush_TabBackColor = new SolidBrush(Color.FromArgb(232, 232, 232));
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            SetDefaultSelected();
+            Rectangle clientRectangle = base.ClientRectangle;
+            clientRectangle.Width--;
+            clientRectangle.Height--;
+            DEF_START_POS_forOnPaint = DEF_START_POS;
+            e.Graphics.DrawRectangle(SystemPens.ControlDark, clientRectangle);
+            e.Graphics.FillRectangle(Brushes.White, clientRectangle);
+            e.Graphics.FillRectangle(brush_TabBackColor, new Rectangle(clientRectangle.X, clientRectangle.Y, clientRectangle.Width, DEF_BUTTON_HEIGHT));
+            //int radius = 5;
+            //e.Graphics.DrawRoundRectangle(SystemPens.ControlDark, clientRectangle, radius);
+            //e.Graphics.FillRoundRectangle(Brushes.White, clientRectangle, radius);
+            //e.Graphics.FillRoundRectangle(brush_TabBackColor,new Rectangle(clientRectangle.X, clientRectangle.Y, clientRectangle.Width, DEF_BUTTON_HEIGHT),radius);
+            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            for (int i = 0; i < Items.Count; i++)
+            {
+                BrowserTabStripItem fATabStripItem = Items[i];
+                if (fATabStripItem.Visible || base.DesignMode)
+                {
+                    OnCalcTabPage(e.Graphics, fATabStripItem);
+                    fATabStripItem.IsDrawn = false;
+                    OnDrawTabButton(e.Graphics, fATabStripItem);
+                }
+            }
+            if (selectedItem != null)
+            {
+                OnDrawTabButton(e.Graphics, selectedItem);
+            }
+            if (Items.DrawnCount == 0 || Items.VisibleCount == 0)
+            {
+                //e.Graphics.DrawLine(SystemPens.ControlDark, new Point(0, 28), new Point(base.ClientRectangle.Width, 28));
+                e.Graphics.DrawLine(Pens.Red, new Point(0, DEF_BUTTON_HEIGHT), new Point(base.ClientRectangle.Width, DEF_BUTTON_HEIGHT));
+            }
+            else if (SelectedItem != null && SelectedItem.IsDrawn)
+            {
+                //var lineColorPen = SystemPens.ControlDark;
+                var lineColorPen = new Pen( color_TablButton_inActiveBG);
+
+                //int num = (int)(SelectedItem.StripRect.Height / 4f);
+                Point point = new Point((int)SelectedItem.StripRect.Left - TabRadius, DEF_BUTTON_HEIGHT);
+                e.Graphics.DrawLine(lineColorPen, new Point(0, DEF_BUTTON_HEIGHT), point);
+                point.X += (int)SelectedItem.StripRect.Width
+                    //+ num * 2;
+                    + TabRadius+2;
+                e.Graphics.DrawLine(lineColorPen, point, new Point(base.ClientRectangle.Width, DEF_BUTTON_HEIGHT));
+            }
+            if (SelectedItem != null && SelectedItem.CanClose)
+            {
+                closeButton.IsVisible = true;
+                closeButton.CalcBounds(selectedItem);
+                closeButton.Draw(e.Graphics);
+            }
+            else
+            {
+                closeButton.IsVisible = false;
+            }
+        }
+
+        /// <summary>
+        /// ready for future use, (_ [] X) , if we put Tabs and Close/Minimize buttons on TitleBar 
+        /// </summary>
+        int atRight_ReservedWidth = 250; 
+        private void OnCalcTabPage(Graphics g, BrowserTabStripItem currentItem) {
+			//_ = Font;
+			int calcWidth = 0;
 			if (currentItem.Title == "+") {
-				num = AddButtonWidth;
+				calcWidth = AddButtonWidth;
 			}
 			else {
-				num = (base.Width - (AddButtonWidth + 20)) / (items.Count - 1);
-				if (num > MaxTabSize) {
-					num = MaxTabSize;
+				calcWidth = (base.Width -atRight_ReservedWidth - (AddButtonWidth + 20)) / (items.Count - 1);
+				if (calcWidth > MaxTabSize) {
+					calcWidth = MaxTabSize;
 				}
 			}
-			RectangleF rectangleF2 = (currentItem.StripRect = new RectangleF(DEF_START_POS, 3f, num, 28f));
-			DEF_START_POS += num;
+			RectangleF rectangleF2 = (currentItem.StripRect = new RectangleF(DEF_START_POS_forOnPaint, 3f, calcWidth, DEF_BUTTON_HEIGHT));
+			DEF_START_POS_forOnPaint += calcWidth;
 		}
 
 		private SizeF MeasureTabWidth(Graphics g, BrowserTabStripItem currentItem, Font currentFont) {
-			SizeF result = g.MeasureString(currentItem.Title, currentFont, new SizeF(200f, 28f), sf);
+			SizeF result = g.MeasureString(currentItem.Title, currentFont, new SizeF(200f, DEF_BUTTON_HEIGHT), sf);
 			result.Width += 25f;
 			return result;
 		}
 
-		private void OnDrawTabButton(Graphics g, BrowserTabStripItem currentItem) {
-			Items.IndexOf(currentItem);
-			Font font = Font;
-			RectangleF stripRect = currentItem.StripRect;
-			GraphicsPath graphicsPath = new GraphicsPath();
-			float left = stripRect.Left;
-			float right = stripRect.Right;
-			float num = 3f;
-			float num2 = stripRect.Bottom - 1f;
-			float num3 = stripRect.Width;
-			float num4 = stripRect.Height;
-			float num5 = num4 / 4f;
-			graphicsPath.AddLine(left - num5, num2, left + num5, num);
-			graphicsPath.AddLine(right - num5, num, right + num5, num2);
-			graphicsPath.CloseFigure();
-			SolidBrush brush = new SolidBrush((currentItem == SelectedItem) ? Color.White : SystemColors.GradientInactiveCaption);
-			g.FillPath(brush, graphicsPath);
-			g.DrawPath(SystemPens.ControlDark, graphicsPath);
-			if (currentItem == SelectedItem) {
-				g.DrawLine(new Pen(brush), left - 9f, num4 + 2f, left + num3 - 1f, num4 + 2f);
-			}
-			PointF location = new PointF(left + 15f, 5f);
-			RectangleF layoutRectangle = stripRect;
-			layoutRectangle.Location = location;
-			layoutRectangle.Width = num3 - (layoutRectangle.Left - left) - 4f;
-			if (currentItem == selectedItem) {
-				layoutRectangle.Width -= 15f;
-			}
-			layoutRectangle.Height = 23f;
-			if (currentItem == SelectedItem) {
-				g.DrawString(currentItem.Title, font, new SolidBrush(ForeColor), layoutRectangle, sf);
-			}
-			else {
-				g.DrawString(currentItem.Title, font, new SolidBrush(ForeColor), layoutRectangle, sf);
-			}
-			currentItem.IsDrawn = true;
-		}
+        bool styleNotPill = true;
+        int TabRadius = 8;
+		//Color color_TablButton_ActiveBG = Color.White;
+		Color color_TablButton_ActiveBG = Color.FromArgb(247, 247, 247);
+		//Color color_TablButton_inActiveBG = SystemColors.GradientInactiveCaption;
+		//Color color_TablButton_inActiveBG = Color.FromArgb(222, 225, 231);
+		Color color_TablButton_inActiveBG = Color.FromArgb(232, 232, 232);
+        /// <summary>
+        /// ********  Draws The Tab Header. aka button
+        /// </summary>
+        /// <param name="g"></param>
+        /// <param name="currentItem"></param>
+        private void OnDrawTabButton(Graphics g, BrowserTabStripItem currentItem)
+        {
+            Items.IndexOf(currentItem);
+            Font font = Font;
 
+            bool isActiveTab = currentItem == SelectedItem;
+            bool is_atRightof_ActiveTab = Items.IndexOf(currentItem) == Items.IndexOf(selectedItem)+1; 
+
+            RectangleF stripRect = currentItem.StripRect;
+            var sr = stripRect;
+            SolidBrush brush = new SolidBrush((currentItem == SelectedItem) ? color_TablButton_ActiveBG : color_TablButton_inActiveBG);
+            Pen pen = new Pen((currentItem == SelectedItem) ? color_TablButton_ActiveBG : color_TablButton_inActiveBG);
+            var tabDrawnRect = new RectangleF(sr.Left, 1, sr.Width - 2, sr.Height - 2);
+			//tabDrawnRect.Height += 2; // hides bottom Line of Rect.
+			tabDrawnRect.Y += 8;  
+            tabDrawnRect.Height -= 8;
+			if(styleNotPill)
+                tabDrawnRect.Height += 2;
+
+            ////--Draw Rectange Tabs
+            //g.FillRectangle(brush, tabDrawnRect);
+            //g.DrawRectangle(SystemPens.ControlDark, tabDrawnRect);
+           
+			////--Draw Pill Style Tabs
+            //g.FillRoundRectangle(brush, tabDrawnRect,TabRadius);
+            //g.DrawRoundRectangle(SystemPens.ControlDark, tabDrawnRect, TabRadius);
+
+            ////--Draw Rounded Chrome Tabs
+            var tabpathNew =
+				isActiveTab ?
+				tabDrawnRect.CreateTabPath_Roundtop_RoundBottomOut(TabRadius) :
+				tabDrawnRect.CreateTabPath_roundAll(TabRadius);
+
+            g.FillPath(brush, tabpathNew);
+            //g.DrawPath(SystemPens.ControlDark, tabpathNew);
+			//--white color requires more work...
+            g.DrawPath(pen , tabpathNew);
+			//--draw ,tab seperator line:   | TAB1 | TAB2
+			if (!isActiveTab && !is_atRightof_ActiveTab) 
+			{
+                int margin = 14;
+                sr.Y += 2; //move rect down
+                g.DrawLine(SystemPens.ControlDark, sr.X, sr.Y + margin, sr.X, sr.Y + sr.Height - margin);
+            }
+			
+			//g.DrawPath(SystemPens.ControlDark, graphicsPath);
+			if (currentItem == SelectedItem)
+            {
+                //g.DrawLine(new Pen(brush), sr_left + 19f, sr_height + 2f, sr_left + sr_width - 1f, sr_height + 2f);
+            }
+           
+			var ForeColorSel = ForeColor;
+			//if (Debugger.IsAttached)
+			//    ForeColorSel = Color.DarkCyan;
+
+			//margin for Tab Text, Vertically Center
+			tabDrawnRect.X += 10;
+			tabDrawnRect.Width -= 10;
+            //sf.LineAlignment = StringAlignment.Center; 
+            if (currentItem == SelectedItem)
+            {
+                tabDrawnRect.Width -= 25;// dont overflow ellipsis "..." under the activeTab.CloseButton.
+                //g.DrawRectangle(Pens.Cyan, tabDrawnRect);
+                g.DrawString(currentItem.Title, font, new SolidBrush(ForeColorSel), tabDrawnRect, sf);
+            }
+            else
+            {
+                g.DrawString(currentItem.Title, font, new SolidBrush(ForeColorSel), tabDrawnRect, sf);
+            }
+            currentItem.IsDrawn = true;
+        }
+      
+
+		//int TabButton_Height = 10;
+		int TabButton_Height2 = 30;
 		private void UpdateLayout() {
-			sf.Trimming = StringTrimming.EllipsisCharacter;
-			sf.FormatFlags |= StringFormatFlags.NoWrap;
-			sf.FormatFlags &= StringFormatFlags.DirectionRightToLeft;
-			stripButtonRect = new Rectangle(0, 0, base.ClientSize.Width - 40 - 2, 10);
-			base.DockPadding.Top = 29;
+            //sf.Trimming = StringTrimming.Character;
+            sf.Trimming = StringTrimming.EllipsisCharacter;
+			sf.FormatFlags = StringFormatFlags.NoWrap;
+			//sf.FormatFlags |= StringFormatFlags.DirectionRightToLeft; //this line causes multiline.//is this arabic??
+            sf.LineAlignment = StringAlignment.Center;
+
+            stripButtonRect = new Rectangle(0, 0, base.ClientSize.Width - 40 - 2, TabButton_Height);
+			base.DockPadding.Top = DEF_BUTTON_HEIGHT+1;
 			base.DockPadding.Bottom = 1;
 			base.DockPadding.Right = 1;
 			base.DockPadding.Left = 1;
@@ -466,34 +536,14 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 			Invalidate();
 		}
 
-		public bool ShouldSerializeFont() {
-			if (Font != null) {
-				return !Font.Equals(defaultFont);
-			}
-			return false;
-		}
+        public bool ShouldSerializeFont() => !Font?.Equals(defaultFont) ?? false;
+        public bool ShouldSerializeSelectedItem() => true;
+        public bool ShouldSerializeItems() => items.Count > 0;
+        public new void ResetFont() => Font = defaultFont;
+        public void BeginInit() => isIniting = true;
+        public void EndInit() => isIniting = false;
 
-		public bool ShouldSerializeSelectedItem() {
-			return true;
-		}
-
-		public bool ShouldSerializeItems() {
-			return items.Count > 0;
-		}
-
-		public new void ResetFont() {
-			Font = defaultFont;
-		}
-
-		public void BeginInit() {
-			isIniting = true;
-		}
-
-		public void EndInit() {
-			isIniting = false;
-		}
-
-		protected override void Dispose(bool disposing) {
+        protected override void Dispose(bool disposing) {
 			if (disposing) {
 				items.CollectionChanged -= OnCollectionChanged;
 				menu.ItemClicked -= OnMenuItemClicked;

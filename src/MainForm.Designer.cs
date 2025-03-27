@@ -1,4 +1,6 @@
-﻿namespace SharpBrowser
+﻿using System.Windows.Forms;
+
+namespace SharpBrowser
 {
     partial class MainForm
     {
@@ -28,329 +30,367 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.menuStripTab = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.menuCloseTab = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuCloseOtherTabs = new System.Windows.Forms.ToolStripMenuItem();
-            this.BtnRefresh = new System.Windows.Forms.Button();
-            this.BtnStop = new System.Windows.Forms.Button();
-            this.BtnForward = new System.Windows.Forms.Button();
-            this.BtnBack = new System.Windows.Forms.Button();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.BtnDownloads = new System.Windows.Forms.Button();
-            this.TxtURL = new System.Windows.Forms.TextBox();
-            this.PanelToolbar = new System.Windows.Forms.Panel();
-            this.TabPages = new SharpBrowser.Controls.BrowserTabStrip.BrowserTabStrip();
-            this.tabStrip1 = new SharpBrowser.Controls.BrowserTabStrip.BrowserTabStripItem();
-            this.tabStripAdd = new SharpBrowser.Controls.BrowserTabStrip.BrowserTabStripItem();
-            this.PanelStatus = new System.Windows.Forms.Panel();
-            this.PanelSearch = new System.Windows.Forms.Panel();
-            this.BtnNextSearch = new System.Windows.Forms.Button();
-            this.BtnPrevSearch = new System.Windows.Forms.Button();
-            this.BtnCloseSearch = new System.Windows.Forms.Button();
-            this.TxtSearch = new System.Windows.Forms.TextBox();
-            this.BtnHome = new System.Windows.Forms.Button();
-            this.menuStripTab.SuspendLayout();
-            this.PanelToolbar.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.TabPages)).BeginInit();
-            this.TabPages.SuspendLayout();
-            this.PanelSearch.SuspendLayout();
-            this.SuspendLayout();
+            menuStripTab = new ContextMenuStrip(components);
+            menuCloseTab = new ToolStripMenuItem();
+            menuCloseOtherTabs = new ToolStripMenuItem();
+            BtnRefresh = new Button();
+            BtnStop = new Button();
+            BtnForward = new Button();
+            BtnBack = new Button();
+            timer1 = new Timer(components);
+            BtnDownloads = new Button();
+            TxtURL = new TextBox();
+            PanelToolbar = new Panel();
+            lbl_ZoomLevel = new Label();
+            btn_Menu = new Button();
+            BtnHome = new Button();
+            TabPages = new SharpBrowser.Controls.BrowserTabStrip.BrowserTabStrip();
+            tabStrip1 = new SharpBrowser.Controls.BrowserTabStrip.BrowserTabStripItem();
+            tabStripAdd = new SharpBrowser.Controls.BrowserTabStrip.BrowserTabStripItem();
+            PanelSearch = new Panel();
+            BtnNextSearch = new Button();
+            BtnPrevSearch = new Button();
+            BtnCloseSearch = new Button();
+            TxtSearch = new TextBox();
+            PanelStatus = new Panel();
+            menuStripTab.SuspendLayout();
+            PanelToolbar.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)TabPages).BeginInit();
+            TabPages.SuspendLayout();
+            PanelSearch.SuspendLayout();
+            SuspendLayout();
             // 
             // menuStripTab
             // 
-            this.menuStripTab.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.menuStripTab.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuCloseTab,
-            this.menuCloseOtherTabs});
-            this.menuStripTab.Name = "menuStripTab";
-            this.menuStripTab.Size = new System.Drawing.Size(198, 52);
+            menuStripTab.ImageScalingSize = new System.Drawing.Size(20, 20);
+            menuStripTab.Items.AddRange(new ToolStripItem[] { menuCloseTab, menuCloseOtherTabs });
+            menuStripTab.Name = "menuStripTab";
+            menuStripTab.Size = new System.Drawing.Size(198, 52);
             // 
             // menuCloseTab
             // 
-            this.menuCloseTab.Name = "menuCloseTab";
-            this.menuCloseTab.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F4)));
-            this.menuCloseTab.Size = new System.Drawing.Size(197, 24);
-            this.menuCloseTab.Text = "Close tab";
-            this.menuCloseTab.Click += new System.EventHandler(this.menuCloseTab_Click);
+            menuCloseTab.Name = "menuCloseTab";
+            menuCloseTab.ShortcutKeys = Keys.Control | Keys.F4;
+            menuCloseTab.Size = new System.Drawing.Size(197, 24);
+            menuCloseTab.Text = "Close tab";
+            menuCloseTab.Click += menuCloseTab_Click;
             // 
             // menuCloseOtherTabs
             // 
-            this.menuCloseOtherTabs.Name = "menuCloseOtherTabs";
-            this.menuCloseOtherTabs.Size = new System.Drawing.Size(197, 24);
-            this.menuCloseOtherTabs.Text = "Close other tabs";
-            this.menuCloseOtherTabs.Click += new System.EventHandler(this.menuCloseOtherTabs_Click);
+            menuCloseOtherTabs.Name = "menuCloseOtherTabs";
+            menuCloseOtherTabs.Size = new System.Drawing.Size(197, 24);
+            menuCloseOtherTabs.Text = "Close other tabs";
+            menuCloseOtherTabs.Click += menuCloseOtherTabs_Click;
             // 
             // BtnRefresh
             // 
-            this.BtnRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.BtnRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnRefresh.ForeColor = System.Drawing.Color.White;
-            this.BtnRefresh.Image = ((System.Drawing.Image)(resources.GetObject("BtnRefresh.Image")));
-            this.BtnRefresh.Location = new System.Drawing.Point(878, 0);
-            this.BtnRefresh.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.BtnRefresh.Name = "BtnRefresh";
-            this.BtnRefresh.Size = new System.Drawing.Size(25, 30);
-            this.BtnRefresh.TabIndex = 3;
-            this.BtnRefresh.UseVisualStyleBackColor = true;
-            this.BtnRefresh.Click += new System.EventHandler(this.bRefresh_Click);
+            BtnRefresh.BackgroundImage = (System.Drawing.Image)resources.GetObject("BtnRefresh.BackgroundImage");
+            BtnRefresh.BackgroundImageLayout = ImageLayout.Zoom;
+            BtnRefresh.FlatStyle = FlatStyle.Flat;
+            BtnRefresh.ForeColor = System.Drawing.Color.White;
+            BtnRefresh.Location = new System.Drawing.Point(114, 9);
+            BtnRefresh.Margin = new Padding(3, 4, 3, 4);
+            BtnRefresh.Name = "BtnRefresh";
+            BtnRefresh.Size = new System.Drawing.Size(36, 34);
+            BtnRefresh.TabIndex = 3;
+            BtnRefresh.UseVisualStyleBackColor = true;
+            BtnRefresh.Click += bRefresh_Click;
             // 
             // BtnStop
             // 
-            this.BtnStop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.BtnStop.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnStop.ForeColor = System.Drawing.Color.White;
-            this.BtnStop.Image = ((System.Drawing.Image)(resources.GetObject("BtnStop.Image")));
-            this.BtnStop.Location = new System.Drawing.Point(878, -2);
-            this.BtnStop.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.BtnStop.Name = "BtnStop";
-            this.BtnStop.Size = new System.Drawing.Size(25, 30);
-            this.BtnStop.TabIndex = 2;
-            this.BtnStop.UseVisualStyleBackColor = true;
-            this.BtnStop.Click += new System.EventHandler(this.bStop_Click);
+            BtnStop.BackgroundImage = (System.Drawing.Image)resources.GetObject("BtnStop.BackgroundImage");
+            BtnStop.BackgroundImageLayout = ImageLayout.Zoom;
+            BtnStop.FlatStyle = FlatStyle.Flat;
+            BtnStop.ForeColor = System.Drawing.Color.White;
+            BtnStop.Location = new System.Drawing.Point(114, 9);
+            BtnStop.Margin = new Padding(3, 4, 3, 4);
+            BtnStop.Name = "BtnStop";
+            BtnStop.Size = new System.Drawing.Size(36, 34);
+            BtnStop.TabIndex = 2;
+            BtnStop.UseVisualStyleBackColor = true;
+            BtnStop.Click += bStop_Click;
             // 
             // BtnForward
             // 
-            this.BtnForward.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnForward.ForeColor = System.Drawing.Color.White;
-            this.BtnForward.Image = ((System.Drawing.Image)(resources.GetObject("BtnForward.Image")));
-            this.BtnForward.Location = new System.Drawing.Point(29, 0);
-            this.BtnForward.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.BtnForward.Name = "BtnForward";
-            this.BtnForward.Size = new System.Drawing.Size(25, 30);
-            this.BtnForward.TabIndex = 1;
-            this.BtnForward.UseVisualStyleBackColor = true;
-            this.BtnForward.Click += new System.EventHandler(this.bForward_Click);
+            BtnForward.BackgroundImage = (System.Drawing.Image)resources.GetObject("BtnForward.BackgroundImage");
+            BtnForward.BackgroundImageLayout = ImageLayout.Zoom;
+            BtnForward.FlatStyle = FlatStyle.Flat;
+            BtnForward.ForeColor = System.Drawing.Color.White;
+            BtnForward.Location = new System.Drawing.Point(66, 9);
+            BtnForward.Margin = new Padding(3, 4, 3, 4);
+            BtnForward.Name = "BtnForward";
+            BtnForward.Size = new System.Drawing.Size(36, 34);
+            BtnForward.TabIndex = 1;
+            BtnForward.UseVisualStyleBackColor = true;
+            BtnForward.Click += bForward_Click;
             // 
             // BtnBack
             // 
-            this.BtnBack.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnBack.ForeColor = System.Drawing.Color.White;
-            this.BtnBack.Image = ((System.Drawing.Image)(resources.GetObject("BtnBack.Image")));
-            this.BtnBack.Location = new System.Drawing.Point(2, 0);
-            this.BtnBack.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.BtnBack.Name = "BtnBack";
-            this.BtnBack.Size = new System.Drawing.Size(25, 30);
-            this.BtnBack.TabIndex = 0;
-            this.BtnBack.UseVisualStyleBackColor = true;
-            this.BtnBack.Click += new System.EventHandler(this.bBack_Click);
+            BtnBack.BackgroundImage = (System.Drawing.Image)resources.GetObject("BtnBack.BackgroundImage");
+            BtnBack.BackgroundImageLayout = ImageLayout.Zoom;
+            BtnBack.FlatStyle = FlatStyle.Flat;
+            BtnBack.ForeColor = System.Drawing.Color.White;
+            BtnBack.Location = new System.Drawing.Point(18, 9);
+            BtnBack.Margin = new Padding(3, 4, 3, 4);
+            BtnBack.Name = "BtnBack";
+            BtnBack.Size = new System.Drawing.Size(36, 34);
+            BtnBack.TabIndex = 0;
+            BtnBack.UseVisualStyleBackColor = true;
+            BtnBack.Click += bBack_Click;
             // 
             // timer1
             // 
-            this.timer1.Interval = 50;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            timer1.Interval = 50;
+            timer1.Tick += timer1_Tick;
             // 
             // BtnDownloads
             // 
-            this.BtnDownloads.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.BtnDownloads.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnDownloads.ForeColor = System.Drawing.Color.White;
-            this.BtnDownloads.Image = ((System.Drawing.Image)(resources.GetObject("BtnDownloads.Image")));
-            this.BtnDownloads.Location = new System.Drawing.Point(906, 0);
-            this.BtnDownloads.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.BtnDownloads.Name = "BtnDownloads";
-            this.BtnDownloads.Size = new System.Drawing.Size(25, 30);
-            this.BtnDownloads.TabIndex = 4;
-            this.BtnDownloads.Tag = "Downloads";
-            this.BtnDownloads.UseVisualStyleBackColor = true;
-            this.BtnDownloads.Click += new System.EventHandler(this.bDownloads_Click);
+            BtnDownloads.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            BtnDownloads.BackgroundImage = (System.Drawing.Image)resources.GetObject("BtnDownloads.BackgroundImage");
+            BtnDownloads.BackgroundImageLayout = ImageLayout.Zoom;
+            BtnDownloads.FlatStyle = FlatStyle.Flat;
+            BtnDownloads.ForeColor = System.Drawing.Color.White;
+            BtnDownloads.Location = new System.Drawing.Point(761, 9);
+            BtnDownloads.Margin = new Padding(3, 4, 3, 4);
+            BtnDownloads.Name = "BtnDownloads";
+            BtnDownloads.Size = new System.Drawing.Size(36, 34);
+            BtnDownloads.TabIndex = 4;
+            BtnDownloads.Tag = "Downloads";
+            BtnDownloads.UseVisualStyleBackColor = true;
+            BtnDownloads.Click += bDownloads_Click;
             // 
             // TxtURL
             // 
-            this.TxtURL.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.TxtURL.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.TxtURL.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TxtURL.Location = new System.Drawing.Point(60, 5);
-            this.TxtURL.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.TxtURL.Name = "TxtURL";
-            this.TxtURL.Size = new System.Drawing.Size(812, 27);
-            this.TxtURL.TabIndex = 5;
-            this.TxtURL.Click += new System.EventHandler(this.txtUrl_Click);
-            this.TxtURL.TextChanged += new System.EventHandler(this.txtUrl_TextChanged);
-            this.TxtURL.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TxtURL_KeyDown);
+            TxtURL.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            TxtURL.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
+            TxtURL.Location = new System.Drawing.Point(162, 4);
+            TxtURL.Margin = new Padding(3, 4, 3, 4);
+            TxtURL.Name = "TxtURL";
+            TxtURL.Size = new System.Drawing.Size(587, 34);
+            TxtURL.TabIndex = 5;
+            TxtURL.Click += TxtURL_Click;
+            TxtURL.Enter += TxtURL_Enter;
+            TxtURL.KeyDown += TxtURL_KeyDown;
             // 
             // PanelToolbar
             // 
-            this.PanelToolbar.BackColor = System.Drawing.Color.White;
-            this.PanelToolbar.Controls.Add(this.BtnHome);
-            this.PanelToolbar.Controls.Add(this.TxtURL);
-            this.PanelToolbar.Controls.Add(this.BtnDownloads);
-            this.PanelToolbar.Controls.Add(this.BtnForward);
-            this.PanelToolbar.Controls.Add(this.BtnBack);
-            this.PanelToolbar.Controls.Add(this.BtnRefresh);
-            this.PanelToolbar.Controls.Add(this.BtnStop);
-            this.PanelToolbar.Dock = System.Windows.Forms.DockStyle.Top;
-            this.PanelToolbar.Location = new System.Drawing.Point(0, 0);
-            this.PanelToolbar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.PanelToolbar.Name = "PanelToolbar";
-            this.PanelToolbar.Size = new System.Drawing.Size(934, 30);
-            this.PanelToolbar.TabIndex = 6;
+            PanelToolbar.BackColor = System.Drawing.Color.FromArgb(247, 247, 247);
+            PanelToolbar.Controls.Add(lbl_ZoomLevel);
+            PanelToolbar.Controls.Add(btn_Menu);
+            PanelToolbar.Controls.Add(BtnHome);
+            PanelToolbar.Controls.Add(BtnRefresh);
+            PanelToolbar.Controls.Add(BtnDownloads);
+            PanelToolbar.Controls.Add(BtnForward);
+            PanelToolbar.Controls.Add(BtnBack);
+            PanelToolbar.Controls.Add(BtnStop);
+            PanelToolbar.Controls.Add(TxtURL);
+            PanelToolbar.Dock = DockStyle.Top;
+            PanelToolbar.Location = new System.Drawing.Point(0, 0);
+            PanelToolbar.Margin = new Padding(3, 4, 3, 4);
+            PanelToolbar.Name = "PanelToolbar";
+            PanelToolbar.Size = new System.Drawing.Size(916, 52);
+            PanelToolbar.TabIndex = 6;
             // 
-            // TabPages
+            // lbl_ZoomLevel
             // 
-            this.TabPages.ContextMenuStrip = this.menuStripTab;
-            this.TabPages.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TabPages.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TabPages.Items.AddRange(new SharpBrowser.Controls.BrowserTabStrip.BrowserTabStripItem[] {
-            this.tabStrip1,
-            this.tabStripAdd});
-            this.TabPages.Location = new System.Drawing.Point(0, 30);
-            this.TabPages.Name = "TabPages";
-            this.TabPages.SelectedItem = this.tabStrip1;
-            this.TabPages.Size = new System.Drawing.Size(934, 621);
-            this.TabPages.TabIndex = 4;
-            this.TabPages.Text = "faTabStrip1";
-            this.TabPages.TabStripItemSelectionChanged += new SharpBrowser.Controls.BrowserTabStrip.TabStripItemChangedHandler(this.OnTabsChanged);
-            this.TabPages.TabStripItemClosed += new System.EventHandler(this.OnTabClosed);
-            this.TabPages.MouseClick += new System.Windows.Forms.MouseEventHandler(this.tabPages_MouseClick);
+            lbl_ZoomLevel.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            lbl_ZoomLevel.AutoSize = true;
+            lbl_ZoomLevel.FlatStyle = FlatStyle.Flat;
+            lbl_ZoomLevel.Location = new System.Drawing.Point(684, 16);
+            lbl_ZoomLevel.Name = "lbl_ZoomLevel";
+            lbl_ZoomLevel.Size = new System.Drawing.Size(42, 20);
+            lbl_ZoomLevel.TabIndex = 9;
+            lbl_ZoomLevel.Text = "???%";
+            lbl_ZoomLevel.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            lbl_ZoomLevel.Click += lbl_ZoomLevel_Click;
+            lbl_ZoomLevel.MouseEnter += lbl_ZoomLevel_MouseEnter;
             // 
-            // tabStrip1
+            // btn_Menu
             // 
-            this.tabStrip1.IsDrawn = true;
-            this.tabStrip1.Name = "tabStrip1";
-            this.tabStrip1.Selected = true;
-            this.tabStrip1.Size = new System.Drawing.Size(932, 591);
-            this.tabStrip1.TabIndex = 0;
-            this.tabStrip1.Title = "Loading...";
-            // 
-            // tabStripAdd
-            // 
-            this.tabStripAdd.CanClose = false;
-            this.tabStripAdd.IsDrawn = true;
-            this.tabStripAdd.Name = "tabStripAdd";
-            this.tabStripAdd.Size = new System.Drawing.Size(931, 601);
-            this.tabStripAdd.TabIndex = 1;
-            this.tabStripAdd.Title = "+";
-            // 
-            // PanelStatus
-            // 
-            this.PanelStatus.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.PanelStatus.Location = new System.Drawing.Point(0, 651);
-            this.PanelStatus.Name = "PanelStatus";
-            this.PanelStatus.Size = new System.Drawing.Size(934, 20);
-            this.PanelStatus.TabIndex = 8;
-            // 
-            // PanelSearch
-            // 
-            this.PanelSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.PanelSearch.BackColor = System.Drawing.Color.White;
-            this.PanelSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.PanelSearch.Controls.Add(this.BtnNextSearch);
-            this.PanelSearch.Controls.Add(this.BtnPrevSearch);
-            this.PanelSearch.Controls.Add(this.BtnCloseSearch);
-            this.PanelSearch.Controls.Add(this.TxtSearch);
-            this.PanelSearch.Location = new System.Drawing.Point(625, 41);
-            this.PanelSearch.Name = "PanelSearch";
-            this.PanelSearch.Size = new System.Drawing.Size(307, 40);
-            this.PanelSearch.TabIndex = 9;
-            this.PanelSearch.Visible = false;
-            // 
-            // BtnNextSearch
-            // 
-            this.BtnNextSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.BtnNextSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnNextSearch.ForeColor = System.Drawing.Color.White;
-            this.BtnNextSearch.Image = ((System.Drawing.Image)(resources.GetObject("BtnNextSearch.Image")));
-            this.BtnNextSearch.Location = new System.Drawing.Point(239, 4);
-            this.BtnNextSearch.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.BtnNextSearch.Name = "BtnNextSearch";
-            this.BtnNextSearch.Size = new System.Drawing.Size(25, 30);
-            this.BtnNextSearch.TabIndex = 9;
-            this.BtnNextSearch.Tag = "Find next (Enter)";
-            this.BtnNextSearch.UseVisualStyleBackColor = true;
-            this.BtnNextSearch.Click += new System.EventHandler(this.BtnNextSearch_Click);
-            // 
-            // BtnPrevSearch
-            // 
-            this.BtnPrevSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.BtnPrevSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnPrevSearch.ForeColor = System.Drawing.Color.White;
-            this.BtnPrevSearch.Image = ((System.Drawing.Image)(resources.GetObject("BtnPrevSearch.Image")));
-            this.BtnPrevSearch.Location = new System.Drawing.Point(206, 4);
-            this.BtnPrevSearch.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.BtnPrevSearch.Name = "BtnPrevSearch";
-            this.BtnPrevSearch.Size = new System.Drawing.Size(25, 30);
-            this.BtnPrevSearch.TabIndex = 8;
-            this.BtnPrevSearch.Tag = "Find previous (Shift+Enter)";
-            this.BtnPrevSearch.UseVisualStyleBackColor = true;
-            this.BtnPrevSearch.Click += new System.EventHandler(this.BtnPrevSearch_Click);
-            // 
-            // BtnCloseSearch
-            // 
-            this.BtnCloseSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.BtnCloseSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnCloseSearch.ForeColor = System.Drawing.Color.White;
-            this.BtnCloseSearch.Image = ((System.Drawing.Image)(resources.GetObject("BtnCloseSearch.Image")));
-            this.BtnCloseSearch.Location = new System.Drawing.Point(272, 4);
-            this.BtnCloseSearch.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.BtnCloseSearch.Name = "BtnCloseSearch";
-            this.BtnCloseSearch.Size = new System.Drawing.Size(25, 30);
-            this.BtnCloseSearch.TabIndex = 7;
-            this.BtnCloseSearch.Tag = "Close (Esc)";
-            this.BtnCloseSearch.UseVisualStyleBackColor = true;
-            this.BtnCloseSearch.Click += new System.EventHandler(this.BtnClearSearch_Click);
-            // 
-            // TxtSearch
-            // 
-            this.TxtSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.TxtSearch.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.TxtSearch.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TxtSearch.Location = new System.Drawing.Point(10, 6);
-            this.TxtSearch.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.TxtSearch.Name = "TxtSearch";
-            this.TxtSearch.Size = new System.Drawing.Size(181, 31);
-            this.TxtSearch.TabIndex = 6;
-            this.TxtSearch.TextChanged += new System.EventHandler(this.TxtSearch_TextChanged);
-            this.TxtSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TxtSearch_KeyDown);
+            btn_Menu.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btn_Menu.BackgroundImage = (System.Drawing.Image)resources.GetObject("btn_Menu.BackgroundImage");
+            btn_Menu.BackgroundImageLayout = ImageLayout.Zoom;
+            btn_Menu.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Silver;
+            btn_Menu.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(224, 224, 224);
+            btn_Menu.FlatStyle = FlatStyle.Flat;
+            btn_Menu.ForeColor = System.Drawing.Color.White;
+            btn_Menu.Location = new System.Drawing.Point(857, 9);
+            btn_Menu.Margin = new Padding(3, 4, 3, 4);
+            btn_Menu.Name = "btn_Menu";
+            btn_Menu.Size = new System.Drawing.Size(36, 34);
+            btn_Menu.TabIndex = 7;
+            btn_Menu.Tag = "Menu3dot";
+            btn_Menu.Text = "...";
+            btn_Menu.UseVisualStyleBackColor = true;
             // 
             // BtnHome
             // 
-            this.BtnHome.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.BtnHome.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnHome.ForeColor = System.Drawing.Color.White;
-            this.BtnHome.Image = ((System.Drawing.Image)(resources.GetObject("BtnHome.Image")));
-            this.BtnHome.Location = new System.Drawing.Point(847, 0);
-            this.BtnHome.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.BtnHome.Name = "BtnHome";
-            this.BtnHome.Size = new System.Drawing.Size(25, 30);
-            this.BtnHome.TabIndex = 6;
-            this.BtnHome.Tag = "Home";
-            this.BtnHome.UseVisualStyleBackColor = true;
-            this.BtnHome.Click += new System.EventHandler(this.BtnHome_Click);
+            BtnHome.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            BtnHome.BackgroundImage = (System.Drawing.Image)resources.GetObject("BtnHome.BackgroundImage");
+            BtnHome.BackgroundImageLayout = ImageLayout.Zoom;
+            BtnHome.FlatStyle = FlatStyle.Flat;
+            BtnHome.ForeColor = System.Drawing.Color.White;
+            BtnHome.Location = new System.Drawing.Point(809, 9);
+            BtnHome.Margin = new Padding(3, 4, 3, 4);
+            BtnHome.Name = "BtnHome";
+            BtnHome.Size = new System.Drawing.Size(36, 34);
+            BtnHome.TabIndex = 6;
+            BtnHome.Tag = "Home";
+            BtnHome.UseVisualStyleBackColor = true;
+            BtnHome.Click += BtnHome_Click;
+            // 
+            // TabPages
+            // 
+            TabPages.ContextMenuStrip = menuStripTab;
+            TabPages.Dock = DockStyle.Fill;
+            TabPages.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
+            TabPages.Items.AddRange(new Controls.BrowserTabStrip.BrowserTabStripItem[] { tabStrip1, tabStripAdd });
+            TabPages.Location = new System.Drawing.Point(0, 52);
+            TabPages.Name = "TabPages";
+            TabPages.Padding = new Padding(1, 49, 1, 1);
+            TabPages.SelectedItem = tabStrip1;
+            TabPages.Size = new System.Drawing.Size(916, 400);
+            TabPages.TabIndex = 4;
+            TabPages.Text = "faTabStrip1";
+            TabPages.TabStripItemSelectionChanged += OnTabsChanged;
+            TabPages.TabStripItemClosed += OnTabClosed;
+            TabPages.MouseClick += tabPages_MouseClick;
+            // 
+            // tabStrip1
+            // 
+            tabStrip1.Dock = DockStyle.Fill;
+            tabStrip1.IsDrawn = true;
+            tabStrip1.Location = new System.Drawing.Point(1, 49);
+            tabStrip1.Name = "tabStrip1";
+            tabStrip1.Selected = true;
+            tabStrip1.Size = new System.Drawing.Size(914, 350);
+            tabStrip1.TabIndex = 0;
+            tabStrip1.Title = "Loading...";
+            // 
+            // tabStripAdd
+            // 
+            tabStripAdd.CanClose = false;
+            tabStripAdd.Dock = DockStyle.Fill;
+            tabStripAdd.IsDrawn = true;
+            tabStripAdd.Location = new System.Drawing.Point(0, 0);
+            tabStripAdd.Name = "tabStripAdd";
+            tabStripAdd.Size = new System.Drawing.Size(931, 601);
+            tabStripAdd.TabIndex = 1;
+            tabStripAdd.Title = "+";
+            // 
+            // PanelSearch
+            // 
+            PanelSearch.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            PanelSearch.BackColor = System.Drawing.Color.White;
+            PanelSearch.BorderStyle = BorderStyle.FixedSingle;
+            PanelSearch.Controls.Add(BtnNextSearch);
+            PanelSearch.Controls.Add(BtnPrevSearch);
+            PanelSearch.Controls.Add(BtnCloseSearch);
+            PanelSearch.Controls.Add(TxtSearch);
+            PanelSearch.Location = new System.Drawing.Point(592, 115);
+            PanelSearch.Name = "PanelSearch";
+            PanelSearch.Size = new System.Drawing.Size(307, 49);
+            PanelSearch.TabIndex = 9;
+            PanelSearch.Visible = false;
+            // 
+            // BtnNextSearch
+            // 
+            BtnNextSearch.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            BtnNextSearch.FlatStyle = FlatStyle.Flat;
+            BtnNextSearch.ForeColor = System.Drawing.Color.White;
+            BtnNextSearch.Image = (System.Drawing.Image)resources.GetObject("BtnNextSearch.Image");
+            BtnNextSearch.Location = new System.Drawing.Point(239, 8);
+            BtnNextSearch.Margin = new Padding(3, 4, 3, 4);
+            BtnNextSearch.Name = "BtnNextSearch";
+            BtnNextSearch.Size = new System.Drawing.Size(25, 30);
+            BtnNextSearch.TabIndex = 9;
+            BtnNextSearch.Tag = "Find next (Enter)";
+            BtnNextSearch.UseVisualStyleBackColor = true;
+            BtnNextSearch.Click += BtnNextSearch_Click;
+            // 
+            // BtnPrevSearch
+            // 
+            BtnPrevSearch.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            BtnPrevSearch.FlatStyle = FlatStyle.Flat;
+            BtnPrevSearch.ForeColor = System.Drawing.Color.White;
+            BtnPrevSearch.Image = (System.Drawing.Image)resources.GetObject("BtnPrevSearch.Image");
+            BtnPrevSearch.Location = new System.Drawing.Point(206, 8);
+            BtnPrevSearch.Margin = new Padding(3, 4, 3, 4);
+            BtnPrevSearch.Name = "BtnPrevSearch";
+            BtnPrevSearch.Size = new System.Drawing.Size(25, 30);
+            BtnPrevSearch.TabIndex = 8;
+            BtnPrevSearch.Tag = "Find previous (Shift+Enter)";
+            BtnPrevSearch.UseVisualStyleBackColor = true;
+            BtnPrevSearch.Click += BtnPrevSearch_Click;
+            // 
+            // BtnCloseSearch
+            // 
+            BtnCloseSearch.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            BtnCloseSearch.FlatStyle = FlatStyle.Flat;
+            BtnCloseSearch.ForeColor = System.Drawing.Color.White;
+            BtnCloseSearch.Image = (System.Drawing.Image)resources.GetObject("BtnCloseSearch.Image");
+            BtnCloseSearch.Location = new System.Drawing.Point(272, 8);
+            BtnCloseSearch.Margin = new Padding(3, 4, 3, 4);
+            BtnCloseSearch.Name = "BtnCloseSearch";
+            BtnCloseSearch.Size = new System.Drawing.Size(25, 30);
+            BtnCloseSearch.TabIndex = 7;
+            BtnCloseSearch.Tag = "Close (Esc)";
+            BtnCloseSearch.UseVisualStyleBackColor = true;
+            BtnCloseSearch.Click += BtnClearSearch_Click;
+            // 
+            // TxtSearch
+            // 
+            TxtSearch.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            TxtSearch.BorderStyle = BorderStyle.None;
+            TxtSearch.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
+            TxtSearch.Location = new System.Drawing.Point(9, 8);
+            TxtSearch.Margin = new Padding(3, 4, 3, 4);
+            TxtSearch.Name = "TxtSearch";
+            TxtSearch.Size = new System.Drawing.Size(181, 31);
+            TxtSearch.TabIndex = 6;
+            TxtSearch.TextChanged += TxtSearch_TextChanged;
+            TxtSearch.KeyDown += TxtSearch_KeyDown;
+            // 
+            // PanelStatus
+            // 
+            PanelStatus.Dock = DockStyle.Bottom;
+            PanelStatus.Location = new System.Drawing.Point(0, 452);
+            PanelStatus.Name = "PanelStatus";
+            PanelStatus.Size = new System.Drawing.Size(916, 20);
+            PanelStatus.TabIndex = 8;
             // 
             // MainForm
             // 
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(934, 671);
-            this.Controls.Add(this.PanelSearch);
-            this.Controls.Add(this.TabPages);
-            this.Controls.Add(this.PanelToolbar);
-            this.Controls.Add(this.PanelStatus);
-            this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.Name = "MainForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Title";
-            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
-            this.Load += new System.EventHandler(this.MainForm_Load);
-            this.menuStripTab.ResumeLayout(false);
-            this.PanelToolbar.ResumeLayout(false);
-            this.PanelToolbar.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.TabPages)).EndInit();
-            this.TabPages.ResumeLayout(false);
-            this.PanelSearch.ResumeLayout(false);
-            this.PanelSearch.PerformLayout();
-            this.ResumeLayout(false);
-
+            AutoScaleMode = AutoScaleMode.None;
+            ClientSize = new System.Drawing.Size(916, 472);
+            Controls.Add(PanelSearch);
+            Controls.Add(TabPages);
+            Controls.Add(PanelToolbar);
+            Controls.Add(PanelStatus);
+            Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
+            Margin = new Padding(4, 5, 4, 5);
+            Name = "MainForm";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "Title";
+            WindowState = FormWindowState.Maximized;
+            FormClosing += MainForm_FormClosing;
+            Load += MainForm_Load;
+            menuStripTab.ResumeLayout(false);
+            PanelToolbar.ResumeLayout(false);
+            PanelToolbar.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)TabPages).EndInit();
+            TabPages.ResumeLayout(false);
+            PanelSearch.ResumeLayout(false);
+            PanelSearch.PerformLayout();
+            ResumeLayout(false);
         }
+
 
         #endregion
 
-		private SharpBrowser.Controls.BrowserTabStrip.BrowserTabStrip TabPages;
+        private SharpBrowser.Controls.BrowserTabStrip.BrowserTabStrip TabPages;
         private SharpBrowser.Controls.BrowserTabStrip.BrowserTabStripItem tabStrip1;
         private SharpBrowser.Controls.BrowserTabStrip.BrowserTabStripItem tabStripAdd;
 		private System.Windows.Forms.Timer timer1;
@@ -371,6 +411,8 @@
 		private System.Windows.Forms.Button BtnPrevSearch;
 		private System.Windows.Forms.Button BtnNextSearch;
         private System.Windows.Forms.Button BtnHome;
+        private System.Windows.Forms.Button btn_Menu;
+        private Label lbl_ZoomLevel;
     }
 }
 
