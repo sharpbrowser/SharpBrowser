@@ -56,7 +56,7 @@ Ctrl+F		| Open search bar (Enter to find next, Esc to close)
 
 ## Code
 
-- SharpBrowser uses CefSharp 131 and is built on NET 7
+- SharpBrowser uses CefSharp 134 and is built on NET 7
 - SharpBrowser only supports x64 platform
 - `MainForm.cs` - main web browser UI and related functionality
 - `Handlers` - various handlers that we have registered with CefSharp that enable deeper integration between us and CefSharp
