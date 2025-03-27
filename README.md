@@ -20,6 +20,7 @@ SharpBrowser is the fastest open source C# web browser there is! Slightly faster
 
 Hotkeys | Function
 ------------ | -------------
+Ctrl+MouseWheel		| Zoom in/out
 Ctrl+T		| Add a new tab
 Ctrl+N		| Add a new window
 Ctrl+W		| Close active tab
