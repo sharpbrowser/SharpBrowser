@@ -245,6 +245,7 @@ namespace SharpBrowser
 			BtnMenu.Tag = "Menu3dot";
 			BtnMenu.Text = "...";
 			BtnMenu.UseVisualStyleBackColor = true;
+			BtnMenu.Click += BtnMenu_Click;
 			// 
 			// BtnHome
 			// 

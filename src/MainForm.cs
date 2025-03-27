@@ -1043,5 +1043,8 @@ namespace SharpBrowser {
 
 
 
+		private void BtnMenu_Click(object sender, EventArgs e) {
+
+		}
 	}
 }
