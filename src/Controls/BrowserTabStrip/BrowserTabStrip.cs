@@ -237,8 +237,6 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 			Invalidate();
 		}
 
-	
-
 		protected override void OnMouseDown(MouseEventArgs e) {
 			base.OnMouseDown(e);
 			HitTestResult hitTestResult = HitTest(e.Location);

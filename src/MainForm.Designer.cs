@@ -43,6 +43,7 @@ namespace SharpBrowser
             BtnDownloads = new Button();
             TxtURL = new TextBox();
             PanelToolbar = new Panel();
+            lbl_ZoomLevel = new Label();
             btn_Menu = new Button();
             BtnHome = new Button();
             TabPages = new SharpBrowser.Controls.BrowserTabStrip.BrowserTabStrip();
@@ -151,7 +152,7 @@ namespace SharpBrowser
             BtnDownloads.BackgroundImageLayout = ImageLayout.Zoom;
             BtnDownloads.FlatStyle = FlatStyle.Flat;
             BtnDownloads.ForeColor = System.Drawing.Color.White;
-            BtnDownloads.Location = new System.Drawing.Point(741, 9);
+            BtnDownloads.Location = new System.Drawing.Point(761, 9);
             BtnDownloads.Margin = new Padding(3, 4, 3, 4);
             BtnDownloads.Name = "BtnDownloads";
             BtnDownloads.Size = new System.Drawing.Size(36, 34);
@@ -167,7 +168,7 @@ namespace SharpBrowser
             TxtURL.Location = new System.Drawing.Point(162, 4);
             TxtURL.Margin = new Padding(3, 4, 3, 4);
             TxtURL.Name = "TxtURL";
-            TxtURL.Size = new System.Drawing.Size(567, 34);
+            TxtURL.Size = new System.Drawing.Size(587, 34);
             TxtURL.TabIndex = 5;
             TxtURL.Click += TxtURL_Click;
             TxtURL.Enter += TxtURL_Enter;
@@ -176,6 +177,7 @@ namespace SharpBrowser
             // PanelToolbar
             // 
             PanelToolbar.BackColor = System.Drawing.Color.FromArgb(247, 247, 247);
+            PanelToolbar.Controls.Add(lbl_ZoomLevel);
             PanelToolbar.Controls.Add(btn_Menu);
             PanelToolbar.Controls.Add(BtnHome);
             PanelToolbar.Controls.Add(BtnRefresh);
@@ -188,8 +190,22 @@ namespace SharpBrowser
             PanelToolbar.Location = new System.Drawing.Point(0, 0);
             PanelToolbar.Margin = new Padding(3, 4, 3, 4);
             PanelToolbar.Name = "PanelToolbar";
-            PanelToolbar.Size = new System.Drawing.Size(896, 52);
+            PanelToolbar.Size = new System.Drawing.Size(916, 52);
             PanelToolbar.TabIndex = 6;
+            // 
+            // lbl_ZoomLevel
+            // 
+            lbl_ZoomLevel.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            lbl_ZoomLevel.AutoSize = true;
+            lbl_ZoomLevel.FlatStyle = FlatStyle.Flat;
+            lbl_ZoomLevel.Location = new System.Drawing.Point(684, 16);
+            lbl_ZoomLevel.Name = "lbl_ZoomLevel";
+            lbl_ZoomLevel.Size = new System.Drawing.Size(42, 20);
+            lbl_ZoomLevel.TabIndex = 9;
+            lbl_ZoomLevel.Text = "???%";
+            lbl_ZoomLevel.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            lbl_ZoomLevel.Click += lbl_ZoomLevel_Click;
+            lbl_ZoomLevel.MouseEnter += lbl_ZoomLevel_MouseEnter;
             // 
             // btn_Menu
             // 
@@ -200,7 +216,7 @@ namespace SharpBrowser
             btn_Menu.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(224, 224, 224);
             btn_Menu.FlatStyle = FlatStyle.Flat;
             btn_Menu.ForeColor = System.Drawing.Color.White;
-            btn_Menu.Location = new System.Drawing.Point(837, 9);
+            btn_Menu.Location = new System.Drawing.Point(857, 9);
             btn_Menu.Margin = new Padding(3, 4, 3, 4);
             btn_Menu.Name = "btn_Menu";
             btn_Menu.Size = new System.Drawing.Size(36, 34);
@@ -216,7 +232,7 @@ namespace SharpBrowser
             BtnHome.BackgroundImageLayout = ImageLayout.Zoom;
             BtnHome.FlatStyle = FlatStyle.Flat;
             BtnHome.ForeColor = System.Drawing.Color.White;
-            BtnHome.Location = new System.Drawing.Point(789, 9);
+            BtnHome.Location = new System.Drawing.Point(809, 9);
             BtnHome.Margin = new Padding(3, 4, 3, 4);
             BtnHome.Name = "BtnHome";
             BtnHome.Size = new System.Drawing.Size(36, 34);
@@ -235,7 +251,7 @@ namespace SharpBrowser
             TabPages.Name = "TabPages";
             TabPages.Padding = new Padding(1, 49, 1, 1);
             TabPages.SelectedItem = tabStrip1;
-            TabPages.Size = new System.Drawing.Size(896, 400);
+            TabPages.Size = new System.Drawing.Size(916, 400);
             TabPages.TabIndex = 4;
             TabPages.Text = "faTabStrip1";
             TabPages.TabStripItemSelectionChanged += OnTabsChanged;
@@ -249,7 +265,7 @@ namespace SharpBrowser
             tabStrip1.Location = new System.Drawing.Point(1, 49);
             tabStrip1.Name = "tabStrip1";
             tabStrip1.Selected = true;
-            tabStrip1.Size = new System.Drawing.Size(894, 350);
+            tabStrip1.Size = new System.Drawing.Size(914, 350);
             tabStrip1.TabIndex = 0;
             tabStrip1.Title = "Loading...";
             // 
@@ -273,7 +289,7 @@ namespace SharpBrowser
             PanelSearch.Controls.Add(BtnPrevSearch);
             PanelSearch.Controls.Add(BtnCloseSearch);
             PanelSearch.Controls.Add(TxtSearch);
-            PanelSearch.Location = new System.Drawing.Point(572, 115);
+            PanelSearch.Location = new System.Drawing.Point(592, 115);
             PanelSearch.Name = "PanelSearch";
             PanelSearch.Size = new System.Drawing.Size(307, 49);
             PanelSearch.TabIndex = 9;
@@ -342,13 +358,13 @@ namespace SharpBrowser
             PanelStatus.Dock = DockStyle.Bottom;
             PanelStatus.Location = new System.Drawing.Point(0, 452);
             PanelStatus.Name = "PanelStatus";
-            PanelStatus.Size = new System.Drawing.Size(896, 20);
+            PanelStatus.Size = new System.Drawing.Size(916, 20);
             PanelStatus.TabIndex = 8;
             // 
             // MainForm
             // 
             AutoScaleMode = AutoScaleMode.None;
-            ClientSize = new System.Drawing.Size(896, 472);
+            ClientSize = new System.Drawing.Size(916, 472);
             Controls.Add(PanelSearch);
             Controls.Add(TabPages);
             Controls.Add(PanelToolbar);
@@ -396,6 +412,7 @@ namespace SharpBrowser
 		private System.Windows.Forms.Button BtnNextSearch;
         private System.Windows.Forms.Button BtnHome;
         private System.Windows.Forms.Button btn_Menu;
+        private Label lbl_ZoomLevel;
     }
 }
 
