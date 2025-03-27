@@ -740,7 +740,8 @@ namespace SharpBrowser {
 		}
 
 
-		// ----- ctrl ms wheel -> update zoom pct
+		#region Ctrl+Mousewheel Zoom
+
 		private void Browser_FrameLoadEnd_mswheel(object sender, FrameLoadEndEventArgs e) {
 			if (e.Frame.IsMain) {
 				e.Browser.ExecuteScriptAsync(
@@ -773,7 +774,7 @@ namespace SharpBrowser {
 			}
 		}
 		int convertZoomlevel_toZoomPct(double zoomLevel) {
-			// - https://www.wolframalpha.com/input?i=exponential+fit+%7B%7B-7.6036%2C+25%7D%2C+%7B-6.0257%2C+33%7D%2C+%7B-2.2239%2C+67%7D%2C+%7B-1.2239%2C+80%7D%2C+%7B-0.5779%2C+90%7D%2C+%7B0.%2C+100%7D%2C+%7B0.5228%2C+110%7D%2C+%7B1.2239%2C+125%7D%2C+%7B2.2239%2C+150%7D%2C+%7B5.0257%2C+250%7D%2C+%7B7.6036%2C+400%7D%7D
+			
 			// expo fit - y= 100.011 e^(0.182307 x)
 			var zoomPct = 100.011 * Math.Exp(0.182307 * zoomLevel);
 			return (int)zoomPct;
@@ -803,6 +804,8 @@ namespace SharpBrowser {
 		private async void lbl_ZoomLevel_MouseEnter(object sender, EventArgs e) {
 			await Get_ZoomLevel_intoTbx(CurBrowser);
 		}
+
+		#endregion
 
 		private void timer1_Tick(object sender, EventArgs e) {
 			TabPages.SelectedItem = newStrip;
