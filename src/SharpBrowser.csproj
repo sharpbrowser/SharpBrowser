@@ -36,6 +36,7 @@
     <PackageReference Include="CefSharp.Common.NETCore" Version="134.3.60" />
     <PackageReference Include="CefSharp.WinForms.NETCore" Version="134.3.60" />
     <PackageReference Include="chromiumembeddedframework.runtime.win-x64" Version="134.3.6" />
+    <PackageReference Include="FontAwesome.Sharp" Version="6.6.0" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Net" />
