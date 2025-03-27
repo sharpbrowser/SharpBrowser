@@ -53,7 +53,6 @@ namespace SharpBrowser
 			BtnPrevSearch = new Button();
 			BtnCloseSearch = new Button();
 			TxtSearch = new TextBox();
-			PanelStatus = new Panel();
 			menuStripTab.SuspendLayout();
 			PanelToolbar.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)TabPages).BeginInit();
@@ -277,7 +276,7 @@ namespace SharpBrowser
 			TabPages.Name = "TabPages";
 			TabPages.Padding = new Padding(1, 49, 1, 1);
 			TabPages.SelectedItem = tabStrip1;
-			TabPages.Size = new System.Drawing.Size(916, 407);
+			TabPages.Size = new System.Drawing.Size(916, 427);
 			TabPages.TabIndex = 4;
 			TabPages.Text = "faTabStrip1";
 			TabPages.TabStripItemSelectionChanged += OnTabsChanged;
@@ -291,7 +290,7 @@ namespace SharpBrowser
 			tabStrip1.Location = new System.Drawing.Point(1, 49);
 			tabStrip1.Name = "tabStrip1";
 			tabStrip1.Selected = true;
-			tabStrip1.Size = new System.Drawing.Size(914, 357);
+			tabStrip1.Size = new System.Drawing.Size(914, 377);
 			tabStrip1.TabIndex = 0;
 			tabStrip1.Title = "Loading...";
 			// 
@@ -379,14 +378,6 @@ namespace SharpBrowser
 			TxtSearch.TextChanged += TxtSearch_TextChanged;
 			TxtSearch.KeyDown += TxtSearch_KeyDown;
 			// 
-			// PanelStatus
-			// 
-			PanelStatus.Dock = DockStyle.Bottom;
-			PanelStatus.Location = new System.Drawing.Point(0, 452);
-			PanelStatus.Name = "PanelStatus";
-			PanelStatus.Size = new System.Drawing.Size(916, 20);
-			PanelStatus.TabIndex = 8;
-			// 
 			// MainForm
 			// 
 			AutoScaleMode = AutoScaleMode.None;
@@ -394,7 +385,6 @@ namespace SharpBrowser
 			Controls.Add(PanelSearch);
 			Controls.Add(TabPages);
 			Controls.Add(PanelToolbar);
-			Controls.Add(PanelStatus);
 			Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
 			Margin = new Padding(4, 5, 4, 5);
 			Name = "MainForm";
@@ -430,7 +420,6 @@ namespace SharpBrowser
 		private FontAwesome.Sharp.IconButton BtnDownloads;
 		private System.Windows.Forms.TextBox TxtURL;
 		private System.Windows.Forms.Panel PanelToolbar;
-		private System.Windows.Forms.Panel PanelStatus;
 		private System.Windows.Forms.Panel PanelSearch;
 		private System.Windows.Forms.TextBox TxtSearch;
 		private System.Windows.Forms.Button BtnCloseSearch;
