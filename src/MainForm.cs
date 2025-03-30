@@ -50,6 +50,7 @@ namespace SharpBrowser {
 			InitTooltips(this.Controls);
 			InitHotkeys();
 
+			InitFAButton_DisabledColors();
 			TxtURL.MakeTextbox_CustomBorderColor();
 
 			//cant  do this on gui. paneltoolbar gets deleted. buggy designer 
@@ -67,14 +68,33 @@ namespace SharpBrowser {
 
 		}
 
+        private void InitFAButton_DisabledColors()
+        {
+            BtnBack.EnabledChanged += (s1, e1) => handleFAButton_DisabledColors(s1);
+            BtnForward.EnabledChanged += (s1, e1) => handleFAButton_DisabledColors(s1);
+            BtnStop.EnabledChanged += (s1, e1) => handleFAButton_DisabledColors(s1);
+            BtnRefresh.EnabledChanged += (s1, e1) => handleFAButton_DisabledColors(s1);
+            BtnDownloads.EnabledChanged += (s1, e1) => handleFAButton_DisabledColors(s1);
+            BtnHome.EnabledChanged += (s1, e1) => handleFAButton_DisabledColors(s1);
+            BtnMenu.EnabledChanged += (s1, e1) => handleFAButton_DisabledColors(s1);
+        }
+        private async void handleFAButton_DisabledColors(object senderBtn)
+        {
+            var faBtn = senderBtn as FontAwesome.Sharp.IconButton;
+			//faBtn.IconColor = faBtn.Enabled ? Color.Black : PanelToolbar.BackColor.ChangeColorBrightness(0);
+			faBtn.IconColor = faBtn.Enabled ? Color.Black : Color.Black.ChangeColorBrightness(0.8);
 
-		#region App Icon
 
-		/// <summary>
-		/// embedding the resource using the Visual Studio designer results in a blurry icon.
-		/// the best way to get a non-blurry icon for Windows 7 apps.
-		/// </summary>
-		private void InitAppIcon() {
+        }
+
+
+        #region App Icon
+
+        /// <summary>
+        /// embedding the resource using the Visual Studio designer results in a blurry icon.
+        /// the best way to get a non-blurry icon for Windows 7 apps.
+        /// </summary>
+        private void InitAppIcon() {
 			assembly = Assembly.GetAssembly(typeof(MainForm));
 			Icon = new Icon(GetResourceStream("sharpbrowser.ico"), new Size(64, 64));
 		}
