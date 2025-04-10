@@ -14,6 +14,7 @@ SharpBrowser is the fastest and most full-featured open source C# web browser th
 - File downloads and download manager
 - Custom error pages
 - Custom context menu
+- Custom application main menu
 - Easily add [vendor-specific branding](#customization), styling, buttons or hotkeys
 - View online & offline webpages
 - Popups open in new tabs
