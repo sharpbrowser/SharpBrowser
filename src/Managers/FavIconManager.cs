@@ -37,8 +37,7 @@ namespace SharpBrowser.Managers {
 		///  Reuse HttpClient for better performance
 		/// </summary>
 		private static readonly HttpClient httpClient = new HttpClient() { Timeout = TimeSpan.FromSeconds(5) };
-		private static readonly object _lockObject = new object();
-
+		
 		public static async void OnFrameLoadEnd(ChromiumWebBrowser browser, FrameLoadEndEventArgs e) {
 
 			//try {
