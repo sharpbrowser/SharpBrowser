@@ -4,7 +4,7 @@ SharpBrowser is the fastest and most full-featured open source C# web browser th
 
 ## Features
 
-https://github.com/sharpbrowser/SharpBrowser/raw/master/images/topbar.png
+![SharpBrowser](https://github.com/sharpbrowser/SharpBrowser/raw/master/images/topbar.png)
 
 ### Modern
 
