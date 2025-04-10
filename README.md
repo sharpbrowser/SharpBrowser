@@ -63,7 +63,11 @@ Ctrl+Shift+P 		| Print to PDF
 
 - To enable Javascript, WebGL, WebRTC, LocalStorage, modify the `BrowserConfig` class.
 
-- To customize the page context-menu, modify `ContextMenuHandler.OnBeforeContextMenu` function, and then implement the command inside `ContextMenuHandler.OnContextMenuCommand`.
+- To register hotkeys for your own commands, modify the `MainForm.InitHotkeys` function.
+
+- To register your own commands into the main menu, open the form designed for `MainForm` and click the `MainMenu` object. Add `IconMenuItem` objects into that menu.
+
+- To register your own commands into the page context-menu, modify `ContextMenuHandler.OnBeforeContextMenu` function, and then implement the command inside `ContextMenuHandler.OnContextMenuCommand`.
 
 - To setup how web app permissions are handled, modify `PermissionHandler.OnShowPermissionPrompt` (some flags are already inside `BrowserConfig` and can easily be changed).
 
