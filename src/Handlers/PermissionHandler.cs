@@ -46,7 +46,6 @@ namespace SharpBrowser.Handlers {
 			switch (requestedPermissions) {
 
 				case PermissionRequestType.Notifications:
-				case PermissionRequestType.StorageAccess:
 				case PermissionRequestType.TopLevelStorageAccess:
 				case PermissionRequestType.WindowManagement:
 				case PermissionRequestType.RegisterProtocolHandler:
@@ -64,17 +63,21 @@ namespace SharpBrowser.Handlers {
 				case PermissionRequestType.CameraPanTiltZoom:
 					allow = BrowserConfig.Camera;
 					break;
+				case PermissionRequestType.MicStream:
+					allow = BrowserConfig.Microphone;
+					break;
 				case PermissionRequestType.Clipboard:
 					allow = BrowserConfig.JavascriptClipboard;
+					break;
+				case PermissionRequestType.FileSystemAccess:
+					allow = BrowserConfig.LocalFiles;
 					break;
 
 
 				// ACCEPT THINGS THAT ARE SUPPORTED
 
+				case PermissionRequestType.StorageAccess:
 				case PermissionRequestType.LocalFonts:
-					allow = true;
-					break;
-
 				case PermissionRequestType.MultipleDownloads:
 					allow = true;
 					break;

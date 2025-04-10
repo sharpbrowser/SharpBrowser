@@ -71,6 +71,10 @@ namespace SharpBrowser.Browser {
 		/// </summary>
 		public static bool Camera = true;
 		/// <summary>
+		/// Can JS on webpages access Microphone?
+		/// </summary>
+		public static bool Microphone = true;
+		/// <summary>
 		/// Is JS enabled for webpages?
 		/// </summary>
 		public static bool Javascript = true;
@@ -81,7 +85,7 @@ namespace SharpBrowser.Browser {
 		/// <summary>
 		/// Can webpages access local files?
 		/// </summary>
-		public static bool LoadLocalFiles = false;
+		public static bool LocalFiles = false;
 
 
 

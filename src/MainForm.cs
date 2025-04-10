@@ -199,7 +199,7 @@ namespace SharpBrowser {
 			settings.CachePath = GetAppDir("Cache");
 
 			// needed for loading local images
-			if (BrowserConfig.LoadLocalFiles) {
+			if (BrowserConfig.LocalFiles) {
 				settings.CefCommandLineArgs.Add("disable-web-security", "1");
 				settings.CefCommandLineArgs.Add("allow-file-access-from-files", "1");
 			}
