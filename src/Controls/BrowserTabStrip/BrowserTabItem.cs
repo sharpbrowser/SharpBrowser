@@ -7,7 +7,7 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 	[ToolboxItem(false)]
 	[DefaultProperty("Title")]
 	[DefaultEvent("Changed")]
-	public class BrowserTabStripItem : Panel {
+	public class BrowserTabItem : Panel {
 		private RectangleF stripRect = Rectangle.Empty;
 
 		private Image image;
@@ -120,15 +120,15 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 
 		public event EventHandler Changed;
 
-		public BrowserTabStripItem()
+		public BrowserTabItem()
 			: this(string.Empty, null) {
 		}
 
-		public BrowserTabStripItem(Control displayControl)
+		public BrowserTabItem(Control displayControl)
 			: this(string.Empty, displayControl) {
 		}
 
-		public BrowserTabStripItem(string caption, Control displayControl) {
+		public BrowserTabItem(string caption, Control displayControl) {
 			SetStyle(ControlStyles.OptimizedDoubleBuffer, value: true);
 			SetStyle(ControlStyles.ResizeRedraw, value: true);
 			SetStyle(ControlStyles.UserPaint, value: true);
@@ -180,7 +180,7 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 			}
 		}
 
-		public void Assign(BrowserTabStripItem item) {
+		public void Assign(BrowserTabItem item) {
 			Visible = item.Visible;
 			Text = item.Text;
 			CanClose = item.CanClose;

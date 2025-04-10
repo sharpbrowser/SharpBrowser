@@ -4,16 +4,19 @@ SharpBrowser is the fastest open source C# web browser there is! Slightly faster
 
 ## Features
 
-- HTML5, CSS3, JS, HTML5 Video, WebGL 3D, WebAssembly, etc
+- HTML5, CSS3, JS, HTML5 Video, WebGL 3D, WebAssembly
 - Tabbed browsing
-- Address bar (also opens Google)
-- Back, Forward, Stop, Refresh
+  - Popups open in new tabs
+  - When the last tab is closed, the browser window closes down
+- Address bar (also opens Google or any search engine)
+- Back, Forward, Stop, Refresh, Home, Menu button
+- Print and Print to PDF
 - Developer tools
 - Search bar (also highlights all instances)
-- Download manager
+- File downloads and download manager
 - Custom error pages
 - Custom context menu
-- Easily add vendor-specific branding, buttons or hotkeys
+- Easily add [vendor-specific branding](#customization), styling, buttons or hotkeys
 - View online & offline webpages
 
 ## Hotkeys
@@ -26,10 +29,13 @@ Ctrl+N		| Add a new window
 Ctrl+W		| Close active tab
 Ctrl+MiddleClick		| Close Tab
 F5			| Refresh active tab
+F11			| Toggle fullscreen
 F12			| Open developer tools
 Ctrl+Tab	| Switch to the next tab
 Ctrl+Shift+Tab	| Switch to the previous tab
 Ctrl+F		| Open search bar (Enter to find next, Esc to close)
+Ctrl+P 		| Print
+Ctrl+Shift+P 		| Print to PDF
 
 
 ## System requirements
@@ -47,11 +53,20 @@ Ctrl+F		| Open search bar (Enter to find next, Esc to close)
 - See the [Compilation Guide](docs/Compilation.md) for steps to get started.
 
 
+## Customization
+
+- To configure the browser bring, name, URL, default search engine, modify the `BrowserConfig` class.
+
+- To configure the tab style colors, modify the `BrowserTabStyle` class.
+
+- To enable Javascript, WebGL, LocalStorage can be found in the `BrowserConfig` class.
+
+
+
 ## Documentation
 
 - [User Guide](docs/Users.md)
 - [Compilation Guide](docs/Compilation.md)
-- [Configuration Guide](docs/Configuration.md)
 - [Distribution Guide](docs/Distribution.md)
 
 

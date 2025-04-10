@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using FontAwesome.Sharp;
+using System.Windows.Forms;
 
 namespace SharpBrowser
 {
@@ -31,56 +32,86 @@ namespace SharpBrowser
 		private void InitializeComponent() {
 			components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-			menuStripTab = new ContextMenuStrip(components);
-			menuCloseTab = new ToolStripMenuItem();
-			menuCloseOtherTabs = new ToolStripMenuItem();
-			BtnRefresh = new FontAwesome.Sharp.IconButton();
-			BtnStop = new FontAwesome.Sharp.IconButton();
-			BtnForward = new FontAwesome.Sharp.IconButton();
-			BtnBack = new FontAwesome.Sharp.IconButton();
-			timer1 = new Timer(components);
-			BtnDownloads = new FontAwesome.Sharp.IconButton();
+			TabMenu = new ContextMenuStrip(components);
+			TMReload = new IconMenuItem();
+			TMClose = new IconMenuItem();
+			TMCloseOther = new IconMenuItem();
+			BtnRefresh = new IconButton();
+			BtnStop = new IconButton();
+			BtnForward = new IconButton();
+			BtnBack = new IconButton();
+			BtnDownloads = new IconButton();
 			TxtURL = new TextBox();
 			PanelToolbar = new Panel();
 			lbl_ZoomLevel = new Label();
-			BtnMenu = new FontAwesome.Sharp.IconButton();
-			BtnHome = new FontAwesome.Sharp.IconButton();
-			TabPages = new Controls.BrowserTabStrip.BrowserTabStrip();
-			tabStrip1 = new Controls.BrowserTabStrip.BrowserTabStripItem();
-			tabStripAdd = new Controls.BrowserTabStrip.BrowserTabStripItem();
+			BtnMenu = new IconButton();
+			BtnHome = new IconButton();
+			TabPages = new SharpBrowser.Controls.BrowserTabStrip.BrowserTabStrip();
+			tabStrip1 = new SharpBrowser.Controls.BrowserTabStrip.BrowserTabItem();
 			PanelSearch = new Panel();
 			BtnNextSearch = new Button();
 			BtnPrevSearch = new Button();
 			BtnCloseSearch = new Button();
 			TxtSearch = new TextBox();
-			menuStripTab.SuspendLayout();
+			MainMenu = new ContextMenuStrip(components);
+			MMNewTab = new IconMenuItem();
+			MMNewWindow = new IconMenuItem();
+			MMNextTab = new IconMenuItem();
+			MMPrevTab = new IconMenuItem();
+			toolStripSeparator1 = new ToolStripSeparator();
+			MMPrint = new IconMenuItem();
+			MMPrintPDF = new IconMenuItem();
+			MMDownloads = new IconMenuItem();
+			MMFullscreen = new IconMenuItem();
+			MMDevTools = new IconMenuItem();
+			toolStripSeparator2 = new ToolStripSeparator();
+			MMClose = new IconMenuItem();
+			MMCloseOther = new IconMenuItem();
+			TabMenu.SuspendLayout();
 			PanelToolbar.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)TabPages).BeginInit();
 			TabPages.SuspendLayout();
 			PanelSearch.SuspendLayout();
+			MainMenu.SuspendLayout();
 			SuspendLayout();
 			// 
-			// menuStripTab
+			// TabMenu
 			// 
-			menuStripTab.ImageScalingSize = new System.Drawing.Size(20, 20);
-			menuStripTab.Items.AddRange(new ToolStripItem[] { menuCloseTab, menuCloseOtherTabs });
-			menuStripTab.Name = "menuStripTab";
-			menuStripTab.Size = new System.Drawing.Size(170, 48);
+			TabMenu.ImageScalingSize = new System.Drawing.Size(20, 20);
+			TabMenu.Items.AddRange(new ToolStripItem[] { TMReload, TMClose, TMCloseOther });
+			TabMenu.Name = "menuStripTab";
+			TabMenu.Size = new System.Drawing.Size(173, 82);
 			// 
-			// menuCloseTab
+			// TMReload
 			// 
-			menuCloseTab.Name = "menuCloseTab";
-			menuCloseTab.ShortcutKeys = Keys.Control | Keys.F4;
-			menuCloseTab.Size = new System.Drawing.Size(169, 22);
-			menuCloseTab.Text = "Close tab";
-			menuCloseTab.Click += menuCloseTab_Click;
+			TMReload.IconChar = IconChar.Refresh;
+			TMReload.IconColor = System.Drawing.Color.Black;
+			TMReload.IconFont = IconFont.Auto;
+			TMReload.Name = "TMReload";
+			TMReload.Size = new System.Drawing.Size(172, 26);
+			TMReload.Text = "Reload tab";
+			TMReload.Click += TMReload_Click;
 			// 
-			// menuCloseOtherTabs
+			// TMClose
 			// 
-			menuCloseOtherTabs.Name = "menuCloseOtherTabs";
-			menuCloseOtherTabs.Size = new System.Drawing.Size(169, 22);
-			menuCloseOtherTabs.Text = "Close other tabs";
-			menuCloseOtherTabs.Click += menuCloseOtherTabs_Click;
+			TMClose.IconChar = IconChar.Close;
+			TMClose.IconColor = System.Drawing.Color.Black;
+			TMClose.IconFont = IconFont.Auto;
+			TMClose.Name = "TMClose";
+			TMClose.ShortcutKeyDisplayString = "Ctrl+W";
+			TMClose.Size = new System.Drawing.Size(172, 26);
+			TMClose.Text = "Close tab";
+			TMClose.Click += TMCloseTab_Click;
+			// 
+			// TMCloseOther
+			// 
+			TMCloseOther.IconChar = IconChar.Eraser;
+			TMCloseOther.IconColor = System.Drawing.Color.Black;
+			TMCloseOther.IconFont = IconFont.Auto;
+			TMCloseOther.Name = "TMCloseOther";
+			TMCloseOther.Size = new System.Drawing.Size(172, 26);
+			TMCloseOther.Text = "Close other tabs";
+			TMCloseOther.Click += TMCloseOtherTabs_Click;
 			// 
 			// BtnRefresh
 			// 
@@ -88,9 +119,9 @@ namespace SharpBrowser
 			BtnRefresh.FlatAppearance.BorderSize = 0;
 			BtnRefresh.FlatStyle = FlatStyle.Flat;
 			BtnRefresh.ForeColor = System.Drawing.Color.White;
-			BtnRefresh.IconChar = FontAwesome.Sharp.IconChar.Refresh;
+			BtnRefresh.IconChar = IconChar.Refresh;
 			BtnRefresh.IconColor = System.Drawing.Color.Black;
-			BtnRefresh.IconFont = FontAwesome.Sharp.IconFont.Auto;
+			BtnRefresh.IconFont = IconFont.Auto;
 			BtnRefresh.IconSize = 30;
 			BtnRefresh.Location = new System.Drawing.Point(85, 5);
 			BtnRefresh.Margin = new Padding(3, 4, 3, 4);
@@ -105,9 +136,9 @@ namespace SharpBrowser
 			BtnStop.BackgroundImageLayout = ImageLayout.Zoom;
 			BtnStop.FlatStyle = FlatStyle.Flat;
 			BtnStop.ForeColor = System.Drawing.Color.White;
-			BtnStop.IconChar = FontAwesome.Sharp.IconChar.Cancel;
+			BtnStop.IconChar = IconChar.Cancel;
 			BtnStop.IconColor = System.Drawing.Color.Black;
-			BtnStop.IconFont = FontAwesome.Sharp.IconFont.Auto;
+			BtnStop.IconFont = IconFont.Auto;
 			BtnStop.IconSize = 30;
 			BtnStop.Location = new System.Drawing.Point(85, 5);
 			BtnStop.Margin = new Padding(3, 4, 3, 4);
@@ -123,9 +154,9 @@ namespace SharpBrowser
 			BtnForward.FlatAppearance.BorderSize = 0;
 			BtnForward.FlatStyle = FlatStyle.Flat;
 			BtnForward.ForeColor = System.Drawing.Color.White;
-			BtnForward.IconChar = FontAwesome.Sharp.IconChar.ArrowRight;
+			BtnForward.IconChar = IconChar.ArrowRight;
 			BtnForward.IconColor = System.Drawing.Color.Black;
-			BtnForward.IconFont = FontAwesome.Sharp.IconFont.Auto;
+			BtnForward.IconFont = IconFont.Auto;
 			BtnForward.IconSize = 30;
 			BtnForward.Location = new System.Drawing.Point(45, 5);
 			BtnForward.Margin = new Padding(3, 4, 3, 4);
@@ -141,9 +172,9 @@ namespace SharpBrowser
 			BtnBack.FlatAppearance.BorderSize = 0;
 			BtnBack.FlatStyle = FlatStyle.Flat;
 			BtnBack.ForeColor = System.Drawing.Color.White;
-			BtnBack.IconChar = FontAwesome.Sharp.IconChar.ArrowLeft;
+			BtnBack.IconChar = IconChar.ArrowLeft;
 			BtnBack.IconColor = System.Drawing.Color.Black;
-			BtnBack.IconFont = FontAwesome.Sharp.IconFont.Auto;
+			BtnBack.IconFont = IconFont.Auto;
 			BtnBack.IconSize = 30;
 			BtnBack.Location = new System.Drawing.Point(5, 5);
 			BtnBack.Margin = new Padding(3, 4, 3, 4);
@@ -153,11 +184,6 @@ namespace SharpBrowser
 			BtnBack.UseVisualStyleBackColor = true;
 			BtnBack.Click += bBack_Click;
 			// 
-			// timer1
-			// 
-			timer1.Interval = 50;
-			timer1.Tick += timer1_Tick;
-			// 
 			// BtnDownloads
 			// 
 			BtnDownloads.Anchor = AnchorStyles.Top | AnchorStyles.Right;
@@ -165,9 +191,9 @@ namespace SharpBrowser
 			BtnDownloads.FlatAppearance.BorderSize = 0;
 			BtnDownloads.FlatStyle = FlatStyle.Flat;
 			BtnDownloads.ForeColor = System.Drawing.Color.White;
-			BtnDownloads.IconChar = FontAwesome.Sharp.IconChar.Download;
+			BtnDownloads.IconChar = IconChar.Download;
 			BtnDownloads.IconColor = System.Drawing.Color.Black;
-			BtnDownloads.IconFont = FontAwesome.Sharp.IconFont.Auto;
+			BtnDownloads.IconFont = IconFont.Auto;
 			BtnDownloads.IconSize = 30;
 			BtnDownloads.Location = new System.Drawing.Point(794, 5);
 			BtnDownloads.Margin = new Padding(3, 4, 3, 4);
@@ -233,9 +259,9 @@ namespace SharpBrowser
 			BtnMenu.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(224, 224, 224);
 			BtnMenu.FlatStyle = FlatStyle.Flat;
 			BtnMenu.ForeColor = System.Drawing.Color.White;
-			BtnMenu.IconChar = FontAwesome.Sharp.IconChar.Bars;
+			BtnMenu.IconChar = IconChar.Bars;
 			BtnMenu.IconColor = System.Drawing.Color.Black;
-			BtnMenu.IconFont = FontAwesome.Sharp.IconFont.Auto;
+			BtnMenu.IconFont = IconFont.Auto;
 			BtnMenu.IconSize = 30;
 			BtnMenu.Location = new System.Drawing.Point(874, 5);
 			BtnMenu.Margin = new Padding(3, 4, 3, 4);
@@ -254,9 +280,9 @@ namespace SharpBrowser
 			BtnHome.FlatAppearance.BorderSize = 0;
 			BtnHome.FlatStyle = FlatStyle.Flat;
 			BtnHome.ForeColor = System.Drawing.Color.White;
-			BtnHome.IconChar = FontAwesome.Sharp.IconChar.House;
+			BtnHome.IconChar = IconChar.House;
 			BtnHome.IconColor = System.Drawing.Color.Black;
-			BtnHome.IconFont = FontAwesome.Sharp.IconFont.Auto;
+			BtnHome.IconFont = IconFont.Auto;
 			BtnHome.IconSize = 30;
 			BtnHome.Location = new System.Drawing.Point(834, 5);
 			BtnHome.Margin = new Padding(3, 4, 3, 4);
@@ -269,10 +295,10 @@ namespace SharpBrowser
 			// 
 			// TabPages
 			// 
-			TabPages.ContextMenuStrip = menuStripTab;
+			TabPages.ContextMenuStrip = TabMenu;
 			TabPages.Dock = DockStyle.Fill;
 			TabPages.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
-			TabPages.Items.AddRange(new Controls.BrowserTabStrip.BrowserTabStripItem[] { tabStrip1, tabStripAdd });
+			TabPages.Items.AddRange(new Controls.BrowserTabStrip.BrowserTabItem[] { tabStrip1 });
 			TabPages.Location = new System.Drawing.Point(0, 45);
 			TabPages.Name = "TabPages";
 			TabPages.Padding = new Padding(1, 49, 1, 1);
@@ -282,7 +308,7 @@ namespace SharpBrowser
 			TabPages.Text = "faTabStrip1";
 			TabPages.TabStripItemSelectionChanged += OnTabsChanged;
 			TabPages.TabStripItemClosed += OnTabClosed;
-			TabPages.MouseClick += tabPages_MouseClick;
+			TabPages.TabStripNewTab += OnNewTab;
 			// 
 			// tabStrip1
 			// 
@@ -294,17 +320,6 @@ namespace SharpBrowser
 			tabStrip1.Size = new System.Drawing.Size(914, 377);
 			tabStrip1.TabIndex = 0;
 			tabStrip1.Title = "Loading...";
-			// 
-			// tabStripAdd
-			// 
-			tabStripAdd.CanClose = false;
-			tabStripAdd.Dock = DockStyle.Fill;
-			tabStripAdd.IsDrawn = true;
-			tabStripAdd.Location = new System.Drawing.Point(0, 0);
-			tabStripAdd.Name = "tabStripAdd";
-			tabStripAdd.Size = new System.Drawing.Size(931, 601);
-			tabStripAdd.TabIndex = 1;
-			tabStripAdd.Title = "+";
 			// 
 			// PanelSearch
 			// 
@@ -379,6 +394,140 @@ namespace SharpBrowser
 			TxtSearch.TextChanged += TxtSearch_TextChanged;
 			TxtSearch.KeyDown += TxtSearch_KeyDown;
 			// 
+			// MainMenu
+			// 
+			MainMenu.ImageScalingSize = new System.Drawing.Size(20, 20);
+			MainMenu.Items.AddRange(new ToolStripItem[] { MMNewTab, MMNewWindow, MMNextTab, MMPrevTab, toolStripSeparator1, MMPrint, MMPrintPDF, MMDownloads, MMFullscreen, MMDevTools, toolStripSeparator2, MMClose, MMCloseOther });
+			MainMenu.Name = "menuStripTab";
+			MainMenu.Size = new System.Drawing.Size(228, 302);
+			// 
+			// MMNewTab
+			// 
+			MMNewTab.IconChar = IconChar.Add;
+			MMNewTab.IconColor = System.Drawing.Color.Black;
+			MMNewTab.IconFont = IconFont.Auto;
+			MMNewTab.Name = "MMNewTab";
+			MMNewTab.ShortcutKeyDisplayString = "Ctrl+T";
+			MMNewTab.Size = new System.Drawing.Size(227, 26);
+			MMNewTab.Text = "New tab";
+			MMNewTab.Click += MMNewTab_Click;
+			// 
+			// MMNewWindow
+			// 
+			MMNewWindow.IconChar = IconChar.PlusSquare;
+			MMNewWindow.IconColor = System.Drawing.Color.Black;
+			MMNewWindow.IconFont = IconFont.Auto;
+			MMNewWindow.Name = "MMNewWindow";
+			MMNewWindow.ShortcutKeyDisplayString = "Ctrl+N";
+			MMNewWindow.Size = new System.Drawing.Size(227, 26);
+			MMNewWindow.Text = "New window";
+			MMNewWindow.Click += MMNewWindow_Click;
+			// 
+			// MMNextTab
+			// 
+			MMNextTab.IconChar = IconChar.ArrowRight;
+			MMNextTab.IconColor = System.Drawing.Color.Black;
+			MMNextTab.IconFont = IconFont.Auto;
+			MMNextTab.Name = "MMNextTab";
+			MMNextTab.ShortcutKeyDisplayString = "Ctrl+Tab";
+			MMNextTab.Size = new System.Drawing.Size(227, 26);
+			MMNextTab.Text = "Next tab";
+			MMNextTab.Click += MMNextTab_Click;
+			// 
+			// MMPrevTab
+			// 
+			MMPrevTab.IconChar = IconChar.ArrowLeft;
+			MMPrevTab.IconColor = System.Drawing.Color.Black;
+			MMPrevTab.IconFont = IconFont.Auto;
+			MMPrevTab.Name = "MMPrevTab";
+			MMPrevTab.ShortcutKeyDisplayString = "Ctrl+Shift+Tab";
+			MMPrevTab.Size = new System.Drawing.Size(227, 26);
+			MMPrevTab.Text = "Previous tab";
+			MMPrevTab.Click += MMPrevTab_Click;
+			// 
+			// toolStripSeparator1
+			// 
+			toolStripSeparator1.Name = "toolStripSeparator1";
+			toolStripSeparator1.Size = new System.Drawing.Size(224, 6);
+			// 
+			// MMPrint
+			// 
+			MMPrint.IconChar = IconChar.Print;
+			MMPrint.IconColor = System.Drawing.Color.Black;
+			MMPrint.IconFont = IconFont.Auto;
+			MMPrint.Name = "MMPrint";
+			MMPrint.Size = new System.Drawing.Size(227, 26);
+			MMPrint.Text = "Print...";
+			MMPrint.Click += MMPrint_Click;
+			// 
+			// MMPrintPDF
+			// 
+			MMPrintPDF.IconChar = IconChar.FilePdf;
+			MMPrintPDF.IconColor = System.Drawing.Color.Black;
+			MMPrintPDF.IconFont = IconFont.Auto;
+			MMPrintPDF.Name = "MMPrintPDF";
+			MMPrintPDF.Size = new System.Drawing.Size(227, 26);
+			MMPrintPDF.Text = "Print to PDF...";
+			MMPrintPDF.Click += MMPrintPDF_Click;
+			// 
+			// MMDownloads
+			// 
+			MMDownloads.IconChar = IconChar.Download;
+			MMDownloads.IconColor = System.Drawing.Color.Black;
+			MMDownloads.IconFont = IconFont.Auto;
+			MMDownloads.Name = "MMDownloads";
+			MMDownloads.Size = new System.Drawing.Size(227, 26);
+			MMDownloads.Text = "Downloads...";
+			MMDownloads.Click += MMDownloads_Click;
+			// 
+			// MMFullscreen
+			// 
+			MMFullscreen.IconChar = IconChar.Expand;
+			MMFullscreen.IconColor = System.Drawing.Color.Black;
+			MMFullscreen.IconFont = IconFont.Auto;
+			MMFullscreen.Name = "MMFullscreen";
+			MMFullscreen.ShortcutKeyDisplayString = "F11";
+			MMFullscreen.Size = new System.Drawing.Size(227, 26);
+			MMFullscreen.Text = "Fullscreen";
+			MMFullscreen.Click += MMFullscreen_Click;
+			// 
+			// MMDevTools
+			// 
+			MMDevTools.IconChar = IconChar.Code;
+			MMDevTools.IconColor = System.Drawing.Color.Black;
+			MMDevTools.IconFont = IconFont.Auto;
+			MMDevTools.Name = "MMDevTools";
+			MMDevTools.ShortcutKeyDisplayString = "F12";
+			MMDevTools.Size = new System.Drawing.Size(227, 26);
+			MMDevTools.Text = "Developer tools...";
+			MMDevTools.Click += MMDevTools_Click;
+			// 
+			// toolStripSeparator2
+			// 
+			toolStripSeparator2.Name = "toolStripSeparator2";
+			toolStripSeparator2.Size = new System.Drawing.Size(224, 6);
+			// 
+			// MMClose
+			// 
+			MMClose.IconChar = IconChar.Close;
+			MMClose.IconColor = System.Drawing.Color.Black;
+			MMClose.IconFont = IconFont.Auto;
+			MMClose.Name = "MMClose";
+			MMClose.ShortcutKeyDisplayString = "Ctrl+W";
+			MMClose.Size = new System.Drawing.Size(227, 26);
+			MMClose.Text = "Close tab";
+			MMClose.Click += MMClose_Click;
+			// 
+			// MMCloseOther
+			// 
+			MMCloseOther.IconChar = IconChar.Eraser;
+			MMCloseOther.IconColor = System.Drawing.Color.Black;
+			MMCloseOther.IconFont = IconFont.Auto;
+			MMCloseOther.Name = "MMCloseOther";
+			MMCloseOther.Size = new System.Drawing.Size(227, 26);
+			MMCloseOther.Text = "Close other tabs";
+			MMCloseOther.Click += MMCloseOther_Click;
+			// 
 			// MainForm
 			// 
 			AutoScaleMode = AutoScaleMode.None;
@@ -394,13 +543,14 @@ namespace SharpBrowser
 			WindowState = FormWindowState.Maximized;
 			FormClosing += MainForm_FormClosing;
 			Load += MainForm_Load;
-			menuStripTab.ResumeLayout(false);
+			TabMenu.ResumeLayout(false);
 			PanelToolbar.ResumeLayout(false);
 			PanelToolbar.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)TabPages).EndInit();
 			TabPages.ResumeLayout(false);
 			PanelSearch.ResumeLayout(false);
 			PanelSearch.PerformLayout();
+			MainMenu.ResumeLayout(false);
 			ResumeLayout(false);
 		}
 
@@ -408,12 +558,8 @@ namespace SharpBrowser
 		#endregion
 
 		private SharpBrowser.Controls.BrowserTabStrip.BrowserTabStrip TabPages;
-        private SharpBrowser.Controls.BrowserTabStrip.BrowserTabStripItem tabStrip1;
-        private SharpBrowser.Controls.BrowserTabStrip.BrowserTabStripItem tabStripAdd;
-		private System.Windows.Forms.Timer timer1;
-        private System.Windows.Forms.ContextMenuStrip menuStripTab;
-        private System.Windows.Forms.ToolStripMenuItem menuCloseTab;
-        private System.Windows.Forms.ToolStripMenuItem menuCloseOtherTabs;
+        private SharpBrowser.Controls.BrowserTabStrip.BrowserTabItem tabStrip1;
+        private System.Windows.Forms.ContextMenuStrip TabMenu;
 		private FontAwesome.Sharp.IconButton BtnForward;
 		private FontAwesome.Sharp.IconButton BtnBack;
 		private FontAwesome.Sharp.IconButton BtnStop;
@@ -429,6 +575,23 @@ namespace SharpBrowser
         private FontAwesome.Sharp.IconButton BtnHome;
         private FontAwesome.Sharp.IconButton BtnMenu;
         private Label lbl_ZoomLevel;
-    }
+		private ContextMenuStrip MainMenu;
+		private IconMenuItem MMClose;
+		private IconMenuItem MMCloseOther;
+		private IconMenuItem MMNewTab;
+		private IconMenuItem MMNewWindow;
+		private ToolStripSeparator toolStripSeparator1;
+		private IconMenuItem TMReload;
+        private IconMenuItem TMClose;
+        private IconMenuItem TMCloseOther;
+		private IconMenuItem MMDownloads;
+		private IconMenuItem MMNextTab;
+		private IconMenuItem MMPrevTab;
+		private ToolStripSeparator toolStripSeparator2;
+		private IconMenuItem MMPrint;
+		private IconMenuItem MMPrintPDF;
+		private IconMenuItem MMDevTools;
+		private IconMenuItem MMFullscreen;
+	}
 }
 

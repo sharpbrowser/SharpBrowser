@@ -2,15 +2,15 @@ using System;
 
 namespace SharpBrowser.Controls.BrowserTabStrip {
 	public class TabStripItemChangedEventArgs : EventArgs {
-		private BrowserTabStripItem itm;
+		private BrowserTabItem itm;
 
 		private BrowserTabStripItemChangeTypes changeType;
 
 		public BrowserTabStripItemChangeTypes ChangeType => changeType;
 
-		public BrowserTabStripItem Item => itm;
+		public BrowserTabItem Item => itm;
 
-		public TabStripItemChangedEventArgs(BrowserTabStripItem item, BrowserTabStripItemChangeTypes type) {
+		public TabStripItemChangedEventArgs(BrowserTabItem item, BrowserTabStripItemChangeTypes type) {
 			changeType = type;
 			itm = item;
 		}

@@ -157,24 +157,6 @@ namespace SharpBrowser.Controls
         }
 
 
-        //private void TextBox_FontChanged(object sender, EventArgs e)
-        //{
-        //    RefreshHeight(textBox);
-        //    this.Height = textBox.Height + 5;
-        //}
-        ///// <summary>
-        ///// fix Textbox.borderNone bottom gets clipped issue
-        ///// </summary>
-        ///// <param name="textbox"></param>
-        static void RefreshHeight(TextBox textbox)
-        {
-
-            textbox.Multiline = true;
-            Size s = TextRenderer.MeasureText("AĞÜüğGgpPa", textbox.Font, Size.Empty, TextFormatFlags.TextBoxControl);
-            textbox.MinimumSize = new Size(0, s.Height + 1 + 3);
-            textbox.Multiline = false;
-            
-        }
         static int MeasureHeight(TextBox textbox)
         {
             Size size = TextRenderer.MeasureText("AĞÜüğGgpPa", textbox.Font, Size.Empty, TextFormatFlags.TextBoxControl);

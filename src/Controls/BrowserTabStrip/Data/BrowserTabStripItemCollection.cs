@@ -5,12 +5,12 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 	public class BrowserTabStripItemCollection : CollectionWithEvents {
 		private int lockUpdate;
 
-		public BrowserTabStripItem this[int index] {
+		public BrowserTabItem this[int index] {
 			get {
 				if (index < 0 || base.List.Count - 1 < index) {
 					return null;
 				}
-				return (BrowserTabStripItem)base.List[index];
+				return (BrowserTabItem)base.List[index];
 			}
 			set {
 				base.List[index] = value;
@@ -34,7 +34,7 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 			}
 		}
 
-		public virtual BrowserTabStripItem LastVisible {
+		public virtual BrowserTabItem LastVisible {
 			get {
 				for (int num = base.Count - 1; num > 0; num--) {
 					if (this[num].Visible) {
@@ -45,7 +45,7 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 			}
 		}
 
-		public virtual BrowserTabStripItem FirstVisible {
+		public virtual BrowserTabItem FirstVisible {
 			get {
 				for (int i = 0; i < base.Count; i++) {
 					if (this[i].Visible) {
@@ -96,10 +96,10 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 			}
 		}
 
-		public virtual void AddRange(BrowserTabStripItem[] items) {
+		public virtual void AddRange(BrowserTabItem[] items) {
 			BeginUpdate();
 			try {
-				foreach (BrowserTabStripItem value in items) {
+				foreach (BrowserTabItem value in items) {
 					base.List.Add(value);
 				}
 			}
@@ -113,8 +113,8 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 			try {
 				Clear();
 				for (int i = 0; i < collection.Count; i++) {
-					BrowserTabStripItem item = collection[i];
-					BrowserTabStripItem fATabStripItem = new BrowserTabStripItem();
+					BrowserTabItem item = collection[i];
+					BrowserTabItem fATabStripItem = new BrowserTabItem();
 					fATabStripItem.Assign(item);
 					Add(fATabStripItem);
 				}
@@ -124,7 +124,7 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 			}
 		}
 
-		public virtual int Add(BrowserTabStripItem item) {
+		public virtual int Add(BrowserTabItem item) {
 			int num = IndexOf(item);
 			if (num == -1) {
 				num = base.List.Add(item);
@@ -132,13 +132,13 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 			return num;
 		}
 
-		public virtual void Remove(BrowserTabStripItem item) {
+		public virtual void Remove(BrowserTabItem item) {
 			if (base.List.Contains(item)) {
 				base.List.Remove(item);
 			}
 		}
 
-		public virtual BrowserTabStripItem MoveTo(int newIndex, BrowserTabStripItem item) {
+		public virtual BrowserTabItem MoveTo(int newIndex, BrowserTabItem item) {
 			int num = base.List.IndexOf(item);
 			if (num >= 0) {
 				RemoveAt(num);
@@ -148,29 +148,29 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 			return null;
 		}
 
-		public virtual int IndexOf(BrowserTabStripItem item) {
+		public virtual int IndexOf(BrowserTabItem item) {
 			return base.List.IndexOf(item);
 		}
 
-		public virtual bool Contains(BrowserTabStripItem item) {
+		public virtual bool Contains(BrowserTabItem item) {
 			return base.List.Contains(item);
 		}
 
-		public virtual void Insert(int index, BrowserTabStripItem item) {
+		public virtual void Insert(int index, BrowserTabItem item) {
 			if (!Contains(item)) {
 				base.List.Insert(index, item);
 			}
 		}
 
 		protected override void OnInsertComplete(int index, object item) {
-			BrowserTabStripItem fATabStripItem = item as BrowserTabStripItem;
+			BrowserTabItem fATabStripItem = item as BrowserTabItem;
 			fATabStripItem.Changed += OnItem_Changed;
 			OnCollectionChanged(new CollectionChangeEventArgs(CollectionChangeAction.Add, item));
 		}
 
 		protected override void OnRemove(int index, object item) {
 			base.OnRemove(index, item);
-			BrowserTabStripItem fATabStripItem = item as BrowserTabStripItem;
+			BrowserTabItem fATabStripItem = item as BrowserTabItem;
 			fATabStripItem.Changed -= OnItem_Changed;
 			OnCollectionChanged(new CollectionChangeEventArgs(CollectionChangeAction.Remove, item));
 		}

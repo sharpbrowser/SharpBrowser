@@ -1,10 +1,6 @@
 ﻿using CefSharp.WinForms;
 using SharpBrowser.Controls.BrowserTabStrip;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SharpBrowser.Browser.Model {
 	/// <summary>
@@ -22,7 +18,7 @@ namespace SharpBrowser.Browser.Model {
 
 		public DateTime DateCreated;
 
-		public BrowserTabStripItem Tab;
+		public BrowserTabItem Tab;
 		public ChromiumWebBrowser Browser;
 
 	}

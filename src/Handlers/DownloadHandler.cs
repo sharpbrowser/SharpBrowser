@@ -70,7 +70,7 @@ namespace SharpBrowser {
 					else {
 
 						// open the downloads tab
-						myForm.OpenDownloadsTab();
+						myForm.OpenDownloads();
 						callback.Continue(path, true);
 						return true;
 					}

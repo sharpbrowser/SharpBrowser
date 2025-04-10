@@ -156,19 +156,8 @@ namespace SharpBrowser {
 					myForm.RefreshActiveTab();
 				});
 			}
-			if (id == SaveAsPdf)
-			{
-
-				SaveFileDialog sfd = new SaveFileDialog();
-				sfd.Filter = "PDF Files | *.pdf";
-				if (sfd.ShowDialog() == DialogResult.OK)
-				{
-					//string path = Path.GetFileName(sfd.FileName);
-					browser.PrintToPdfAsync(sfd.FileName, new PdfPrintSettings()
-					{
-						PrintBackground = true,
-					});
-				}
+			if (id == SaveAsPdf) {
+				SaveAsPDF(browser);
 			}
 			if (id == Print)
 			{
@@ -176,6 +165,16 @@ namespace SharpBrowser {
 			}
 
 			return false;
+		}
+
+		public static void SaveAsPDF(IBrowser browser) {
+			SaveFileDialog sfd = new SaveFileDialog();
+			sfd.Filter = "PDF Files | *.pdf";
+			if (sfd.ShowDialog() == DialogResult.OK) {
+				browser.PrintToPdfAsync(sfd.FileName, new PdfPrintSettings() {
+					PrintBackground = true,
+				});
+			}
 		}
 
 		//

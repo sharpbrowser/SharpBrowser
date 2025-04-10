@@ -20,6 +20,7 @@ using SharpBrowser.Properties;
 using System.Resources;
 using System.Threading.Tasks;
 using CefSharp.WinForms.Experimental;
+using System.Windows.Controls.Primitives;
 
 namespace SharpBrowser {
 
@@ -51,10 +52,13 @@ namespace SharpBrowser {
 			InitHotkeys();
 
 			InitFAButton_DisabledColors();
-			TxtURL.MakeTextbox_CustomBorderColor();
+			InitToolbar();
 
-			//cant  do this on gui. paneltoolbar gets deleted. buggy designer 
-			//PanelToolbar location Fix -2025
+
+		}
+
+		private void InitToolbar() {
+			TxtURL.MakeTextbox_CustomBorderColor();
 			PanelToolbar.Dock = DockStyle.None;
 			PanelToolbar.BringToFront();
 			PanelToolbar.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
@@ -62,39 +66,35 @@ namespace SharpBrowser {
 			PanelToolbar.Width = this.Width;
 			PanelToolbar.Width = pnlToolbarOverlay.Width;
 
-
 			if (Debugger.IsAttached)
 				pnlToolbarOverlay.BackColor = Color.Cyan;
-
 		}
 
-        private void InitFAButton_DisabledColors()
-        {
-            BtnBack.EnabledChanged += (s1, e1) => handleFAButton_DisabledColors(s1);
-            BtnForward.EnabledChanged += (s1, e1) => handleFAButton_DisabledColors(s1);
-            BtnStop.EnabledChanged += (s1, e1) => handleFAButton_DisabledColors(s1);
-            BtnRefresh.EnabledChanged += (s1, e1) => handleFAButton_DisabledColors(s1);
-            BtnDownloads.EnabledChanged += (s1, e1) => handleFAButton_DisabledColors(s1);
-            BtnHome.EnabledChanged += (s1, e1) => handleFAButton_DisabledColors(s1);
-            BtnMenu.EnabledChanged += (s1, e1) => handleFAButton_DisabledColors(s1);
-        }
-        private async void handleFAButton_DisabledColors(object senderBtn)
-        {
-            var faBtn = senderBtn as FontAwesome.Sharp.IconButton;
+		private void InitFAButton_DisabledColors() {
+			BtnBack.EnabledChanged += (s1, e1) => handleFAButton_DisabledColors(s1);
+			BtnForward.EnabledChanged += (s1, e1) => handleFAButton_DisabledColors(s1);
+			BtnStop.EnabledChanged += (s1, e1) => handleFAButton_DisabledColors(s1);
+			BtnRefresh.EnabledChanged += (s1, e1) => handleFAButton_DisabledColors(s1);
+			BtnDownloads.EnabledChanged += (s1, e1) => handleFAButton_DisabledColors(s1);
+			BtnHome.EnabledChanged += (s1, e1) => handleFAButton_DisabledColors(s1);
+			BtnMenu.EnabledChanged += (s1, e1) => handleFAButton_DisabledColors(s1);
+		}
+		private async void handleFAButton_DisabledColors(object senderBtn) {
+			var faBtn = senderBtn as FontAwesome.Sharp.IconButton;
 			//faBtn.IconColor = faBtn.Enabled ? Color.Black : PanelToolbar.BackColor.ChangeColorBrightness(0);
 			faBtn.IconColor = faBtn.Enabled ? Color.Black : Color.Black.ChangeColorBrightness(0.8);
 
 
-        }
+		}
 
 
-        #region App Icon
+		#region App Icon
 
-        /// <summary>
-        /// embedding the resource using the Visual Studio designer results in a blurry icon.
-        /// the best way to get a non-blurry icon for Windows 7 apps.
-        /// </summary>
-        private void InitAppIcon() {
+		/// <summary>
+		/// embedding the resource using the Visual Studio designer results in a blurry icon.
+		/// the best way to get a non-blurry icon for Windows 7 apps.
+		/// </summary>
+		private void InitAppIcon() {
 			assembly = Assembly.GetAssembly(typeof(MainForm));
 			Icon = new Icon(GetResourceStream("sharpbrowser.ico"), new Size(64, 64));
 		}
@@ -127,6 +127,8 @@ namespace SharpBrowser {
 			KeyboardHandler.AddHotKey(this, OpenDeveloperTools, Keys.F12);
 			KeyboardHandler.AddHotKey(this, NextTab, Keys.Tab, true);
 			KeyboardHandler.AddHotKey(this, PrevTab, Keys.Tab, true, true);
+			KeyboardHandler.AddHotKey(this, Print, Keys.P, true);
+			KeyboardHandler.AddHotKey(this, PrintToPDF, Keys.P, true, true);
 
 			// search hotkeys
 			KeyboardHandler.AddHotKey(this, OpenSearch, Keys.F, true);
@@ -162,9 +164,6 @@ namespace SharpBrowser {
 
 		#region Web Browser & Tabs
 
-		private BrowserTabStripItem newStrip;
-		private BrowserTabStripItem downloadsStrip;
-
 		private string currentFullURL;
 		private string currentCleanURL;
 		private string currentTitle;
@@ -187,7 +186,7 @@ namespace SharpBrowser {
 			CefSettings settings = new CefSettings();
 
 			settings.RegisterScheme(new CefCustomScheme {
-				SchemeName = BrowserConfig.InternalURL,
+				SchemeName = BrowserConfig.InternalScheme,
 				SchemeHandlerFactory = new SchemeHandlerFactory()
 			});
 
@@ -227,11 +226,13 @@ namespace SharpBrowser {
 
 			BrowserSettings config = new BrowserSettings();
 
-			//config.FileAccessFromFileUrls = (!CrossDomainSecurity).ToCefState();
-			//config.UniversalAccessFromFileUrls = (!CrossDomainSecurity).ToCefState();
-			//config.WebSecurity = WebSecurity.ToCefState();
+			config.LocalStorage = BrowserConfig.LocalStorage.ToCefState();
 			config.WebGl = BrowserConfig.WebGL.ToCefState();
-			//config.ApplicationCache = ApplicationCache.ToCefState();
+			config.Javascript = BrowserConfig.Javascript.ToCefState();
+			config.JavascriptAccessClipboard = BrowserConfig.JavascriptClipboard.ToCefState();
+			config.JavascriptCloseWindows = CefState.Disabled;
+			config.JavascriptDomPaste = BrowserConfig.JavascriptClipboard.ToCefState();
+			config.RemoteFonts = CefState.Enabled;
 
 			browser.BrowserSettings = config;
 
@@ -270,11 +271,11 @@ namespace SharpBrowser {
 
 				Uri.TryCreate(url, UriKind.Absolute, out outUri);
 
-				if (!(urlLower.StartsWith("http") || urlLower.StartsWith(BrowserConfig.InternalURL))) {
+				if (!(urlLower.StartsWith("http") || urlLower.StartsWith(BrowserConfig.InternalScheme))) {
 					if (outUri == null || outUri.Scheme != Uri.UriSchemeFile) newUrl = "http://" + url;
 				}
 
-				if (urlLower.StartsWith(BrowserConfig.InternalURL + ":") ||
+				if (urlLower.StartsWith(BrowserConfig.InternalScheme + ":") ||
 
 					// load URL if it seems valid
 					(Uri.TryCreate(newUrl, UriKind.Absolute, out outUri)
@@ -325,7 +326,9 @@ namespace SharpBrowser {
 
 			TxtURL.Text = currentCleanURL;
 
-			CurTab.CurURL = currentFullURL;
+			if (CurTab != null) {
+				CurTab.CurURL = currentFullURL;
+			}
 
 			CloseSearch();
 
@@ -345,63 +348,44 @@ namespace SharpBrowser {
 			return (url == "" || url == "about:blank");
 		}
 		private bool IsBlankOrSystem(string url) {
-			return (url == "" || url.BeginsWith("about:") || url.BeginsWith("chrome:") || url.BeginsWith(BrowserConfig.InternalURL + ":"));
+			return (url == "" || url.BeginsWith("about:") || url.BeginsWith("chrome:") || url.BeginsWith(BrowserConfig.InternalScheme + ":"));
 		}
 
-		public void AddBlankWindow() {
-
-			// open a new instance of the browser
-
-			ProcessStartInfo info = new ProcessStartInfo(Application.ExecutablePath, "");
-			//info.WorkingDirectory = workingDir ?? exePath.GetPathDir(true);
-			info.LoadUserProfile = true;
-
-			info.UseShellExecute = false;
-			info.RedirectStandardError = true;
-			info.RedirectStandardOutput = true;
-			info.RedirectStandardInput = true;
-
-			Process.Start(info);
-		}
-		public void AddBlankTab() {
-			AddNewBrowserTab("");
-			this.InvokeOnParent(delegate () {
-				TxtURL.Focus();
-			});
-		}
-
-		public ChromiumWebBrowser AddNewBrowserTab(string url, bool focusNewTab = true, string refererUrl = null) {
+		public ChromiumWebBrowser AddNewBrowserTab(string url, bool focusNewTab = true, string refererUrl = null, bool skipIfUrlAlreadyOpen = false) {
 			return (ChromiumWebBrowser)this.Invoke((Func<ChromiumWebBrowser>)delegate {
 
 				// check if already exists
-				foreach (BrowserTabStripItem tab in TabPages.Items) {
-					BrowserTab tab2 = (BrowserTab)tab.Tag;
-					if (tab2 != null && (tab2.CurURL == url)) {
-						TabPages.SelectedItem = tab;
-						return tab2.Browser;
+				if (skipIfUrlAlreadyOpen) {
+					foreach (BrowserTabItem tab in TabPages.Items) {
+						BrowserTab tab2 = (BrowserTab)tab.Tag;
+						if (tab2 != null && (tab2.CurURL == url)) {
+							TabPages.SelectedItem = tab;
+							return tab2.Browser;
+						}
 					}
 				}
 
-				BrowserTabStripItem tabStrip = new BrowserTabStripItem();
-				tabStrip.Title = "New Tab";
-				TabPages.Items.Insert(TabPages.Items.Count - 1, tabStrip);
-				newStrip = tabStrip;
-
-				BrowserTab newTab = AddNewBrowser(newStrip, url);
-				newTab.RefererURL = refererUrl;
-				//if (focusNewTab) timer1.Enabled = true;  //50ms
-				if (focusNewTab)
-					Task.Run(() => {
-						//ui is not frozen as i expecte. but AddNewTab button gets white?? for 1 seconds.
-						Thread.Sleep(100);
-						this.Invoke(() => TabPages.SelectedItem = newStrip);
-					});
-
+				BrowserTab newTab = AddNewTabInternal(url, refererUrl, focusNewTab);
 
 				return newTab.Browser;
 			});
 		}
-		private BrowserTab AddNewBrowser(BrowserTabStripItem tabStrip, String url) {
+
+		private BrowserTab AddNewTabInternal(string url, string refererUrl, bool focusNewTab = false) {
+
+			// new tab button and select it
+			BrowserTabItem tabStrip = new BrowserTabItem();
+			tabStrip.Title = "New Tab";
+			TabPages.AddTab(tabStrip, focusNewTab);
+
+			// new browser
+			BrowserTab newTab = AddNewBrowser(tabStrip, url);
+			newTab.RefererURL = refererUrl;
+
+			return newTab;
+		}
+
+		private BrowserTab AddNewBrowser(BrowserTabItem tabStrip, String url) {
 			if (url == "") url = BrowserConfig.NewTabURL;
 			ChromiumWebBrowser browser = new ChromiumWebBrowser(url);
 
@@ -449,9 +433,11 @@ namespace SharpBrowser {
 			// save tab obj in tabstrip
 			tabStrip.Tag = tab;
 
-			if (url.StartsWith(BrowserConfig.InternalURL + ":")) {
+			// handle downloads page
+			if (url.StartsWith(BrowserConfig.InternalScheme + ":")) {
 				browser.JavascriptObjectRepository.Register("host", host, BindingOptions.DefaultBinder);
 			}
+
 			return tab;
 		}
 
@@ -459,7 +445,7 @@ namespace SharpBrowser {
 
 
 		public BrowserTab GetTabByBrowser(IWebBrowser browser) {
-			foreach (BrowserTabStripItem tab2 in TabPages.Items) {
+			foreach (BrowserTabItem tab2 in TabPages.Items) {
 				BrowserTab tab = (BrowserTab)(tab2.Tag);
 				if (tab != null && tab.Browser == browser) {
 					return tab;
@@ -468,57 +454,26 @@ namespace SharpBrowser {
 			return null;
 		}
 
-		public void RefreshActiveTab() => CurBrowser.Load(CurBrowser.Address);
-
-		public void CloseActiveTab() {
-			if (CurTab != null/* && TabPages.Items.Count > 2*/) {
-
-				// remove tab and save its index
-				int index = TabPages.Items.IndexOf(TabPages.SelectedItem);
-				TabPages.RemoveTab(TabPages.SelectedItem);
-
-				// keep tab at same index focussed
-				if ((TabPages.Items.Count - 1) > index) {
-					TabPages.SelectedItem = TabPages.Items[index];
-				}
-			}
-		}
 		private FormWindowState oldWindowState;
 		private FormBorderStyle oldBorderStyle;
 		private bool isFullScreen = false;
 
-		private void ToggleFullscreen() {
+		private void OnTabClosed(object sender, EventArgs e) {
 
-			if (!isFullScreen) {
-				oldWindowState = this.WindowState;
-				oldBorderStyle = this.FormBorderStyle;
-				this.FormBorderStyle = FormBorderStyle.None;
-				this.WindowState = FormWindowState.Maximized;
-				isFullScreen = true;
+			// if the very last tab is closed
+			if (TabPages.Items.Count < 1) {
+				OnLastTabClosed();
 			}
-			else {
-				this.FormBorderStyle = oldBorderStyle;
-				this.WindowState = oldWindowState;
-				isFullScreen = false;
-			}
+
 		}
 
-		private void OnTabClosed(object sender, EventArgs e) { }
+		private void OnLastTabClosed() {
 
-		private void OnTabClosing(SharpBrowser.Controls.BrowserTabStrip.TabStripItemClosingEventArgs e) {
+			// close the window
+			this.Close();
 
-			// exit if invalid tab
-			if (CurTab == null) {
-				e.Cancel = true;
-				return;
-			}
-
-			// add a blank tab if the very last tab is closed!
-			if (TabPages.Items.Count <= 2) {
-				AddBlankTab();
-				//e.Cancel = true;
-			}
-
+			// the new tab is bugged so this is disabled
+			//AddNewTabInternal(BrowserConfig.NewTabURL, null);
 		}
 
 		private void StopActiveTab() => CurBrowser.Stop();
@@ -541,23 +496,6 @@ namespace SharpBrowser {
 		private int LastIndex {
 			get {
 				return TabPages.Items.Count - 2;
-			}
-		}
-
-		private void NextTab() {
-			if (IsOnLastTab()) {
-				CurIndex = 0;
-			}
-			else {
-				CurIndex++;
-			}
-		}
-		private void PrevTab() {
-			if (IsOnFirstTab()) {
-				CurIndex = LastIndex;
-			}
-			else {
-				CurIndex--;
 			}
 		}
 
@@ -584,7 +522,7 @@ namespace SharpBrowser {
 		}
 		public List<BrowserTab> GetAllTabs() {
 			List<BrowserTab> tabs = new List<BrowserTab>();
-			foreach (BrowserTabStripItem tabPage in TabPages.Items) {
+			foreach (BrowserTabItem tabPage in TabPages.Items) {
 				if (tabPage.Tag != null) {
 					tabs.Add((BrowserTab)tabPage.Tag);
 				}
@@ -654,7 +592,7 @@ namespace SharpBrowser {
 			browser.Tag = text;
 
 			// get tab of given browser
-			BrowserTabStripItem tabStrip = (BrowserTabStripItem)browser.Parent;
+			BrowserTabItem tabStrip = (BrowserTabItem)browser.Parent;
 			if (tabStrip != null) //fix error, when fast hit on close button 
 				tabStrip.Title = text;
 
@@ -713,37 +651,47 @@ namespace SharpBrowser {
 			InvokeIfNeeded(() => BtnForward.Enabled = canGoForward);
 		}
 
+		private async void OnNewTab(object o, EventArgs e) {
+			AddBlankTab();
+		}
 		private async void OnTabsChanged(TabStripItemChangedEventArgs e) {
 			ChromiumWebBrowser browser = null;
+
 			try {
-				//reduce exception - freqent exception is perf Killer
+				// apparently this 'fix' reduces frequent exceptions
 				if (e.Item.Controls.Count >= 1 && e.Item.Controls[0] as ChromiumWebBrowser != null)
 					browser = ((ChromiumWebBrowser)e.Item.Controls[0]);
 			}
 			catch (System.Exception ex) {
-				//"- when closing Tab, this executes 10 times, if you have 10 tabs. --- aka perf killer.";
-				var Msg = DateTime.Now.ToLongTimeString() + $" OnTabsChanged -ex: {ex.Message} ";
 			}
 
 
 			if (e.ChangeType == BrowserTabStripItemChangeTypes.SelectionChanged) {
-				if (TabPages.SelectedItem == tabStripAdd) {
-					AddBlankTab();
-				}
-				else {
-					browser = CurBrowser;
+				browser = CurBrowser;
+				if (browser != null) {
 
+					// load the text/URL from this tab into the window
 					SetFormURL(browser.Address);
 					SetFormTitle(browser.Tag.ConvertToString() ?? "New Tab");
 					await Get_ZoomLevel_intoTbx(browser);
 
 					EnableBackButton(browser.CanGoBack);
 					EnableForwardButton(browser.CanGoForward);
+
 				}
+				else {
+					// when a new tab is just created, the browser does not exist, so show default text/URL
+					SetFormURL("");
+					SetFormTitle("Loading...");
+
+					EnableBackButton(false);
+					EnableForwardButton(false);
+
+				}
+
 			}
 
 			if (e.ChangeType == BrowserTabStripItemChangeTypes.Removed) {
-				if (e.Item == downloadsStrip) downloadsStrip = null;
 				if (browser != null) {
 					browser.Dispose();
 				}
@@ -760,100 +708,30 @@ namespace SharpBrowser {
 		}
 
 
-		#region Ctrl+Mousewheel Zoom
 
-		private void Browser_FrameLoadEnd_mswheel(object sender, FrameLoadEndEventArgs e) {
-			if (e.Frame.IsMain) {
-				e.Browser.ExecuteScriptAsync(
-"""     
- document.addEventListener("wheel", (e) => {
-        if (e.ctrlKey) 
-        {  
-            /*ctrl is down*/
-            var msg ="ctrl+wheel";
-            console.log(msg); 
-            CefSharp.PostMessage(msg);
-        }
-    });
- 
-"""
-				);
-			}
+		private void TMReload_Click(object sender, EventArgs e) {
+			RefreshActiveTab();
 		}
-		private void Browser_JavascriptMessageReceived_mswheel(object sender, JavascriptMessageReceivedEventArgs e) {
-			if (e.Message == null)
-				return;
-
-			// to reference the main UI thread for updating the necessary controls.
-			if (e.Message + "" == "ctrl+wheel") {
-				InvokeIfNeeded(async () => {
-
-					await Task.Delay(55);
-					await Get_ZoomLevel_intoTbx(CurBrowser);
-				});
-			}
-		}
-		int convertZoomlevel_toZoomPct(double zoomLevel) {
-			
-			// expo fit - y= 100.011 e^(0.182307 x)
-			var zoomPct = 100.011 * Math.Exp(0.182307 * zoomLevel);
-			return (int)zoomPct;
-
-		}
-		private async Task Get_ZoomLevel_intoTbx(ChromiumWebBrowser browser) {
-			//InvokeIfNeeded(() => lbl_ZoomLevel.Text = $"...%");
-			await Task.Delay(100);
-
-			if (browser.IsDisposed)
-				return;
-			var zoom = await browser.GetZoomLevelAsync();
-			int zoomPct = convertZoomlevel_toZoomPct(zoom);
-			//var zoom2 = await browser.BrowserCore.GetZoomLevelAsync();
-			//InvokeIfNeeded(() => lbl_ZoomLevel.Text = $"{Math.Round(zoom, 4)} ; {zoomPct}?%");
-			InvokeIfNeeded(() => lbl_ZoomLevel.Text = $"{zoomPct}%");
-			InvokeIfNeeded(() => lbl_ZoomLevel.Visible = zoom != 0);
-
-			//await Task.Delay(500);
-			//lbl_ZoomLevel.Text = $"{(int)(zoom2 * 100)}%";
-
-		}
-		private async void lbl_ZoomLevel_Click(object sender, EventArgs e) {
-			CurBrowser.SetZoomLevel(0);//0 -> 100%   [-10 , 0 , +10]
-			await Get_ZoomLevel_intoTbx(CurBrowser);
-		}
-		private async void lbl_ZoomLevel_MouseEnter(object sender, EventArgs e) {
-			await Get_ZoomLevel_intoTbx(CurBrowser);
+		private void TMCloseTab_Click(object sender, EventArgs e) {
+			CloseActiveTab();
 		}
 
-		#endregion
-
-		private void timer1_Tick(object sender, EventArgs e) {
-			TabPages.SelectedItem = newStrip;
-			timer1.Enabled = false;
+		private void TMCloseOtherTabs_Click(object sender, EventArgs e) {
+			CloseOtherTabs();
 		}
 
-		private void menuCloseTab_Click(object sender, EventArgs e) => CloseActiveTab();
-
-		private void menuCloseOtherTabs_Click(object sender, EventArgs e) {
-			List<BrowserTabStripItem> listToClose = new List<BrowserTabStripItem>();
-			foreach (BrowserTabStripItem tab in TabPages.Items) {
-				if (tab != tabStripAdd && tab != TabPages.SelectedItem) listToClose.Add(tab);
-			}
-			foreach (BrowserTabStripItem tab in listToClose) {
-				TabPages.RemoveTab(tab);
-			}
-
-		}
 
 		public List<int> CancelRequests => downloadCancelRequests;
 
-		private void bBack_Click(object sender, EventArgs e) => CurBrowser.Back();
-
-		private void bForward_Click(object sender, EventArgs e) => CurBrowser.Forward();
+		private void bBack_Click(object sender, EventArgs e) { Back(); }
 
 
+		private void bForward_Click(object sender, EventArgs e) { Forward(); }
 
-		private void bDownloads_Click(object sender, EventArgs e) => AddNewBrowserTab(BrowserConfig.DownloadsURL);
+
+		private void bDownloads_Click(object sender, EventArgs e) {
+			OpenDownloads();
+		}
 
 		private void bRefresh_Click(object sender, EventArgs e) => RefreshActiveTab();
 
@@ -898,13 +776,184 @@ namespace SharpBrowser {
 			TxtURL_JustEntered = false;
 		}
 
+		#endregion
 
-		private void OpenDeveloperTools() => CurBrowser.ShowDevTools();
+		#region Web Browser Commands
 
-		private void tabPages_MouseClick(object sender, MouseEventArgs e) {
-			/*if (e.Button == System.Windows.Forms.MouseButtons.Right) {
-				tabPages.GetTabItemByPoint(this.mouse
-			}*/
+		public void AddBlankWindow() {
+
+			// open a new instance of the browser
+
+			ProcessStartInfo info = new ProcessStartInfo(Application.ExecutablePath, "");
+			//info.WorkingDirectory = workingDir ?? exePath.GetPathDir(true);
+			info.LoadUserProfile = true;
+
+			info.UseShellExecute = false;
+			info.RedirectStandardError = true;
+			info.RedirectStandardOutput = true;
+			info.RedirectStandardInput = true;
+
+			Process.Start(info);
+		}
+		public void AddBlankTab() {
+			AddNewBrowserTab(BrowserConfig.NewTabURL, true);
+			this.InvokeOnParent(delegate () {
+				TxtURL.Focus();
+			});
+		}
+
+		public void Back() {
+			CurBrowser.Back();
+		}
+		public void Forward() {
+			CurBrowser.Forward();
+		}
+		public void OpenDownloads() {
+			AddNewBrowserTab(BrowserConfig.DownloadsURL, true, null, true);
+		}
+		public void OpenDeveloperTools() {
+			CurBrowser.ShowDevTools();
+		}
+		public void CloseOtherTabs() {
+			List<BrowserTabItem> listToClose = new List<BrowserTabItem>();
+			foreach (BrowserTabItem tab in TabPages.Items) {
+				if (tab != TabPages.SelectedItem) listToClose.Add(tab);
+			}
+			foreach (BrowserTabItem tab in listToClose) {
+				TabPages.RemoveTab(tab);
+			}
+		}
+
+		public void RefreshActiveTab() => CurBrowser.Load(CurBrowser.Address);
+
+		public void ToggleFullscreen() {
+
+			if (!isFullScreen) {
+				oldWindowState = this.WindowState;
+				oldBorderStyle = this.FormBorderStyle;
+				this.FormBorderStyle = FormBorderStyle.None;
+				this.WindowState = FormWindowState.Maximized;
+				isFullScreen = true;
+			}
+			else {
+				this.FormBorderStyle = oldBorderStyle;
+				this.WindowState = oldWindowState;
+				isFullScreen = false;
+			}
+		}
+
+		public void CloseActiveTab() {
+
+			// if any tab is open
+			var curTab = TabPages.SelectedItem;
+			if (CurTab != null) {
+
+				// if this is the last tab, open a new tab also
+				if (TabPages.Items.Count <= 1) {
+					OnLastTabClosed();
+				}
+
+				// remove tab and save its index
+				int index = TabPages.Items.IndexOf(curTab);
+				TabPages.RemoveTab(curTab);
+
+				// keep tab at same index focussed
+				if (TabPages.Items.Count > 1) {
+					if ((TabPages.Items.Count - 1) > index) {
+						TabPages.SelectedItem = TabPages.Items[index];
+					}
+				}
+			}
+		}
+		public void NextTab() {
+			if (IsOnLastTab()) {
+				CurIndex = 0;
+			}
+			else {
+				CurIndex++;
+			}
+		}
+		public void PrevTab() {
+			if (IsOnFirstTab()) {
+				CurIndex = LastIndex;
+			}
+			else {
+				CurIndex--;
+			}
+		}
+		public void Print() {
+			CurBrowser.Print();
+		}
+		public void PrintToPDF() {
+			ContextMenuHandler.SaveAsPDF(CurBrowser.GetBrowser());
+		}
+
+
+		#endregion
+
+		#region Ctrl+Mousewheel Zoom
+
+		private void Browser_FrameLoadEnd_mswheel(object sender, FrameLoadEndEventArgs e) {
+			if (e.Frame.IsMain) {
+				e.Browser.ExecuteScriptAsync(
+"""     
+ document.addEventListener("wheel", (e) => {
+        if (e.ctrlKey) 
+        {  
+            /*ctrl is down*/
+            var msg ="ctrl+wheel";
+            console.log(msg); 
+            CefSharp.PostMessage(msg);
+        }
+    });
+ 
+"""
+				);
+			}
+		}
+		private void Browser_JavascriptMessageReceived_mswheel(object sender, JavascriptMessageReceivedEventArgs e) {
+			if (e.Message == null)
+				return;
+
+			// to reference the main UI thread for updating the necessary controls.
+			if (e.Message + "" == "ctrl+wheel") {
+				InvokeIfNeeded(async () => {
+
+					await Task.Delay(55);
+					await Get_ZoomLevel_intoTbx(CurBrowser);
+				});
+			}
+		}
+		int convertZoomlevel_toZoomPct(double zoomLevel) {
+
+			// expo fit - y= 100.011 e^(0.182307 x)
+			var zoomPct = 100.011 * Math.Exp(0.182307 * zoomLevel);
+			return (int)zoomPct;
+
+		}
+		private async Task Get_ZoomLevel_intoTbx(ChromiumWebBrowser browser) {
+			//InvokeIfNeeded(() => lbl_ZoomLevel.Text = $"...%");
+			await Task.Delay(100);
+
+			if (browser.IsDisposed)
+				return;
+			var zoom = await browser.GetZoomLevelAsync();
+			int zoomPct = convertZoomlevel_toZoomPct(zoom);
+			//var zoom2 = await browser.BrowserCore.GetZoomLevelAsync();
+			//InvokeIfNeeded(() => lbl_ZoomLevel.Text = $"{Math.Round(zoom, 4)} ; {zoomPct}?%");
+			InvokeIfNeeded(() => lbl_ZoomLevel.Text = $"{zoomPct}%");
+			InvokeIfNeeded(() => lbl_ZoomLevel.Visible = zoom != 0);
+
+			//await Task.Delay(500);
+			//lbl_ZoomLevel.Text = $"{(int)(zoom2 * 100)}%";
+
+		}
+		private async void lbl_ZoomLevel_Click(object sender, EventArgs e) {
+			CurBrowser.SetZoomLevel(0);//0 -> 100%   [-10 , 0 , +10]
+			await Get_ZoomLevel_intoTbx(CurBrowser);
+		}
+		private async void lbl_ZoomLevel_MouseEnter(object sender, EventArgs e) {
+			await Get_ZoomLevel_intoTbx(CurBrowser);
 		}
 
 		#endregion
@@ -982,17 +1031,7 @@ namespace SharpBrowser {
 		/// <summary>
 		/// open a new tab with the downloads URL
 		/// </summary>
-		private void btnDownloads_Click(object sender, EventArgs e) => OpenDownloadsTab();
-
-		public void OpenDownloadsTab() {
-			if (downloadsStrip != null && ((ChromiumWebBrowser)downloadsStrip.Controls[0]).Address == BrowserConfig.DownloadsURL) {
-				TabPages.SelectedItem = downloadsStrip;
-			}
-			else {
-				ChromiumWebBrowser brw = AddNewBrowserTab(BrowserConfig.DownloadsURL);
-				downloadsStrip = (BrowserTabStripItem)brw.Parent;
-			}
-		}
+		private void btnDownloads_Click(object sender, EventArgs e) => OpenDownloads();
 
 		#endregion
 
@@ -1064,10 +1103,62 @@ namespace SharpBrowser {
 		private void BtnHome_Click(object sender, EventArgs e) => CurBrowser.Load(BrowserConfig.HomepageURL);
 		#endregion
 
-
+		#region Main Menu Button
 
 		private void BtnMenu_Click(object sender, EventArgs e) {
+			var screenPoint = BtnMenu.PointToScreen(Point.Empty);
+			int menuWidth = MainMenu.Width;
+			int screenRight = Screen.FromControl(BtnMenu).WorkingArea.Right;
+			int x = screenRight - menuWidth;
+			int y = screenPoint.Y + BtnMenu.Height;
 
+			MainMenu.Show(x, y);
 		}
+
+		private void MMNewTab_Click(object sender, EventArgs e) {
+			AddBlankTab();
+		}
+
+		private void MMNewWindow_Click(object sender, EventArgs e) {
+			AddBlankWindow();
+		}
+
+		private void MMNextTab_Click(object sender, EventArgs e) {
+			NextTab();
+		}
+
+		private void MMPrevTab_Click(object sender, EventArgs e) {
+			PrevTab();
+		}
+
+		private void MMDownloads_Click(object sender, EventArgs e) {
+			OpenDownloads();
+		}
+
+		private void MMPrint_Click(object sender, EventArgs e) {
+			Print();
+		}
+
+		private void MMPrintPDF_Click(object sender, EventArgs e) {
+			PrintToPDF();
+		}
+
+		private void MMClose_Click(object sender, EventArgs e) {
+			CloseActiveTab();
+		}
+
+		private void MMCloseOther_Click(object sender, EventArgs e) {
+			CloseOtherTabs();
+		}
+
+		private void MMDevTools_Click(object sender, EventArgs e) {
+			OpenDeveloperTools();
+		}
+		private void MMFullscreen_Click(object sender, EventArgs e) {
+			ToggleFullscreen();
+		}
+		#endregion
+
+
 	}
 }
