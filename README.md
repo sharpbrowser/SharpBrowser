@@ -33,6 +33,7 @@ SharpBrowser is the fastest and most full-featured open source C# web browser th
 - Custom context menu
 - Custom application main menu
 - Custom settings
+- Custom installer package using InnoSetup
 
 ## Hotkeys
 
@@ -63,9 +64,10 @@ Ctrl+Shift+P 		| Print to PDF
 - You need to install the version of VC++ Runtime that CEFSharp needs. As per our CefSharp version, according to [this](https://github.com/cefsharp/CefSharp/#release-branches), we need the above versions
 
 
-## Getting started
+## Documentation
 
 - See the [Compilation Guide](docs/Compilation.md) for steps to get started.
+- See the [Distribution Guide](docs/Distribution.md) to create a custom setup installer.
 
 
 ## Customization
@@ -87,14 +89,6 @@ Ctrl+Shift+P 		| Print to PDF
 - To setup how web app permissions are handled, modify `PermissionHandler.OnShowPermissionPrompt` (some flags are already inside `BrowserConfig` and can easily be changed).
 
 - To add new settings saved in the JSON file, simply call `ConfigManager.Get*` and `ConfigManager.Set` anywhere in your code. It will save into the file automatically.
-
-
-
-## Documentation
-
-- [User Guide](docs/Users.md)
-- [Compilation Guide](docs/Compilation.md)
-- [Distribution Guide](docs/Distribution.md)
 
 
 ## Code
