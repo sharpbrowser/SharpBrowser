@@ -55,7 +55,7 @@ Ctrl+Shift+P 		| Print to PDF
 
 ## Customization
 
-- To configure the browser bring, name, URL, default search engine, modify the `BrowserConfig` class.
+- To configure the browser branding, name, URL, default search engine, modify the `BrowserConfig` class.
 
 - To configure the tab style colors, modify the `BrowserTabStyle` class.
 
