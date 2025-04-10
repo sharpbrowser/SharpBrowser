@@ -430,10 +430,6 @@ namespace SharpBrowser {
 			browser.RequestHandler = rHandler;
 			browser.PermissionHandler = pHandler;
 
-			// listen for zoom level changed
-			browser.JavascriptMessageReceived += Browser_JavascriptMessageReceived;
-			browser.FrameLoadEnd += Browser_FrameLoadEnd;
-
 			// new tab obj
 			BrowserTab tab = new BrowserTab {
 				IsOpen = true,
@@ -570,7 +566,6 @@ namespace SharpBrowser {
 					EnableForwardButton(CurBrowser.CanGoForward);
 
 					SetTabTitle((ChromiumWebBrowser)sender, "Loading...");
-					Task.Run(() => LoadZoomLevel(CurBrowser).Wait());
 
 					BtnRefresh.Visible = false;
 					BtnStop.Visible = true;
@@ -688,7 +683,6 @@ namespace SharpBrowser {
 					// load the text/URL from this tab into the window
 					SetFormURL(browser.Address);
 					SetFormTitle(browser.Tag.ConvertToString() ?? "New Tab");
-					await LoadZoomLevel(browser);
 
 					EnableBackButton(browser.CanGoBack);
 					EnableForwardButton(browser.CanGoForward);
@@ -903,69 +897,6 @@ namespace SharpBrowser {
 			ContextMenuHandler.SaveAsPDF(CurBrowser.GetBrowser());
 		}
 
-
-		#endregion
-
-		#region Ctrl+Mousewheel Zoom
-
-		private void Browser_FrameLoadEnd(object sender, FrameLoadEndEventArgs e) {
-			if (e.Frame.IsMain) {
-				e.Browser.ExecuteScriptAsync(
-"""     
- document.addEventListener("wheel", (e) => {
-        if (e.ctrlKey) 
-        {  
-            /*ctrl is down*/
-            var msg ="ctrl+wheel";
-            console.log(msg); 
-            CefSharp.PostMessage(msg);
-        }
-    });
- 
-"""
-				);
-			}
-		}
-		private void Browser_JavascriptMessageReceived(object sender, JavascriptMessageReceivedEventArgs e) {
-			if (e.Message == null)
-				return;
-
-			// to reference the main UI thread for updating the necessary controls.
-			if (e.Message + "" == "ctrl+wheel") {
-				InvokeIfNeeded(async () => {
-
-					await Task.Delay(55);
-					await LoadZoomLevel(CurBrowser);
-				});
-			}
-		}
-		int convertZoomlevel_toZoomPct(double zoomLevel) {
-
-			// expo fit - y= 100.011 e^(0.182307 x)
-			var zoomPct = 100.011 * Math.Exp(0.182307 * zoomLevel);
-			return (int)zoomPct;
-
-		}
-		private async Task LoadZoomLevel(ChromiumWebBrowser browser) {
-
-			await Task.Delay(100);
-
-			if (browser.IsDisposed)
-				return;
-			var zoom = await browser.GetZoomLevelAsync();
-			int zoomPct = convertZoomlevel_toZoomPct(zoom);
-			InvokeIfNeeded(() => lbl_ZoomLevel.Text = $"{zoomPct}%");
-			InvokeIfNeeded(() => lbl_ZoomLevel.Visible = zoom != 0);
-
-
-		}
-		private async void lbl_ZoomLevel_Click(object sender, EventArgs e) {
-			CurBrowser.SetZoomLevel(0);//0 -> 100%   [-10 , 0 , +10]
-			await LoadZoomLevel(CurBrowser);
-		}
-		private async void lbl_ZoomLevel_MouseEnter(object sender, EventArgs e) {
-			await LoadZoomLevel(CurBrowser);
-		}
 
 		#endregion
 

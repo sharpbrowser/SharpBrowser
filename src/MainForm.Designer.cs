@@ -43,7 +43,6 @@ namespace SharpBrowser
 			BtnDownloads = new IconButton();
 			TxtURL = new TextBox();
 			PanelToolbar = new Panel();
-			lbl_ZoomLevel = new Label();
 			BtnMenu = new IconButton();
 			BtnHome = new IconButton();
 			TabPages = new SharpBrowser.Controls.BrowserTabStrip.BrowserTabStrip();
@@ -220,7 +219,6 @@ namespace SharpBrowser
 			// PanelToolbar
 			// 
 			PanelToolbar.BackColor = System.Drawing.Color.FromArgb(247, 247, 247);
-			PanelToolbar.Controls.Add(lbl_ZoomLevel);
 			PanelToolbar.Controls.Add(BtnMenu);
 			PanelToolbar.Controls.Add(BtnHome);
 			PanelToolbar.Controls.Add(BtnDownloads);
@@ -235,20 +233,6 @@ namespace SharpBrowser
 			PanelToolbar.Name = "PanelToolbar";
 			PanelToolbar.Size = new System.Drawing.Size(916, 45);
 			PanelToolbar.TabIndex = 6;
-			// 
-			// lbl_ZoomLevel
-			// 
-			lbl_ZoomLevel.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-			lbl_ZoomLevel.AutoSize = true;
-			lbl_ZoomLevel.FlatStyle = FlatStyle.Flat;
-			lbl_ZoomLevel.Location = new System.Drawing.Point(748, 16);
-			lbl_ZoomLevel.Name = "lbl_ZoomLevel";
-			lbl_ZoomLevel.Size = new System.Drawing.Size(32, 15);
-			lbl_ZoomLevel.TabIndex = 9;
-			lbl_ZoomLevel.Text = "???%";
-			lbl_ZoomLevel.TextAlign = System.Drawing.ContentAlignment.TopRight;
-			lbl_ZoomLevel.Click += lbl_ZoomLevel_Click;
-			lbl_ZoomLevel.MouseEnter += lbl_ZoomLevel_MouseEnter;
 			// 
 			// BtnMenu
 			// 
@@ -576,7 +560,6 @@ namespace SharpBrowser
 		private System.Windows.Forms.Button BtnNextSearch;
         private FontAwesome.Sharp.IconButton BtnHome;
         private FontAwesome.Sharp.IconButton BtnMenu;
-        private Label lbl_ZoomLevel;
 		private ContextMenuStrip MainMenu;
 		private IconMenuItem MMClose;
 		private IconMenuItem MMCloseOther;
