@@ -34,7 +34,7 @@ Ctrl+F		| Open search bar (Enter to find next, Esc to close)
 
 ## System requirements
 
-- You need .NET 8 on Windows.
+- You need .NET 8 on Windows 64-bit.
 
 - You need [VC++ 2019 Runtime](https://aka.ms/vs/17/release/vc_redist.x64.exe) (64-bit)
 - You might need [VC++ 2017 Runtime](https://www.microsoft.com/en-in/download/details.aspx?id=48145) (64-bit)
