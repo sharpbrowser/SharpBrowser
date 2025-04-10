@@ -275,7 +275,7 @@ namespace SharpBrowser {
 					if (outUri == null || outUri.Scheme != Uri.UriSchemeFile) newUrl = "http://" + url;
 				}
 
-				if (urlLower.StartsWith(BrowserConfig.InternalScheme + ":") ||
+				if (urlLower.Contains("://") ||
 
 					// load URL if it seems valid
 					(Uri.TryCreate(newUrl, UriKind.Absolute, out outUri)

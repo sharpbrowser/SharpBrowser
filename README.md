@@ -96,6 +96,10 @@ Ctrl+Shift+P 		| Print to PDF
 
 ![](https://github.com/sharpbrowser/SharpBrowser/raw/master/images/5.png)
 
+### PDF Viewer
+
+![](https://github.com/sharpbrowser/SharpBrowser/raw/master/images/7.png)
+
 ### YouTube
 
 ![](https://github.com/sharpbrowser/SharpBrowser/raw/master/images/6.png)

@@ -7,6 +7,7 @@ using Microsoft.Win32;
 using System.Reflection;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace SharpBrowser {
 
@@ -309,8 +310,9 @@ namespace SharpBrowser {
 			//gets the name of the file that have the icon.
 			string IconLocation =
 				ApplicationKey.OpenSubKey("DefaultIcon").GetValue("").ToString();
-			string[] IconPath = IconLocation.Split(',');
+			List<string> IconPath = IconLocation.Split(',').ToList();
 
+			if (IconPath.Count == 1) IconPath.Add("0");
 			if (IconPath[1] == null) IconPath[1] = "0";
 			IntPtr[] Large = new IntPtr[1], Small = new IntPtr[1];
 

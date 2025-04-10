@@ -178,7 +178,7 @@
 		host.getDownloads().then(function(res) {
 			var list = JSON.parse(res);
 			$.each(list, function(key, item) {
-				UpdateItem(item.v);
+				UpdateItem(item);
 			});
 		});
 	}

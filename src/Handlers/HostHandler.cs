@@ -1,7 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Windows.Forms;
 
 namespace SharpBrowser {
@@ -20,8 +23,8 @@ namespace SharpBrowser {
 		}
 		public string getDownloads() {
 			lock (myForm.downloads) {
-				string x = JSON.Instance.ToJSON(myForm.downloads);
-				return x;
+				var json = JsonConvert.SerializeObject(myForm.downloads.Values);
+				return json;
 			}
 		}
 
