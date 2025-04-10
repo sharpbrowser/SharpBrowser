@@ -25,7 +25,6 @@ SharpBrowser is the fastest and most full-featured open source C# web browser th
 - Developer tools
 - Web app permission handling
 - Popups open in new tabs
-- When the last tab is closed, the browser window closes down
 
 ### Extensible
 
