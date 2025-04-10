@@ -301,7 +301,7 @@ namespace SharpBrowser
 			TabPages.Items.AddRange(new Controls.BrowserTabStrip.BrowserTabItem[] { tabStrip1 });
 			TabPages.Location = new System.Drawing.Point(0, 45);
 			TabPages.Name = "TabPages";
-			TabPages.Padding = new Padding(1, 49, 1, 1);
+			TabPages.Padding = new Padding(1, 41, 1, 1);
 			TabPages.SelectedItem = tabStrip1;
 			TabPages.Size = new System.Drawing.Size(916, 427);
 			TabPages.TabIndex = 4;
@@ -314,10 +314,10 @@ namespace SharpBrowser
 			// 
 			tabStrip1.Dock = DockStyle.Fill;
 			tabStrip1.IsDrawn = true;
-			tabStrip1.Location = new System.Drawing.Point(1, 49);
+			tabStrip1.Location = new System.Drawing.Point(1, 41);
 			tabStrip1.Name = "tabStrip1";
 			tabStrip1.Selected = true;
-			tabStrip1.Size = new System.Drawing.Size(914, 377);
+			tabStrip1.Size = new System.Drawing.Size(914, 385);
 			tabStrip1.TabIndex = 0;
 			tabStrip1.Title = "Loading...";
 			// 
@@ -399,7 +399,7 @@ namespace SharpBrowser
 			MainMenu.ImageScalingSize = new System.Drawing.Size(20, 20);
 			MainMenu.Items.AddRange(new ToolStripItem[] { MMNewTab, MMNewWindow, MMNextTab, MMPrevTab, toolStripSeparator1, MMPrint, MMPrintPDF, MMDownloads, MMFullscreen, MMDevTools, toolStripSeparator2, MMClose, MMCloseOther });
 			MainMenu.Name = "menuStripTab";
-			MainMenu.Size = new System.Drawing.Size(228, 302);
+			MainMenu.Size = new System.Drawing.Size(228, 324);
 			// 
 			// MMNewTab
 			// 
@@ -456,6 +456,7 @@ namespace SharpBrowser
 			MMPrint.IconColor = System.Drawing.Color.Black;
 			MMPrint.IconFont = IconFont.Auto;
 			MMPrint.Name = "MMPrint";
+			MMPrint.ShortcutKeyDisplayString = "Ctrl+P";
 			MMPrint.Size = new System.Drawing.Size(227, 26);
 			MMPrint.Text = "Print...";
 			MMPrint.Click += MMPrint_Click;
@@ -466,6 +467,7 @@ namespace SharpBrowser
 			MMPrintPDF.IconColor = System.Drawing.Color.Black;
 			MMPrintPDF.IconFont = IconFont.Auto;
 			MMPrintPDF.Name = "MMPrintPDF";
+			MMPrintPDF.ShortcutKeyDisplayString = "Ctrl+Shift+P";
 			MMPrintPDF.Size = new System.Drawing.Size(227, 26);
 			MMPrintPDF.Text = "Print to PDF...";
 			MMPrintPDF.Click += MMPrintPDF_Click;

@@ -124,16 +124,19 @@ Ctrl+Shift+P 		| Print to PDF
 			<img src="https://github.com/sharpbrowser/SharpBrowser/raw/master/images/search.png" width="420"/>
 		</td>
 		<td align="center">
-			<strong>Downloads Tab</strong><br>
-			<img src="https://github.com/sharpbrowser/SharpBrowser/raw/master/images/downloads.png" width="420"/>
+			<strong>Main Menu</strong><br>
+			<img src="https://github.com/sharpbrowser/SharpBrowser/raw/master/images/mainmenu.png" width="420"/>
 		</td>
 	</tr>
 	<tr>
 		<td align="center">
+			<strong>Downloads Tab</strong><br>
+			<img src="https://github.com/sharpbrowser/SharpBrowser/raw/master/images/downloads.png" width="420"/>
+		</td>
+		<td align="center">
 			<strong>Developer Tools</strong><br>
 			<img src="https://github.com/sharpbrowser/SharpBrowser/raw/master/images/devtools.png" width="420"/>
 		</td>
-		<td></td>
 	</tr>
 	<tr>
 		<td align="center">

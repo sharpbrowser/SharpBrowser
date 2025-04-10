@@ -1117,11 +1117,9 @@ namespace SharpBrowser {
 		#region Main Menu Button
 
 		private void BtnMenu_Click(object sender, EventArgs e) {
-			var screenPoint = BtnMenu.PointToScreen(Point.Empty);
-			int menuWidth = MainMenu.Width;
-			int screenRight = Screen.FromControl(BtnMenu).WorkingArea.Right;
-			int x = screenRight - menuWidth;
-			int y = screenPoint.Y + BtnMenu.Height;
+			var buttonScreenPoint = BtnMenu.PointToScreen(Point.Empty);
+			int x = buttonScreenPoint.X + BtnMenu.Width - MainMenu.Width;
+			int y = buttonScreenPoint.Y + BtnMenu.Height;
 
 			MainMenu.Show(x, y);
 		}
