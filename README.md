@@ -165,9 +165,3 @@ Ctrl+Shift+P 		| Print to PDF
 		</td>
 	</tr>
 </table>
-
-## Credits
-
-- [Robin Rodricks](https://github.com/robinrodricks) - SharpBrowser project.
-- [Alex Maitland](https://github.com/amaitland) - CefSharp project, wrapper for CEF embeddable browser.
-- [Ahmet Uzun](https://github.com/postacik) - Original browser project.
