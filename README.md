@@ -95,6 +95,10 @@ Ctrl+Shift+P 		| Print to PDF
 
 ![](https://github.com/sharpbrowser/SharpBrowser/raw/master/images/apple.png)
 
+### Google Maps
+
+![](https://github.com/sharpbrowser/SharpBrowser/raw/master/images/googlemaps.png)
+
 ### WebAssembly & WebGL
 
 ![](https://github.com/sharpbrowser/SharpBrowser/raw/master/images/webgl.png)
@@ -110,10 +114,6 @@ Ctrl+Shift+P 		| Print to PDF
 ### YouTube
 
 ![](https://github.com/sharpbrowser/SharpBrowser/raw/master/images/youtube.png)
-
-### Google Maps
-
-![](https://github.com/sharpbrowser/SharpBrowser/raw/master/images/googlemaps.png)
 
 ### Search Bar
 
