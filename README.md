@@ -54,7 +54,14 @@ Ctrl+P 		| Print
 Ctrl+Shift+P 		| Print to PDF
 
 
-## System requirements
+
+## Documentation
+
+- See the [Compilation Guide](docs/Compilation.md) for steps to get started.
+- See the [Distribution Guide](docs/Distribution.md) to create a custom setup installer.
+
+
+### System requirements
 
 - You need .NET 8 on Windows 64-bit.
 
@@ -62,12 +69,6 @@ Ctrl+Shift+P 		| Print to PDF
 - You might need [VC++ 2017 Runtime](https://www.microsoft.com/en-in/download/details.aspx?id=48145) (64-bit)
 
 - You need to install the version of VC++ Runtime that CEFSharp needs. As per our CefSharp version, according to [this](https://github.com/cefsharp/CefSharp/#release-branches), we need the above versions
-
-
-## Documentation
-
-- See the [Compilation Guide](docs/Compilation.md) for steps to get started.
-- See the [Distribution Guide](docs/Distribution.md) to create a custom setup installer.
 
 
 ### Customization
