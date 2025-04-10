@@ -55,7 +55,9 @@ Ctrl+Shift+P 		| Print to PDF
 
 ## Customization
 
-- To configure the browser branding, name, URL, default search engine, default proxy, modify the `BrowserConfig` class.
+- To customize the browser branding, name, URL, default search engine, default proxy, modify the `BrowserConfig` class.
+
+- To customize the application icon, change `sharpbrowser.ico` inside the `Resources` folder.
 
 - To configure the tab style colors, modify the `BrowserTabStyle` class.
 
