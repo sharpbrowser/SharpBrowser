@@ -9,7 +9,7 @@ SharpBrowser is the fastest and most full-featured open source C# web browser th
 ### Modern
 
 - [HTML5, CSS3, JS, Video, PDF, WebGL, WebAssembly, WebRTC, WebMIDI](#screenshots)
-- Tabbed browsing (website favicons show on the tabs)
+- Tabbed browsing with website favicons
 - Address bar (also opens Google or any search engine)
 - Back, Forward, Stop, Refresh, Home, Menu button
 - Print and Print to PDF
