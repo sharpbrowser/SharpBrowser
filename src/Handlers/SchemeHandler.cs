@@ -9,7 +9,7 @@ using System.Windows.Forms;
 using System.Drawing;
 using CefSharp.Callback;
 
-namespace SharpBrowser {
+namespace SharpBrowser.Handlers {
 	internal class SchemeHandler : IResourceHandler, IDisposable {
 		private static string appPath = Path.GetDirectoryName(Application.ExecutablePath) + @"\";
 

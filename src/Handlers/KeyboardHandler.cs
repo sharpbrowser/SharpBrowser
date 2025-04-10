@@ -1,10 +1,10 @@
-﻿	using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using CefSharp;
 using SharpBrowser.Browser.Model;
 
-namespace SharpBrowser {
+namespace SharpBrowser.Handlers {
 	internal class KeyboardHandler : IKeyboardHandler {
 		MainForm myForm;
 

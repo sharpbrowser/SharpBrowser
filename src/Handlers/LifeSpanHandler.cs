@@ -1,6 +1,6 @@
 ﻿using CefSharp;
 
-namespace SharpBrowser {
+namespace SharpBrowser.Handlers {
 	internal class LifeSpanHandler : ILifeSpanHandler {
 		MainForm myForm;
 

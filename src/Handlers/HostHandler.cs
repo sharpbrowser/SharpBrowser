@@ -7,7 +7,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Windows.Forms;
 
-namespace SharpBrowser {
+namespace SharpBrowser.Handlers {
 
 	/// <summary>
 	/// functions in this class are accessible by JS using the code `host.X()`

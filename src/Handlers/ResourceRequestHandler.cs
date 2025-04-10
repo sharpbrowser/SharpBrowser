@@ -10,7 +10,7 @@ using System.Drawing;
 using CefSharp.Callback;
 using SharpBrowser.Browser;
 
-namespace SharpBrowser {
+namespace SharpBrowser.Handlers {
 	internal class ResourceRequestHandler : IResourceRequestHandler {
 		readonly MainForm myForm;
 		public ResourceRequestHandler(MainForm form) {

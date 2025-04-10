@@ -4,7 +4,7 @@ SharpBrowser is the fastest and most full-featured open source C# web browser th
 
 ## Features
 
-- HTML5, CSS3, JS, HTML5 Video, WebGL 3D, WebAssembly
+- HTML5, CSS3, JS, HTML5 Video, WebGL 3D, WebAssembly, WebRTC
 - Tabbed browsing
   - Popups open in new tabs
   - When the last tab is closed, the browser window closes down
@@ -55,11 +55,15 @@ Ctrl+Shift+P 		| Print to PDF
 
 ## Customization
 
-- To configure the browser branding, name, URL, default search engine, modify the `BrowserConfig` class.
+- To configure the browser branding, name, URL, default search engine, default proxy, modify the `BrowserConfig` class.
 
 - To configure the tab style colors, modify the `BrowserTabStyle` class.
 
-- To enable Javascript, WebGL, LocalStorage can be found in the `BrowserConfig` class.
+- To enable Javascript, WebGL, WebRTC, LocalStorage, modify the `BrowserConfig` class.
+
+- To customize the page context-menu, modify `ContextMenuHandler.OnBeforeContextMenu` function, and then implement the command inside `ContextMenuHandler.OnContextMenuCommand`.
+
+- To setup how web app permissions are handled, modify `PermissionHandler.OnShowPermissionPrompt` (some flags are already inside `BrowserConfig` and can easily be changed).
 
 
 
@@ -89,23 +93,27 @@ Ctrl+Shift+P 		| Print to PDF
 
 ### Apple.com
 
-![](https://github.com/sharpbrowser/SharpBrowser/raw/master/images/1.png)
+![](https://github.com/sharpbrowser/SharpBrowser/raw/master/images/apple.png)
 
 ### WebAssembly & WebGL
 
-![](https://github.com/sharpbrowser/SharpBrowser/raw/master/images/5.png)
+![](https://github.com/sharpbrowser/SharpBrowser/raw/master/images/webgl.png)
 
 ### PDF Viewer
 
-![](https://github.com/sharpbrowser/SharpBrowser/raw/master/images/7.png)
+![](https://github.com/sharpbrowser/SharpBrowser/raw/master/images/pdf.png)
+
+### Web Camera
+
+![](https://github.com/sharpbrowser/SharpBrowser/raw/master/images/webcam.png)
 
 ### YouTube
 
-![](https://github.com/sharpbrowser/SharpBrowser/raw/master/images/6.png)
+![](https://github.com/sharpbrowser/SharpBrowser/raw/master/images/youtube.png)
 
 ### Google Maps
 
-![](https://github.com/sharpbrowser/SharpBrowser/raw/master/images/2.png)
+![](https://github.com/sharpbrowser/SharpBrowser/raw/master/images/googlemaps.png)
 
 ### Search Bar
 
@@ -113,11 +121,11 @@ Ctrl+Shift+P 		| Print to PDF
 
 ### Downloads Tab
 
-![](https://github.com/sharpbrowser/SharpBrowser/raw/master/images/3.png)
+![](https://github.com/sharpbrowser/SharpBrowser/raw/master/images/downloads.png)
 
 ### Developer Tools
 
-![](https://github.com/sharpbrowser/SharpBrowser/raw/master/images/4.png)
+![](https://github.com/sharpbrowser/SharpBrowser/raw/master/images/devtools.png)
 
 ### Custom Error Pages
 

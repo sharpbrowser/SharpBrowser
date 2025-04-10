@@ -21,6 +21,8 @@ using System.Resources;
 using System.Threading.Tasks;
 using CefSharp.WinForms.Experimental;
 using System.Windows.Controls.Primitives;
+using System.Reflection.Metadata;
+using SharpBrowser.Handlers;
 
 namespace SharpBrowser {
 
@@ -174,22 +176,21 @@ namespace SharpBrowser {
 		private LifeSpanHandler lHandler;
 		private KeyboardHandler kHandler;
 		private RequestHandler rHandler;
+		private PermissionHandler pHandler;
 
 		/// <summary>
 		/// this is done just once, to globally initialize CefSharp/CEF
 		/// </summary>
 		private void InitBrowser() {
 
-			//CefSharpSettings.LegacyJavascriptBindingEnabled = true;
-
-			//Cef.EnableHighDPISupport();
 			CefSettings settings = new CefSettings();
-
+			
 			settings.RegisterScheme(new CefCustomScheme {
 				SchemeName = BrowserConfig.InternalScheme,
 				SchemeHandlerFactory = new SchemeHandlerFactory()
 			});
 
+			// add user agent settings
 			settings.UserAgent = BrowserConfig.UserAgent;
 			settings.AcceptLanguageList = BrowserConfig.AcceptLanguage;
 
@@ -197,6 +198,18 @@ namespace SharpBrowser {
 
 			settings.CachePath = GetAppDir("Cache");
 
+			// needed for loading local images
+			if (BrowserConfig.LoadLocalFiles) {
+				settings.CefCommandLineArgs.Add("disable-web-security", "1");
+				settings.CefCommandLineArgs.Add("allow-file-access-from-files", "1");
+			}
+
+			// enable webRTC streams
+			if (BrowserConfig.WebRTC) {
+				settings.CefCommandLineArgs.Add("enable-media-stream", "1");
+			}
+
+			// enable proxy if wanted
 			if (BrowserConfig.Proxy) {
 				CefSharpSettings.Proxy = new ProxyOptions(BrowserConfig.ProxyIP,
 					BrowserConfig.ProxyPort.ToString(), BrowserConfig.ProxyUsername,
@@ -210,6 +223,7 @@ namespace SharpBrowser {
 			mHandler = new ContextMenuHandler(this);
 			kHandler = new KeyboardHandler(this);
 			rHandler = new RequestHandler(this);
+			pHandler = new PermissionHandler();
 
 			InitDownloads();
 
@@ -414,10 +428,11 @@ namespace SharpBrowser {
 			browser.LifeSpanHandler = lHandler;
 			browser.KeyboardHandler = kHandler;
 			browser.RequestHandler = rHandler;
+			browser.PermissionHandler = pHandler;
 
-			//listen zoomLevel Changed
-			browser.JavascriptMessageReceived += Browser_JavascriptMessageReceived_mswheel;
-			browser.FrameLoadEnd += Browser_FrameLoadEnd_mswheel;
+			// listen for zoom level changed
+			browser.JavascriptMessageReceived += Browser_JavascriptMessageReceived;
+			browser.FrameLoadEnd += Browser_FrameLoadEnd;
 
 			// new tab obj
 			BrowserTab tab = new BrowserTab {
@@ -555,7 +570,7 @@ namespace SharpBrowser {
 					EnableForwardButton(CurBrowser.CanGoForward);
 
 					SetTabTitle((ChromiumWebBrowser)sender, "Loading...");
-					Task.Run(() => Get_ZoomLevel_intoTbx(CurBrowser).Wait());
+					Task.Run(() => LoadZoomLevel(CurBrowser).Wait());
 
 					BtnRefresh.Visible = false;
 					BtnStop.Visible = true;
@@ -673,7 +688,7 @@ namespace SharpBrowser {
 					// load the text/URL from this tab into the window
 					SetFormURL(browser.Address);
 					SetFormTitle(browser.Tag.ConvertToString() ?? "New Tab");
-					await Get_ZoomLevel_intoTbx(browser);
+					await LoadZoomLevel(browser);
 
 					EnableBackButton(browser.CanGoBack);
 					EnableForwardButton(browser.CanGoForward);
@@ -893,7 +908,7 @@ namespace SharpBrowser {
 
 		#region Ctrl+Mousewheel Zoom
 
-		private void Browser_FrameLoadEnd_mswheel(object sender, FrameLoadEndEventArgs e) {
+		private void Browser_FrameLoadEnd(object sender, FrameLoadEndEventArgs e) {
 			if (e.Frame.IsMain) {
 				e.Browser.ExecuteScriptAsync(
 """     
@@ -911,7 +926,7 @@ namespace SharpBrowser {
 				);
 			}
 		}
-		private void Browser_JavascriptMessageReceived_mswheel(object sender, JavascriptMessageReceivedEventArgs e) {
+		private void Browser_JavascriptMessageReceived(object sender, JavascriptMessageReceivedEventArgs e) {
 			if (e.Message == null)
 				return;
 
@@ -920,7 +935,7 @@ namespace SharpBrowser {
 				InvokeIfNeeded(async () => {
 
 					await Task.Delay(55);
-					await Get_ZoomLevel_intoTbx(CurBrowser);
+					await LoadZoomLevel(CurBrowser);
 				});
 			}
 		}
@@ -931,29 +946,25 @@ namespace SharpBrowser {
 			return (int)zoomPct;
 
 		}
-		private async Task Get_ZoomLevel_intoTbx(ChromiumWebBrowser browser) {
-			//InvokeIfNeeded(() => lbl_ZoomLevel.Text = $"...%");
+		private async Task LoadZoomLevel(ChromiumWebBrowser browser) {
+
 			await Task.Delay(100);
 
 			if (browser.IsDisposed)
 				return;
 			var zoom = await browser.GetZoomLevelAsync();
 			int zoomPct = convertZoomlevel_toZoomPct(zoom);
-			//var zoom2 = await browser.BrowserCore.GetZoomLevelAsync();
-			//InvokeIfNeeded(() => lbl_ZoomLevel.Text = $"{Math.Round(zoom, 4)} ; {zoomPct}?%");
 			InvokeIfNeeded(() => lbl_ZoomLevel.Text = $"{zoomPct}%");
 			InvokeIfNeeded(() => lbl_ZoomLevel.Visible = zoom != 0);
 
-			//await Task.Delay(500);
-			//lbl_ZoomLevel.Text = $"{(int)(zoom2 * 100)}%";
 
 		}
 		private async void lbl_ZoomLevel_Click(object sender, EventArgs e) {
 			CurBrowser.SetZoomLevel(0);//0 -> 100%   [-10 , 0 , +10]
-			await Get_ZoomLevel_intoTbx(CurBrowser);
+			await LoadZoomLevel(CurBrowser);
 		}
 		private async void lbl_ZoomLevel_MouseEnter(object sender, EventArgs e) {
-			await Get_ZoomLevel_intoTbx(CurBrowser);
+			await LoadZoomLevel(CurBrowser);
 		}
 
 		#endregion

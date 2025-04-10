@@ -48,6 +48,8 @@ namespace SharpBrowser.Browser {
 		/// </summary>
 		public static string SearchURL = "https://www.google.com/search?q=";
 
+
+
 		/// <summary>
 		/// Is LocalStorage enabled for webpages?
 		/// </summary>
@@ -57,6 +59,18 @@ namespace SharpBrowser.Browser {
 		/// </summary>
 		public static bool WebGL = true;
 		/// <summary>
+		/// Can JS on webpages access WebRTC streams?
+		/// </summary>
+		public static bool WebRTC = true;
+		/// <summary>
+		/// Can JS on webpages access MIDI devices using WebMidi API?
+		/// </summary>
+		public static bool WebMidi = true;
+		/// <summary>
+		/// Can JS on webpages access Web Cameras?
+		/// </summary>
+		public static bool Camera = true;
+		/// <summary>
 		/// Is JS enabled for webpages?
 		/// </summary>
 		public static bool Javascript = true;
@@ -64,6 +78,12 @@ namespace SharpBrowser.Browser {
 		/// Can JS on webpages access the clipboard?
 		/// </summary>
 		public static bool JavascriptClipboard = true;
+		/// <summary>
+		/// Can webpages access local files?
+		/// </summary>
+		public static bool LoadLocalFiles = false;
+
+
 
 		/// <summary>
 		/// If true then the following proxy is used for all browsing and downloads.

@@ -4,7 +4,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Windows.Forms;
 using CefSharp;
 
-namespace SharpBrowser {
+namespace SharpBrowser.Handlers {
 	internal class RequestHandler : IRequestHandler {
 		MainForm myForm;
 

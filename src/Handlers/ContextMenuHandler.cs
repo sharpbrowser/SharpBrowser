@@ -6,7 +6,7 @@ using CefSharp;
 using System.Windows.Forms;
 using CefSharp.WinForms;
 
-namespace SharpBrowser {
+namespace SharpBrowser.Handlers {
 	internal class ContextMenuHandler : IContextMenuHandler {
 
 		private const int ShowDevTools = 26501;
@@ -169,7 +169,8 @@ namespace SharpBrowser {
 
 		public static void SaveAsPDF(IBrowser browser) {
 			SaveFileDialog sfd = new SaveFileDialog();
-			sfd.Filter = "PDF Files | *.pdf";
+			sfd.Filter = "PDF Files|*.pdf";
+			//sfd.DefaultExt = (browser.MainFrame.Name ?? "Document") + ".pdf";
 			if (sfd.ShowDialog() == DialogResult.OK) {
 				browser.PrintToPdfAsync(sfd.FileName, new PdfPrintSettings() {
 					PrintBackground = true,

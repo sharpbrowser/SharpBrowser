@@ -1,6 +1,6 @@
 ﻿using CefSharp;
 
-namespace SharpBrowser {
+namespace SharpBrowser.Handlers {
 	internal class DownloadHandler : IDownloadHandler {
 		readonly MainForm myForm;
 
