@@ -4,7 +4,7 @@ SharpBrowser is the fastest and most full-featured open source C# web browser th
 
 ## Features
 
-- HTML5, CSS3, JS, HTML5 Video, PDF, WebGL 3D, WebAssembly, WebRTC
+- HTML5, CSS3, JS, HTML5 Video, PDF, WebGL 3D, WebAssembly, WebRTC, WebMIDI
 - Tabbed browsing
 - Address bar (also opens Google or any search engine)
 - Back, Forward, Stop, Refresh, Home, Menu button
@@ -62,7 +62,7 @@ Ctrl+Shift+P 		| Print to PDF
 
 - To customize the tab size and tab colors, modify the `BrowserTabStyle` class.
 
-- To enable Javascript, WebGL, WebRTC, LocalStorage, Camera, modify the `BrowserConfig` class.
+- To enable Camera, Javascript, WebGL, WebRTC, WebMIDI, LocalStorage, modify the `BrowserConfig` class.
 
 - To register hotkeys for your own commands, modify the `MainForm.InitHotkeys` function.
 
@@ -105,7 +105,7 @@ Ctrl+Shift+P 		| Print to PDF
 	</tr>
 	<tr>
 		<td align="center">
-			<strong>WebAssembly & WebGL</strong><br>
+			<strong>WebAssembly & WebGL</strong></strong> <a href="https://www.polaris.com/en-us/off-road/rzr/build-model/">(test)</a><br>
 			<img src="https://github.com/sharpbrowser/SharpBrowser/raw/master/images/webgl.png" width="420"/>
 		</td>
 		<td align="center">
@@ -115,9 +115,15 @@ Ctrl+Shift+P 		| Print to PDF
 	</tr>
 	<tr>
 		<td align="center">
-			<strong>Web Camera</strong><br>
+			<strong>Web Camera</strong> <a href="https://webcamtests.com/">(test)</a><br>
 			<img src="https://github.com/sharpbrowser/SharpBrowser/raw/master/images/webcam.png" width="420"/>
 		</td>
+		<td align="center">
+			<strong>WebMIDI</strong> <a href="https://muted.io/piano/">(test)</a><br>
+			<img src="https://github.com/sharpbrowser/SharpBrowser/raw/master/images/webmidi.png" width="420"/>
+		</td>
+	</tr>
+	<tr>
 		<td align="center">
 			<strong>YouTube</strong><br>
 			<img src="https://github.com/sharpbrowser/SharpBrowser/raw/master/images/youtube.png" width="420"/>

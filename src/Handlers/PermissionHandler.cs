@@ -39,56 +39,58 @@ namespace SharpBrowser.Handlers {
 		/// <param name="callback">Callback interface used for asynchronous continuation of permission prompts.</param>
 		bool IPermissionHandler.OnShowPermissionPrompt(IWebBrowser chromiumWebBrowser, IBrowser browser, ulong promptId, string requestingOrigin, PermissionRequestType requestedPermissions, IPermissionPromptCallback callback) {
 
+			var allow = false;
+
 
 			// DENY FEATURES THAT ARE NOT SUPPORTED
+			switch (requestedPermissions) {
 
-			if (requestedPermissions == PermissionRequestType.Notifications) {
-				return false;
-			}
-			if (requestedPermissions == PermissionRequestType.StorageAccess) {
-				return false;
-			}
-			if (requestedPermissions == PermissionRequestType.TopLevelStorageAccess) {
-				return false;
-			}
-			if (requestedPermissions == PermissionRequestType.WindowManagement) {
-				return false;
-			}
-			if (requestedPermissions == PermissionRequestType.RegisterProtocolHandler) {
-				return false;
-			}
+				case PermissionRequestType.Notifications:
+				case PermissionRequestType.StorageAccess:
+				case PermissionRequestType.TopLevelStorageAccess:
+				case PermissionRequestType.WindowManagement:
+				case PermissionRequestType.RegisterProtocolHandler:
+					allow = false;
+					break;
 
 
-			// ACCEPT/DENY BASED ON APP CONFIG
 
-			if (requestedPermissions == PermissionRequestType.MidiSysex) {
-				return BrowserConfig.WebMidi;
-			}
-			if (requestedPermissions == PermissionRequestType.CameraStream) {
-				return BrowserConfig.Camera;
-			}
-			if (requestedPermissions == PermissionRequestType.CameraPanTiltZoom) {
-				return BrowserConfig.Camera;
-			}
-			if (requestedPermissions == PermissionRequestType.Clipboard) {
-				return BrowserConfig.JavascriptClipboard;
-			}
+				// ACCEPT/DENY BASED ON APP CONFIG
+
+				case PermissionRequestType.MidiSysex:
+					allow = BrowserConfig.WebMidi;
+					break;
+				case PermissionRequestType.CameraStream:
+				case PermissionRequestType.CameraPanTiltZoom:
+					allow = BrowserConfig.Camera;
+					break;
+				case PermissionRequestType.Clipboard:
+					allow = BrowserConfig.JavascriptClipboard;
+					break;
 
 
-			// ACCEPT THINGS THAT ARE SUPPORTED
+				// ACCEPT THINGS THAT ARE SUPPORTED
 
-			if (requestedPermissions == PermissionRequestType.LocalFonts) {
-				return true;
-			}
+				case PermissionRequestType.LocalFonts:
+					allow = true;
+					break;
 
-			if (requestedPermissions == PermissionRequestType.MultipleDownloads) {
-				return true;
+				case PermissionRequestType.MultipleDownloads:
+					allow = true;
+					break;
+
 			}
 
 
 			// DENY UNKNOWN BY DEFAULT
+			if (allow) {
+				callback.Continue(PermissionRequestResult.Accept);
+			}else {
+				callback.Continue(PermissionRequestResult.Deny);
+			}
 
-			return false;
+			// returning true means the browser has handled this request
+			return true;
 		}
 	}
 }
