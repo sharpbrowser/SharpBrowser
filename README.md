@@ -63,7 +63,7 @@ Ctrl+Shift+P 		| Print to PDF
 
 - To customize the tab size and tab colors, modify the `BrowserTabStyle` class.
 
-- To enable Camera, Javascript, WebGL, WebRTC, WebMIDI, LocalStorage, modify the `BrowserConfig` class.
+- To enable or disable Web Camera, Javascript, WebGL, WebRTC, WebMIDI, LocalStorage, modify the `BrowserConfig` class.
 
 - To register hotkeys for your own commands, modify the `MainForm.InitHotkeys` function.
 
