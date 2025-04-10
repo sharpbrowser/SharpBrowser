@@ -105,7 +105,7 @@ Ctrl+Shift+P 		| Print to PDF
 	</tr>
 	<tr>
 		<td align="center">
-			<strong>WebAssembly & WebGL</strong></strong> <a href="https://www.polaris.com/en-us/off-road/rzr/build-model/">(test)</a><br>
+			<strong>WebGL</strong></strong> <a href="https://www.polaris.com/en-us/off-road/rzr/build-model/">(test)</a><br>
 			<img src="https://github.com/sharpbrowser/SharpBrowser/raw/master/images/webgl.png" width="420"/>
 		</td>
 		<td align="center">
@@ -124,6 +124,10 @@ Ctrl+Shift+P 		| Print to PDF
 		</td>
 	</tr>
 	<tr>
+		<td align="center">
+			<strong>WebAssembly</strong></strong> <a href="https://browserbench.org/JetStream2.0/">(test)</a><br>
+			<img src="https://github.com/sharpbrowser/SharpBrowser/raw/master/images/wasm.png" width="420"/>
+		</td>
 		<td align="center">
 			<strong>YouTube</strong><br>
 			<img src="https://github.com/sharpbrowser/SharpBrowser/raw/master/images/youtube.png" width="420"/>
