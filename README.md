@@ -70,7 +70,7 @@ Ctrl+Shift+P 		| Print to PDF
 - See the [Distribution Guide](docs/Distribution.md) to create a custom setup installer.
 
 
-## Customization
+### Customization
 
 - To customize the browser branding, name, URL, default search engine, default proxy, modify the `BrowserConfig` class.
 
@@ -91,7 +91,7 @@ Ctrl+Shift+P 		| Print to PDF
 - To add new settings saved in the JSON file, simply call `ConfigManager.Get*` and `ConfigManager.Set` anywhere in your code. It will save into the file automatically.
 
 
-## Code
+### Code
 
 - SharpBrowser uses CefSharp 134 and is built on NET.
 - SharpBrowser only supports Windows x64 platform.
