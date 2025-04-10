@@ -77,59 +77,76 @@ Ctrl+Shift+P 		| Print to PDF
 ## Code
 
 - SharpBrowser uses CefSharp 134 and is built on NET.
-- SharpBrowser only supports x64 platform
+- SharpBrowser only supports Windows x64 platform.
 - `MainForm.cs` - main web browser UI and related functionality
 - `Handlers` - various handlers that we have registered with CefSharp that enable deeper integration between us and CefSharp
 - `bin` - Binaries are included in the `bin` folder due to the complex CefSharp setup required. Don't empty this folder.
 - `bin/storage` - HTML and JS required for downloads manager and custom error pages
+
+## Screenshots
+
+<table>
+	<tr>
+		<td align="center">
+			<strong>Apple.com</strong><br>
+			<img src="https://github.com/sharpbrowser/SharpBrowser/raw/master/images/apple.png" width="420"/>
+		</td>
+		<td align="center">
+			<strong>Google Maps</strong><br>
+			<img src="https://github.com/sharpbrowser/SharpBrowser/raw/master/images/googlemaps.png" width="420"/>
+		</td>
+	</tr>
+	<tr>
+		<td align="center">
+			<strong>WebAssembly & WebGL</strong><br>
+			<img src="https://github.com/sharpbrowser/SharpBrowser/raw/master/images/webgl.png" width="420"/>
+		</td>
+		<td align="center">
+			<strong>PDF Viewer</strong><br>
+			<img src="https://github.com/sharpbrowser/SharpBrowser/raw/master/images/pdf.png" width="420"/>
+		</td>
+	</tr>
+	<tr>
+		<td align="center">
+			<strong>Web Camera</strong><br>
+			<img src="https://github.com/sharpbrowser/SharpBrowser/raw/master/images/webcam.png" width="420"/>
+		</td>
+		<td align="center">
+			<strong>YouTube</strong><br>
+			<img src="https://github.com/sharpbrowser/SharpBrowser/raw/master/images/youtube.png" width="420"/>
+		</td>
+	</tr>
+	<tr>
+		<td align="center">
+			<strong>Search Bar</strong><br>
+			<img src="https://github.com/sharpbrowser/SharpBrowser/raw/master/images/search.png" width="420"/>
+		</td>
+		<td align="center">
+			<strong>Downloads Tab</strong><br>
+			<img src="https://github.com/sharpbrowser/SharpBrowser/raw/master/images/downloads.png" width="420"/>
+		</td>
+	</tr>
+	<tr>
+		<td align="center">
+			<strong>Developer Tools</strong><br>
+			<img src="https://github.com/sharpbrowser/SharpBrowser/raw/master/images/devtools.png" width="420"/>
+		</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td align="center">
+			<strong>Custom Error Page 1</strong><br>
+			<img src="https://github.com/sharpbrowser/SharpBrowser/raw/master/images/error1.png" width="420"/>
+		</td>
+		<td align="center">
+			<strong>Custom Error Page 2</strong><br>
+			<img src="https://github.com/sharpbrowser/SharpBrowser/raw/master/images/error2.png" width="420"/>
+		</td>
+	</tr>
+</table>
 
 ## Credits
 
 - [Robin Rodricks](https://github.com/robinrodricks) - SharpBrowser project.
 - [Alex Maitland](https://github.com/amaitland) - CefSharp project, wrapper for CEF embeddable browser.
 - [Ahmet Uzun](https://github.com/postacik) - Original browser project.
-
-## Screenshots
-
-### Apple.com
-
-![](https://github.com/sharpbrowser/SharpBrowser/raw/master/images/apple.png)
-
-### Google Maps
-
-![](https://github.com/sharpbrowser/SharpBrowser/raw/master/images/googlemaps.png)
-
-### WebAssembly & WebGL
-
-![](https://github.com/sharpbrowser/SharpBrowser/raw/master/images/webgl.png)
-
-### PDF Viewer
-
-![](https://github.com/sharpbrowser/SharpBrowser/raw/master/images/pdf.png)
-
-### Web Camera
-
-![](https://github.com/sharpbrowser/SharpBrowser/raw/master/images/webcam.png)
-
-### YouTube
-
-![](https://github.com/sharpbrowser/SharpBrowser/raw/master/images/youtube.png)
-
-### Search Bar
-
-![](https://github.com/sharpbrowser/SharpBrowser/raw/master/images/search.png)
-
-### Downloads Tab
-
-![](https://github.com/sharpbrowser/SharpBrowser/raw/master/images/downloads.png)
-
-### Developer Tools
-
-![](https://github.com/sharpbrowser/SharpBrowser/raw/master/images/devtools.png)
-
-### Custom Error Pages
-
-![](https://github.com/sharpbrowser/SharpBrowser/raw/master/images/error1.png)
-
-![](https://github.com/sharpbrowser/SharpBrowser/raw/master/images/error2.png)
-
