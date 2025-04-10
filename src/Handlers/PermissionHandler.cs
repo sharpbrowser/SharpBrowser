@@ -1,5 +1,5 @@
 ﻿using CefSharp;
-using SharpBrowser.Browser;
+using SharpBrowser.Config;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -72,11 +72,13 @@ namespace SharpBrowser.Handlers {
 				case PermissionRequestType.FileSystemAccess:
 					allow = BrowserConfig.LocalFiles;
 					break;
+				case PermissionRequestType.StorageAccess:
+					allow = BrowserConfig.LocalStorage;
+					break;
 
 
 				// ACCEPT THINGS THAT ARE SUPPORTED
 
-				case PermissionRequestType.StorageAccess:
 				case PermissionRequestType.LocalFonts:
 				case PermissionRequestType.MultipleDownloads:
 					allow = true;

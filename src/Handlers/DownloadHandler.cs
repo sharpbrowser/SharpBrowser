@@ -1,4 +1,5 @@
 ﻿using CefSharp;
+using SharpBrowser.Managers;
 
 namespace SharpBrowser.Handlers {
 	internal class DownloadHandler : IDownloadHandler {
@@ -54,10 +55,10 @@ namespace SharpBrowser.Handlers {
 			if (!callback.IsDisposed) {
 				using (callback) {
 
-					myForm.UpdateDownloadItem(item);
+					DownloadManager.UpdateDownloadItem(item);
 
 					// ask browser what path it wants to save the file into
-					string path = myForm.CalcDownloadPath(item);
+					string path = DownloadManager.CalcDownloadPath(item);
 
 					// if file should not be saved, path will be null, so skip file
 					if (path == null) {
@@ -98,8 +99,8 @@ namespace SharpBrowser.Handlers {
 		//   callback:
 		//     The callback used to Cancel/Pause/Resume the process
 		public void OnDownloadUpdated(IWebBrowser webBrowser, IBrowser browser, DownloadItem downloadItem, IDownloadItemCallback callback) {
-			myForm.UpdateDownloadItem(downloadItem);
-			if (downloadItem.IsInProgress && myForm.CancelRequests.Contains(downloadItem.Id)) {
+			DownloadManager.UpdateDownloadItem(downloadItem);
+			if (downloadItem.IsInProgress && DownloadManager.CancelRequests.Contains(downloadItem.Id)) {
 				callback.Cancel();
 			}
 			//Console.WriteLine(downloadItem.Url + " %" + downloadItem.PercentComplete + " complete");

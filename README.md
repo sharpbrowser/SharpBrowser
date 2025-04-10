@@ -4,22 +4,35 @@ SharpBrowser is the fastest and most full-featured open source C# web browser th
 
 ## Features
 
+### Modern
+
 - HTML5, CSS3, JS, HTML5 Video, PDF, WebGL 3D, WebAssembly, WebRTC, WebMIDI
 - Tabbed browsing
 - Address bar (also opens Google or any search engine)
 - Back, Forward, Stop, Refresh, Home, Menu button
 - Print and Print to PDF
-- Developer tools
 - Search bar (also highlights all instances)
 - File downloads and download manager
+- View online & offline webpages
+- Fullscreen mode
+
+### Smart 
+
+- Saves open tabs and resumes the browsing session when reopened
+- Developer tools
+- Web app permission handling
+- Cookies and file cache saved in the `AppData` folder
+- Application settings saved in a JSON file in the `AppData` folder
+- Popups open in new tabs
+- When the last tab is closed, the browser window closes down
+
+### Extensible
+
+- Easily add [your own branding](#customization), styling, buttons or hotkeys
 - Custom error pages
 - Custom context menu
 - Custom application main menu
-- Easily add [your own branding](#customization), styling, buttons or hotkeys
-- View online & offline webpages
-- Web app permission handling based on configuration
-- Popups open in new tabs
-- When the last tab is closed, the browser window closes down
+- Custom settings
 
 ## Hotkeys
 
@@ -63,15 +76,17 @@ Ctrl+Shift+P 		| Print to PDF
 
 - To customize the tab size and tab colors, modify the `BrowserTabStyle` class.
 
-- To enable or disable Web Camera, Javascript, WebGL, WebRTC, WebMIDI, LocalStorage, modify the `BrowserConfig` class.
+- To enable or disable Web Camera, Microphone, Javascript, WebGL, WebRTC, WebMIDI, LocalStorage, modify the `BrowserConfig` class.
 
-- To register hotkeys for your own commands, modify the `MainForm.InitHotkeys` function.
+- To register hotkeys for your own commands, modify the `HotkeyManager` class.
 
 - To register your own commands into the main menu, open the form designed for `MainForm` and click the `MainMenu` object. Add `IconMenuItem` objects into that menu.
 
 - To register your own commands into the page context-menu, modify `ContextMenuHandler.OnBeforeContextMenu` function, and then implement the command inside `ContextMenuHandler.OnContextMenuCommand`.
 
 - To setup how web app permissions are handled, modify `PermissionHandler.OnShowPermissionPrompt` (some flags are already inside `BrowserConfig` and can easily be changed).
+
+- To add new settings saved in the JSON file, simply call `ConfigManager.Get*` and `ConfigManager.Set` anywhere in your code. It will save into the file automatically.
 
 
 
@@ -87,6 +102,7 @@ Ctrl+Shift+P 		| Print to PDF
 - SharpBrowser uses CefSharp 134 and is built on NET.
 - SharpBrowser only supports Windows x64 platform.
 - `MainForm.cs` - main web browser UI and related functionality
+- `Managers` - classes that manage various types of browsing functionality, like settings, downloads and hotkeys
 - `Handlers` - various handlers that we have registered with CefSharp that enable deeper integration between us and CefSharp
 - `bin` - Binaries are included in the `bin` folder due to the complex CefSharp setup required. Don't empty this folder.
 - `bin/storage` - HTML and JS required for downloads manager and custom error pages

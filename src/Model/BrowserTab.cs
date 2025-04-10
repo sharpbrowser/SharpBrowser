@@ -2,7 +2,7 @@
 using SharpBrowser.Controls.BrowserTabStrip;
 using System;
 
-namespace SharpBrowser.Browser.Model {
+namespace SharpBrowser.Model {
 	/// <summary>
 	/// POCO created for holding data per tab
 	/// </summary>

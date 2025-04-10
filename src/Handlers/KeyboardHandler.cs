@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using CefSharp;
-using SharpBrowser.Browser.Model;
+using SharpBrowser.Model;
 
 namespace SharpBrowser.Handlers {
 	internal class KeyboardHandler : IKeyboardHandler {
@@ -10,7 +10,7 @@ namespace SharpBrowser.Handlers {
 
 		public static List<BrowserHotKey> Hotkeys = new List<BrowserHotKey>();
 		public static void AddHotKey(Form form, Action function, Keys key, bool ctrl = false, bool shift = false, bool alt = false) {
-			Utils.AddHotKey(form, function, key, ctrl, shift, alt);
+			WinFormsUtils.AddHotKey(form, function, key, ctrl, shift, alt);
 			Hotkeys.Add(new BrowserHotKey(function, key, ctrl, shift, alt));
 		}
 

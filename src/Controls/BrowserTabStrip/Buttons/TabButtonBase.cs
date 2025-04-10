@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using SharpBrowser.Config;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace SharpBrowser.Controls.BrowserTabStrip.Buttons {

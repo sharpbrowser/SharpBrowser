@@ -8,7 +8,8 @@ using CefSharp;
 using System.Windows.Forms;
 using System.Drawing;
 using CefSharp.Callback;
-using SharpBrowser.Browser;
+using SharpBrowser.Config;
+using SharpBrowser.Utils;
 
 namespace SharpBrowser.Handlers {
 	internal class ResourceRequestHandler : IResourceRequestHandler {

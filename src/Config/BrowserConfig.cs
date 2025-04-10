@@ -1,12 +1,16 @@
 ﻿using CefSharp;
 
-namespace SharpBrowser.Browser {
+namespace SharpBrowser.Config {
 	internal static class BrowserConfig {
 
 		/// <summary>
-		/// The title of the window and application in Windows
+		/// The title of the window and application in Windows.
 		/// </summary>
 		public static string Branding = "SharpBrowser";
+		/// <summary>
+		/// The folder name in AppData.
+		/// </summary>
+		public static string AppID = "SharpBrowser";
 		/// <summary>
 		/// The language you distribute it in
 		/// </summary>
@@ -14,7 +18,7 @@ namespace SharpBrowser.Browser {
 		/// <summary>
 		/// The browser's user agent string, which identifies itself to websites
 		/// </summary>
-		public static string UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.102 Safari/537.36 /CefSharp Browser" + Cef.CefSharpVersion; // UserAgent to fix issue with Google account authentication		
+		public static string UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.5112.102 Safari/537.36 CefSharp/" + Cef.CefSharpVersion; // UserAgent to fix issue with Google account authentication		
 		/// <summary>
 		/// The home page of your browser which shows up when you press the home button
 		/// </summary>
@@ -51,9 +55,9 @@ namespace SharpBrowser.Browser {
 
 
 		/// <summary>
-		/// Is LocalStorage enabled for webpages?
+		/// Should we save the tabs that are open and re-open them on the next startup?
 		/// </summary>
-		public static bool LocalStorage = false;
+		public static bool SaveOpenTabs = true;
 		/// <summary>
 		/// Is WebGL enabled for webpages?
 		/// </summary>
@@ -86,6 +90,10 @@ namespace SharpBrowser.Browser {
 		/// Can webpages access local files?
 		/// </summary>
 		public static bool LocalFiles = false;
+		/// <summary>
+		/// Can webpages access local storage API?
+		/// </summary>
+		public static bool LocalStorage = true;
 
 
 

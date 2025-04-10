@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 
-namespace SharpBrowser.Controls {
+namespace SharpBrowser.Config {
 	internal static class BrowserTabStyle {
 
 		public static int TabHeight = 40;

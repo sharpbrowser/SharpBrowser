@@ -1,17 +1,22 @@
+using SharpBrowser.Config;
 using SharpBrowser.Controls.BrowserTabStrip.Buttons;
+using SharpBrowser.Model;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using static System.Windows.Forms.DataFormats;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace SharpBrowser.Controls.BrowserTabStrip {
+
 	[DefaultEvent("TabStripItemSelectionChanged")]
 	[DefaultProperty("Items")]
 	[ToolboxItem(true)]
-	public class BrowserTabStrip : BaseStyledPanel, ISupportInitialize, IDisposable {
+	internal class BrowserTabStrip : BaseStyledPanel, ISupportInitialize, IDisposable {
 
 		public int TabButton_Height => BrowserTabStyle.TabHeight;
 
@@ -299,7 +304,7 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 			newTabButton.ProcessRolloverEvents(this, e);
 
 		}
-		
+
 
 		protected override void OnMouseLeave(EventArgs e) {
 			base.OnMouseLeave(e);
@@ -387,7 +392,7 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 			//--------------------------------------------------------
 			// DRAW NEW BUTTON
 			newTabButton.IsVisible = true;
-			newTabButton.CalcBounds(Items[items.Count-1], false);
+			newTabButton.CalcBounds(Items[items.Count - 1], false);
 			newTabButton.Draw(e.Graphics);
 			//--------------------------------------------------------
 
@@ -551,6 +556,31 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 				}
 			}
 			base.Dispose(disposing);
+		}
+
+		public List<BrowserTabItem> Tabs {
+			get {
+				var tabs = new List<BrowserTabItem>();
+				foreach (BrowserTabItem item in items) {
+					tabs.Add(item);
+				}
+				return tabs;
+			}
+		}
+		public int SelectedIndex {
+			get {
+				var i = 0;
+				foreach (BrowserTabItem item in items) {
+					if (item.Selected) return i;
+					i++;
+				}
+				return 0;
+			}
+			set {
+				if (Items[value] != null) {
+					SelectedItem = Items[value];
+				}
+			}
 		}
 	}
 }

@@ -34,28 +34,6 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 			}
 		}
 
-		public virtual BrowserTabItem LastVisible {
-			get {
-				for (int num = base.Count - 1; num > 0; num--) {
-					if (this[num].Visible) {
-						return this[num];
-					}
-				}
-				return null;
-			}
-		}
-
-		public virtual BrowserTabItem FirstVisible {
-			get {
-				for (int i = 0; i < base.Count; i++) {
-					if (this[i].Visible) {
-						return this[i];
-					}
-				}
-				return null;
-			}
-		}
-
 		[Browsable(false)]
 		public virtual int VisibleCount {
 			get {

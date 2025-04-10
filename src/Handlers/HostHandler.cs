@@ -1,11 +1,5 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Windows.Forms;
+using SharpBrowser.Managers;
 
 namespace SharpBrowser.Handlers {
 
@@ -22,18 +16,14 @@ namespace SharpBrowser.Handlers {
 			myForm.AddNewBrowserTab(url, focusNewTab);
 		}
 		public string getDownloads() {
-			lock (myForm.downloads) {
-				var json = JsonConvert.SerializeObject(myForm.downloads.Values);
+			lock (DownloadManager.Downloads) {
+				var json = JsonConvert.SerializeObject(DownloadManager.Downloads.Values);
 				return json;
 			}
 		}
 
 		public bool cancelDownload(int downloadId) {
-			lock (myForm.downloadCancelRequests) {
-				if (!myForm.downloadCancelRequests.Contains(downloadId)) {
-					myForm.downloadCancelRequests.Add(downloadId);
-				}
-			}
+			DownloadManager.Cancel(downloadId);
 			return true;
 		}
 		public void refreshActiveTab() {
