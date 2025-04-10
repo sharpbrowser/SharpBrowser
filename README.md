@@ -59,7 +59,7 @@ Ctrl+Shift+P 		| Print to PDF
 
 - To customize the application icon, change `sharpbrowser.ico` inside the `Resources` folder.
 
-- To configure the tab style colors, modify the `BrowserTabStyle` class.
+- To customize the tab size and tab colors, modify the `BrowserTabStyle` class.
 
 - To enable Javascript, WebGL, WebRTC, LocalStorage, modify the `BrowserConfig` class.
 
