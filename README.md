@@ -76,7 +76,6 @@ Ctrl+Shift+P 		| Print to PDF
 - SharpBrowser only supports x64 platform
 - `MainForm.cs` - main web browser UI and related functionality
 - `Handlers` - various handlers that we have registered with CefSharp that enable deeper integration between us and CefSharp
-- `Data/JSON.cs` - fast JSON serializer/deserializer
 - `bin` - Binaries are included in the `bin` folder due to the complex CefSharp setup required. Don't empty this folder.
 - `bin/storage` - HTML and JS required for downloads manager and custom error pages
 
