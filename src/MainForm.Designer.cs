@@ -286,7 +286,7 @@ namespace SharpBrowser
 			TabPages.Location = new System.Drawing.Point(0, 45);
 			TabPages.Name = "TabPages";
 			TabPages.Padding = new Padding(1, 41, 1, 1);
-			TabPages.SelectedItem = tabStrip1;
+			TabPages.SelectedTab = tabStrip1;
 			TabPages.Size = new System.Drawing.Size(916, 427);
 			TabPages.TabIndex = 4;
 			TabPages.Text = "faTabStrip1";

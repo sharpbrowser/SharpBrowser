@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Windows.Controls.Primitives;
 using System.Windows.Forms;
 using static System.Windows.Forms.DataFormats;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
@@ -26,7 +27,7 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 		private TabNewButton newTabButton;
 		private BrowserTabStripItemCollection items;
 
-		private StringFormat sf;
+		private StringFormat DrawStringFormat;
 
 		private bool isIniting;
 		public int MaxTabSize = 200;
@@ -34,7 +35,7 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 
 		[RefreshProperties(RefreshProperties.All)]
 		[DefaultValue(null)]
-		public BrowserTabItem SelectedItem {
+		public BrowserTabItem SelectedTab {
 			get {
 				return selectedItem;
 			}
@@ -123,7 +124,7 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 			menu.VisibleChanged += OnMenuVisibleChanged;
 			closeButton = new TabCloseButton(base.ToolStripRenderer);
 			newTabButton = new TabNewButton(base.ToolStripRenderer);
-			sf = new StringFormat();
+			DrawStringFormat = new StringFormat();
 			EndInit();
 			UpdateLayout();
 		}
@@ -151,7 +152,7 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 
 			// select the new tab
 			if ((autoSelect && tabItem.Visible) || (tabItem.Visible && Items.DrawnCount < 1)) {
-				SelectedItem = tabItem;
+				SelectedTab = tabItem;
 				SelectItem(tabItem);
 			}
 		}
@@ -169,10 +170,10 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 				// select last item
 				if (Items.Count > 0) {
 					if (Items[num] != null) {
-						SelectedItem = Items[num];
+						SelectedTab = Items[num];
 					}
 					else {
-						SelectedItem = Items[items.Count - 1];
+						SelectedTab = Items[items.Count - 1];
 					}
 				}
 			}
@@ -262,7 +263,7 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 				// select the tab if clicked
 				BrowserTabItem tabItemByPoint = GetTabItemByPoint(e.Location);
 				if (tabItemByPoint != null) {
-					SelectedItem = tabItemByPoint;
+					SelectedTab = tabItemByPoint;
 					Invalidate();
 				}
 
@@ -285,11 +286,11 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 		}
 
 		private void CloseActiveTab() {
-			if (SelectedItem != null) {
-				TabStripItemClosingEventArgs tabStripItemClosingEventArgs = new TabStripItemClosingEventArgs(SelectedItem);
+			if (SelectedTab != null) {
+				TabStripItemClosingEventArgs tabStripItemClosingEventArgs = new TabStripItemClosingEventArgs(SelectedTab);
 				OnTabStripItemClosing(tabStripItemClosingEventArgs);
-				if (!tabStripItemClosingEventArgs.Cancel && SelectedItem.CanClose) {
-					RemoveTab(SelectedItem);
+				if (!tabStripItemClosingEventArgs.Cancel && SelectedTab.CanClose) {
+					RemoveTab(SelectedTab);
 					OnTabStripItemClosed(EventArgs.Empty);
 				}
 			}
@@ -322,18 +323,8 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 			}
 		}
 
-		private void SetDefaultSelected() {
-			if (selectedItem == null && Items.Count > 0) {
-				SelectedItem = Items[0];
-			}
-			for (int i = 0; i < Items.Count; i++) {
-				BrowserTabItem fATabStripItem = Items[i];
-				fATabStripItem.Dock = DockStyle.Fill;
-			}
-		}
-
 		private void OnMenuItemClicked(object sender, ToolStripItemClickedEventArgs e) {
-			BrowserTabItem fATabStripItem2 = (SelectedItem = (BrowserTabItem)e.ClickedItem.Tag);
+			BrowserTabItem fATabStripItem2 = (SelectedTab = (BrowserTabItem)e.ClickedItem.Tag);
 		}
 
 		private void OnMenuVisibleChanged(object sender, EventArgs e) {
@@ -341,6 +332,9 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 			}
 		}
 
+		/// <summary>
+		/// Main rendering of the entire tab strip.
+		/// </summary>
 		protected override void OnPaint(PaintEventArgs e) {
 			//SetDefaultSelected();
 			Rectangle clientRectangle = base.ClientRectangle;
@@ -369,18 +363,18 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 			if (Items.DrawnCount == 0 || Items.VisibleCount == 0) {
 				e.Graphics.DrawLine(Pens.Red, new Point(0, BrowserTabStyle.TabHeight), new Point(base.ClientRectangle.Width, BrowserTabStyle.TabHeight));
 			}
-			else if (SelectedItem != null && SelectedItem.IsDrawn) {
+			else if (SelectedTab != null && SelectedTab.IsDrawn) {
 				var lineColorPen = new Pen(BrowserTabStyle.NormalTabBackColor);
 
-				Point point = new Point((int)SelectedItem.StripRect.Left - TabRadius, BrowserTabStyle.TabHeight);
+				Point point = new Point((int)SelectedTab.StripRect.Left - TabRadius, BrowserTabStyle.TabHeight);
 				e.Graphics.DrawLine(lineColorPen, new Point(0, BrowserTabStyle.TabHeight), point);
-				point.X += (int)SelectedItem.StripRect.Width + TabRadius + 2;
+				point.X += (int)SelectedTab.StripRect.Width + TabRadius + 2;
 				e.Graphics.DrawLine(lineColorPen, point, new Point(base.ClientRectangle.Width, BrowserTabStyle.TabHeight));
 			}
 
 			//--------------------------------------------------------
 			// DRAW CLOSE BUTTON FOR SELECTED TAB
-			if (SelectedItem != null && SelectedItem.CanClose) {
+			if (SelectedTab != null && SelectedTab.CanClose) {
 				closeButton.IsVisible = true;
 				closeButton.CalcBounds(selectedItem, true);
 				closeButton.Draw(e.Graphics);
@@ -423,17 +417,17 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 		/// <summary>
 		/// Draws The Tab Header button
 		/// </summary>
-		private void OnDrawTabButton(Graphics g, BrowserTabItem currentItem) {
-			Items.IndexOf(currentItem);
+		private void OnDrawTabButton(Graphics g, BrowserTabItem tab) {
+			Items.IndexOf(tab);
 			Font font = Font;
 
-			bool isActiveTab = currentItem == SelectedItem;
-			bool is_atRightof_ActiveTab = Items.IndexOf(currentItem) == Items.IndexOf(selectedItem) + 1;
+			bool isActiveTab = tab == SelectedTab;
+			bool is_atRightof_ActiveTab = Items.IndexOf(tab) == Items.IndexOf(selectedItem) + 1;
 
-			RectangleF stripRect = currentItem.StripRect;
+			RectangleF stripRect = tab.StripRect;
 			var sr = stripRect;
-			SolidBrush brush = new SolidBrush((currentItem == SelectedItem) ? BrowserTabStyle.SelectedTabBackColor : BrowserTabStyle.NormalTabBackColor);
-			Pen pen = new Pen((currentItem == SelectedItem) ? BrowserTabStyle.SelectedTabBackColor : BrowserTabStyle.NormalTabBackColor);
+			SolidBrush brush = new SolidBrush((tab == SelectedTab) ? BrowserTabStyle.SelectedTabBackColor : BrowserTabStyle.NormalTabBackColor);
+			Pen pen = new Pen((tab == SelectedTab) ? BrowserTabStyle.SelectedTabBackColor : BrowserTabStyle.NormalTabBackColor);
 
 			//--------------------------------------------------------
 			// Calc Rect for the Tab
@@ -474,41 +468,70 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 			}
 
 			//g.DrawPath(SystemPens.ControlDark, graphicsPath);
-			if (currentItem == SelectedItem) {
+			if (tab == SelectedTab) {
 				//g.DrawLine(new Pen(brush), sr_left + 19f, sr_height + 2f, sr_left + sr_width - 1f, sr_height + 2f);
 			}
 			//--------------------------------------------------------
 
 			var ForeColorSel = ForeColor;
 
-			//margin for Tab Text, Vertically Center
-			tabDrawnRect.X += 10;
-			tabDrawnRect.Width -= 10;
-			//sf.LineAlignment = StringAlignment.Center; 
 
 			//--------------------------------------------------------
-			// Tab Title
-			//--------------------------------------------------------
-			if (currentItem == SelectedItem) {
-				tabDrawnRect.Width -= 25;// dont overflow ellipsis "..." under the activeTab.CloseButton.
-										 //g.DrawRectangle(Pens.Cyan, tabDrawnRect);
-				g.DrawString(currentItem.Title, font, new SolidBrush(ForeColorSel), tabDrawnRect, sf);
-			}
-			else {
-				g.DrawString(currentItem.Title, font, new SolidBrush(ForeColorSel), tabDrawnRect, sf);
-			}
+			// Tab Text
 			//--------------------------------------------------------
 
-			currentItem.IsDrawn = true;
+			// margin for Tab Text, Vertically Center
+			var textRect = tabDrawnRect;
+			textRect.X += 10;
+			textRect.Width -= 10;
+
+			// leave gap for icon if any
+			if (tab.Image != null) {
+				var extraSize = BrowserTabStyle.Tab_IconSize + 5;
+				textRect.X += extraSize;
+				textRect.Width -= extraSize;
+			}
+
+			// draw tab text title
+			// FIX: fix janky text rendering and bad kerning by using TextRenderer instead of DrawString
+			g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
+			if (tab == SelectedTab) {
+				textRect.Width -= 25;
+			}
+			TextRenderer.DrawText(g,tab.Title,font,Rectangle.Round(textRect),ForeColorSel,
+				TextFormatFlags.Left | TextFormatFlags.VerticalCenter | TextFormatFlags.EndEllipsis
+			);
+			//--------------------------------------------------------
+
+
+			//--------------------------------------------------------
+			// Tab Icon
+			//--------------------------------------------------------
+			if (tab.Image != null) {
+
+				// center align the icon in the given space, but right align it to the text
+				var size = (int)BrowserTabStyle.Tab_IconSize;
+				var iconX = textRect.X - (5 + size);
+				var iconY = textRect.Y + ((textRect.Height - size) / 2);
+
+				// draw tab icon
+				g.InterpolationMode = InterpolationMode.NearestNeighbor;
+				g.DrawImage(tab.Image, (int)iconX, (int)iconY, size, size);
+			}
+
+
+			tab.IsDrawn = true;
 		}
 
 
 		private void UpdateLayout() {
 			//sf.Trimming = StringTrimming.Character;
-			sf.Trimming = StringTrimming.EllipsisCharacter;
-			sf.FormatFlags = StringFormatFlags.NoWrap;
+			DrawStringFormat.Trimming = StringTrimming.EllipsisCharacter;
+			DrawStringFormat.FormatFlags = StringFormatFlags.NoWrap;
 			//sf.FormatFlags |= StringFormatFlags.DirectionRightToLeft; //this line causes multiline.//is this arabic??
-			sf.LineAlignment = StringAlignment.Center;
+			DrawStringFormat.LineAlignment = StringAlignment.Center;
+
+			DrawStringFormat.Alignment = StringAlignment.Near;
 
 			base.DockPadding.Top = BrowserTabStyle.TabHeight + 1;
 			base.DockPadding.Bottom = 1;
@@ -551,8 +574,8 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 				if (menu != null && !menu.IsDisposed) {
 					menu.Dispose();
 				}
-				if (sf != null) {
-					sf.Dispose();
+				if (DrawStringFormat != null) {
+					DrawStringFormat.Dispose();
 				}
 			}
 			base.Dispose(disposing);
@@ -567,20 +590,17 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 				return tabs;
 			}
 		}
+
 		public int SelectedIndex {
 			get {
-				var i = 0;
-				foreach (BrowserTabItem item in items) {
-					if (item.Selected) return i;
-					i++;
-				}
-				return 0;
+				return Items.IndexOf(SelectedTab);
 			}
 			set {
 				if (Items[value] != null) {
-					SelectedItem = Items[value];
+					SelectedTab = Items[value];
 				}
 			}
 		}
+
 	}
 }

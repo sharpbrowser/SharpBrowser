@@ -94,6 +94,10 @@ namespace SharpBrowser.Config {
 		/// Can webpages access local storage API?
 		/// </summary>
 		public static bool LocalStorage = true;
+		/// <summary>
+		/// Can users resize text areas on webpages?
+		/// </summary>
+		public static bool TextAreaResize = true;
 
 
 

@@ -136,6 +136,7 @@ namespace SharpBrowser {
 
 			BrowserSettings config = new BrowserSettings();
 
+			config.TextAreaResize = BrowserConfig.TextAreaResize.ToCefState();
 			config.LocalStorage = BrowserConfig.LocalStorage.ToCefState();
 			config.WebGl = BrowserConfig.WebGL.ToCefState();
 			config.Javascript = BrowserConfig.Javascript.ToCefState();
@@ -222,7 +223,7 @@ namespace SharpBrowser {
 		private void SetFormURL(string URL) {
 
 			currentFullURL = URL;
-			currentCleanURL = CleanURL(URL);
+			currentCleanURL = URLUtils.CleanURL(URL);
 
 			TxtURL.Text = currentCleanURL;
 
@@ -234,23 +235,6 @@ namespace SharpBrowser {
 
 		}
 
-		private string CleanURL(string url) {
-			if (url.BeginsWith("about:")) {
-				return "";
-			}
-			url = url.RemovePrefix("http://");
-			url = url.RemovePrefix("https://");
-			url = url.RemovePrefix("file://");
-			url = url.RemovePrefix("/");
-			return url.DecodeURL();
-		}
-		private bool IsBlank(string url) {
-			return (url == "" || url == "about:blank");
-		}
-		private bool IsBlankOrSystem(string url) {
-			return (url == "" || url.BeginsWith("about:") || url.BeginsWith("chrome:") || url.BeginsWith(BrowserConfig.InternalScheme + ":"));
-		}
-
 		public ChromiumWebBrowser AddNewBrowserTab(string url, bool focusNewTab = true, string refererUrl = null, bool skipIfUrlAlreadyOpen = false, bool focusOnAddressBar = false) {
 			return Invoke((Func<ChromiumWebBrowser>)delegate {
 
@@ -259,7 +243,7 @@ namespace SharpBrowser {
 					foreach (BrowserTabItem tab in TabPages.Items) {
 						BrowserTab tab2 = (BrowserTab)tab.Tag;
 						if (tab2 != null && (tab2.CurURL == url)) {
-							TabPages.SelectedItem = tab;
+							TabPages.SelectedTab = tab;
 							return tab2.Browser;
 						}
 					}
@@ -303,8 +287,9 @@ namespace SharpBrowser {
 			browser.BringToFront();
 
 			// add events
-			browser.StatusMessage += Browser_StatusMessage;
+			//browser.StatusMessage += Browser_StatusMessage;
 			browser.LoadingStateChanged += Browser_LoadingStateChanged;
+			browser.FrameLoadEnd += Browser_FrameLoadEnd;
 			browser.TitleChanged += Browser_TitleChanged;
 			browser.LoadError += Browser_LoadError;
 			browser.AddressChanged += Browser_URLChanged;
@@ -332,9 +317,6 @@ namespace SharpBrowser {
 			return tab;
 		}
 
-
-
-
 		public BrowserTab GetTabByBrowser(IWebBrowser browser) {
 			foreach (BrowserTabItem tab2 in TabPages.Items) {
 				BrowserTab tab = (BrowserTab)(tab2.Tag);
@@ -345,9 +327,6 @@ namespace SharpBrowser {
 			return null;
 		}
 
-		private FormWindowState oldWindowState;
-		private FormBorderStyle oldBorderStyle;
-		private bool isFullScreen = false;
 
 		private void OnTabClosed(object sender, EventArgs e) {
 
@@ -370,30 +349,22 @@ namespace SharpBrowser {
 		public void StopActiveTab() => CurBrowser.Stop();
 
 		private bool IsOnFirstTab() {
-			return TabPages.SelectedItem == TabPages.Items[0];
+			return TabPages.SelectedTab == TabPages.Items[0];
 		}
 		private bool IsOnLastTab() {
-			return TabPages.SelectedItem == TabPages.Items[TabPages.Items.Count - 2];
+			return TabPages.SelectedTab == TabPages.Items[TabPages.Items.Count - 1];
 		}
 
-		private int CurIndex {
-			get {
-				return TabPages.Items.IndexOf(TabPages.SelectedItem);
-			}
-			set {
-				TabPages.SelectedItem = TabPages.Items[value];
-			}
-		}
 		private int LastIndex {
 			get {
-				return TabPages.Items.Count - 2;
+				return TabPages.Items.Count - 1;
 			}
 		}
 
 		public ChromiumWebBrowser CurBrowser {
 			get {
-				if (TabPages.SelectedItem != null && TabPages.SelectedItem.Tag != null) {
-					return ((BrowserTab)TabPages.SelectedItem.Tag).Browser;
+				if (TabPages.SelectedTab != null && TabPages.SelectedTab.Tag != null) {
+					return ((BrowserTab)TabPages.SelectedTab.Tag).Browser;
 				}
 				else {
 					return null;
@@ -403,8 +374,8 @@ namespace SharpBrowser {
 
 		public BrowserTab CurTab {
 			get {
-				if (TabPages.SelectedItem != null && TabPages.SelectedItem.Tag != null) {
-					return ((BrowserTab)TabPages.SelectedItem.Tag);
+				if (TabPages.SelectedTab != null && TabPages.SelectedTab.Tag != null) {
+					return ((BrowserTab)TabPages.SelectedTab.Tag);
 				}
 				else {
 					return null;
@@ -421,60 +392,10 @@ namespace SharpBrowser {
 			return tabs;
 		}
 
-		public int CurTabLoadingDur {
-			get {
-				if (TabPages.SelectedItem != null && TabPages.SelectedItem.Tag != null) {
-					int loadTime = (int)(DateTime.Now - CurTab.DateCreated).TotalMilliseconds;
-					return loadTime;
-				}
-				else {
-					return 0;
-				}
-			}
-		}
-
-		private void Browser_URLChanged(object sender, AddressChangedEventArgs e) {
-			InvokeIfNeeded(() => {
-				// if current tab
-				if (sender == CurBrowser) {
-
-					if (!WinFormsUtils.IsFocussed(TxtURL)) {
-						SetFormURL(e.Address);
-					}
-
-					EnableBackButton(CurBrowser.CanGoBack);
-					EnableForwardButton(CurBrowser.CanGoForward);
-
-					SetTabTitle((ChromiumWebBrowser)sender, "Loading...");
-
-					BtnRefresh.Visible = false;
-					BtnStop.Visible = true;
-
-					CurTab.DateCreated = DateTime.Now;
-
-				}
-
-			});
-		}
-
-		private void Browser_LoadError(object sender, LoadErrorEventArgs e) {
-			// ("Load Error:" + e.ErrorCode + ";" + e.ErrorText);
-		}
-
-		private void Browser_TitleChanged(object sender, TitleChangedEventArgs e) {
-			InvokeIfNeeded(() => {
-
-				ChromiumWebBrowser browser = (ChromiumWebBrowser)sender;
-
-				SetTabTitle(browser, e.Title);
-
-			});
-		}
-
 		private void SetTabTitle(ChromiumWebBrowser browser, string text) {
 
 			text = text.Trim();
-			if (IsBlank(text)) {
+			if (URLUtils.IsBlank(text)) {
 				text = "New Tab";
 			}
 
@@ -494,29 +415,6 @@ namespace SharpBrowser {
 			}
 		}
 
-		private void Browser_LoadingStateChanged(object sender, LoadingStateChangedEventArgs e) {
-			if (sender == CurBrowser) {
-
-				EnableBackButton(e.CanGoBack);
-				EnableForwardButton(e.CanGoForward);
-
-				if (e.IsLoading) {
-
-					// set title
-					//SetTabTitle();
-
-				}
-				else {
-
-					// after loaded / stopped
-					InvokeIfNeeded(() => {
-						BtnRefresh.Visible = true;
-						BtnStop.Visible = false;
-					});
-				}
-			}
-		}
-
 		public void InvokeIfNeeded(Action action) {
 			if (this.InvokeRequired) {
 				this.BeginInvoke(action);
@@ -525,8 +423,6 @@ namespace SharpBrowser {
 				action.Invoke();
 			}
 		}
-
-		private void Browser_StatusMessage(object sender, StatusMessageEventArgs e) { }
 
 		public void WaitForBrowserToInitialize(ChromiumWebBrowser browser) {
 			while (!browser.IsBrowserInitialized) {
@@ -557,26 +453,7 @@ namespace SharpBrowser {
 
 
 			if (e.ChangeType == BrowserTabStripItemChangeTypes.SelectionChanged) {
-				browser = CurBrowser;
-				if (browser != null) {
-
-					// load the text/URL from this tab into the window
-					SetFormURL(browser.Address);
-					SetFormTitle(browser.Tag.ConvertToString() ?? "New Tab");
-
-					EnableBackButton(browser.CanGoBack);
-					EnableForwardButton(browser.CanGoForward);
-
-				}
-				else {
-					// when a new tab is just created, the browser does not exist, so show default text/URL
-					SetFormURL("");
-					SetFormTitle("Loading...");
-
-					EnableBackButton(false);
-					EnableForwardButton(false);
-
-				}
+				Tabs_OnSwitchedTab();
 
 			}
 
@@ -586,16 +463,7 @@ namespace SharpBrowser {
 				}
 			}
 
-			if (e.ChangeType == BrowserTabStripItemChangeTypes.Changed) {
-				if (browser != null) {
-					if (currentFullURL != "about:blank") {
-						browser.Focus();
-					}
-				}
-			}
-
 		}
-
 
 
 		private void TMReload_Click(object sender, EventArgs e) {
@@ -665,6 +533,133 @@ namespace SharpBrowser {
 
 		#endregion
 
+		#region Web Browser Events
+
+		private ChromiumWebBrowser Tabs_OnSwitchedTab() {
+			ChromiumWebBrowser browser = CurBrowser;
+			if (browser != null) {
+
+				// load the text/URL from this tab into the window
+				SetFormURL(browser.Address);
+				SetFormTitle(browser.Tag.ConvertToString() ?? "New Tab");
+
+				EnableBackButton(browser.CanGoBack);
+				EnableForwardButton(browser.CanGoForward);
+
+				// focus on the browser
+				// FIX: important for hotkeys to work (for example a chain of Ctrl+W, Ctrl+W)
+				browser.Focus();
+			}
+			else {
+
+				// when a new tab is just created, the browser does not exist, so show default text/URL
+				SetFormURL("");
+				SetFormTitle("Loading...");
+
+				EnableBackButton(false);
+				EnableForwardButton(false);
+
+			}
+
+			return browser;
+		}
+
+		private void Browser_FrameLoadEnd(object sender, FrameLoadEndEventArgs e) {
+
+			// for any tab, even background tabs, download the favicon
+			FavIconManager.OnLoaded = Manager_OnFavIconLoaded;
+			if (e.Frame.IsMain) {
+
+				if (!URLUtils.IsBlankOrSystem(e.Url)) {
+
+					FavIconManager.OnFrameLoadEnd(sender as ChromiumWebBrowser, e);
+				}
+			}
+		}
+
+		private void Manager_OnFavIconLoaded(ChromiumWebBrowser browser, byte[] iconData) {
+			InvokeIfNeeded(() => {
+
+				var tab = GetTabByBrowser(browser);
+				if (tab != null && tab.Tab != null) {
+					var bitmap = new Bitmap(new MemoryStream(iconData));
+					tab.FavIcon = bitmap;
+					tab.Tab.Image = bitmap;
+				}
+
+			});
+		}
+
+		private void Browser_URLChanged(object sender, AddressChangedEventArgs e) {
+			InvokeIfNeeded(() => {
+				// if current tab
+				if (sender == CurBrowser) {
+
+					if (!WinFormsUtils.IsFocussed(TxtURL)) {
+						SetFormURL(e.Address);
+					}
+
+					EnableBackButton(CurBrowser.CanGoBack);
+					EnableForwardButton(CurBrowser.CanGoForward);
+
+					SetTabTitle((ChromiumWebBrowser)sender, "Loading...");
+
+					BtnRefresh.Visible = false;
+					BtnStop.Visible = true;
+
+					CurTab.DateCreated = DateTime.Now;
+
+				}
+
+			});
+		}
+
+		private void Browser_LoadError(object sender, LoadErrorEventArgs e) {
+			// ("Load Error:" + e.ErrorCode + ";" + e.ErrorText);
+		}
+
+		private void Browser_TitleChanged(object sender, TitleChangedEventArgs e) {
+			InvokeIfNeeded(() => {
+
+				ChromiumWebBrowser browser = (ChromiumWebBrowser)sender;
+
+				SetTabTitle(browser, e.Title);
+
+			});
+		}
+
+		private void Browser_LoadingStateChanged(object sender, LoadingStateChangedEventArgs e) {
+
+			// if its the current tab, update browser UI based on its state
+			if (sender == CurBrowser) {
+
+				EnableBackButton(e.CanGoBack);
+				EnableForwardButton(e.CanGoForward);
+
+				if (e.IsLoading) {
+
+					// set title
+					//SetTabTitle();
+
+				}
+				else {
+
+					// after loaded / stopped
+					InvokeIfNeeded(() => {
+						BtnRefresh.Visible = true;
+						BtnStop.Visible = false;
+					});
+				}
+			}
+
+
+		}
+
+		private void Browser_StatusMessage(object sender, StatusMessageEventArgs e) { }
+
+
+		#endregion
+
 		#region Web Browser Commands
 
 		public void AddBlankWindow() {
@@ -701,7 +696,7 @@ namespace SharpBrowser {
 		public void CloseOtherTabs() {
 			List<BrowserTabItem> listToClose = new List<BrowserTabItem>();
 			foreach (BrowserTabItem tab in TabPages.Items) {
-				if (tab != TabPages.SelectedItem) listToClose.Add(tab);
+				if (tab != TabPages.SelectedTab) listToClose.Add(tab);
 			}
 			foreach (BrowserTabItem tab in listToClose) {
 				TabPages.RemoveTab(tab);
@@ -710,6 +705,60 @@ namespace SharpBrowser {
 
 		public void RefreshActiveTab() => CurBrowser.Load(CurBrowser.Address);
 
+		public void CloseActiveTab() {
+
+			// if any tab is open
+			var curTab = TabPages.SelectedTab;
+			if (CurTab != null) {
+
+				// if this is the last tab, open a new tab also
+				if (TabPages.Items.Count <= 1) {
+					OnLastTabClosed();
+				}
+
+				// remove tab and save its index
+				int index = TabPages.Items.IndexOf(curTab);
+				TabPages.RemoveTab(curTab);
+
+				// keep tab at same index focussed
+				if (TabPages.Items.Count > 1) {
+					if ((TabPages.Items.Count - 1) > index) {
+						TabPages.SelectedTab = TabPages.Items[index];
+					}
+				}
+			}
+		}
+		public void NextTab() {
+			if (IsOnLastTab()) {
+				TabPages.SelectedIndex = 0;
+			}
+			else {
+				TabPages.SelectedIndex++;
+			}
+		}
+		public void PrevTab() {
+			if (IsOnFirstTab()) {
+				TabPages.SelectedIndex = LastIndex;
+			}
+			else {
+				TabPages.SelectedIndex--;
+			}
+		}
+		public void Print() {
+			CurBrowser.Print();
+		}
+		public void PrintToPDF() {
+			ContextMenuHandler.SaveAsPDF(CurBrowser.GetBrowser());
+		}
+
+
+		#endregion
+
+		#region Fullscreen
+
+		private FormWindowState oldWindowState;
+		private FormBorderStyle oldBorderStyle;
+		private bool isFullScreen = false;
 		public void ToggleFullscreen() {
 
 			if (!isFullScreen) {
@@ -725,53 +774,6 @@ namespace SharpBrowser {
 				isFullScreen = false;
 			}
 		}
-
-		public void CloseActiveTab() {
-
-			// if any tab is open
-			var curTab = TabPages.SelectedItem;
-			if (CurTab != null) {
-
-				// if this is the last tab, open a new tab also
-				if (TabPages.Items.Count <= 1) {
-					OnLastTabClosed();
-				}
-
-				// remove tab and save its index
-				int index = TabPages.Items.IndexOf(curTab);
-				TabPages.RemoveTab(curTab);
-
-				// keep tab at same index focussed
-				if (TabPages.Items.Count > 1) {
-					if ((TabPages.Items.Count - 1) > index) {
-						TabPages.SelectedItem = TabPages.Items[index];
-					}
-				}
-			}
-		}
-		public void NextTab() {
-			if (IsOnLastTab()) {
-				CurIndex = 0;
-			}
-			else {
-				CurIndex++;
-			}
-		}
-		public void PrevTab() {
-			if (IsOnFirstTab()) {
-				CurIndex = LastIndex;
-			}
-			else {
-				CurIndex--;
-			}
-		}
-		public void Print() {
-			CurBrowser.Print();
-		}
-		public void PrintToPDF() {
-			ContextMenuHandler.SaveAsPDF(CurBrowser.GetBrowser());
-		}
-
 
 		#endregion
 

@@ -1,6 +1,7 @@
 ﻿using CefSharp.WinForms;
 using SharpBrowser.Controls.BrowserTabStrip;
 using System;
+using System.Drawing;
 
 namespace SharpBrowser.Model {
 	/// <summary>
@@ -20,6 +21,8 @@ namespace SharpBrowser.Model {
 
 		public BrowserTabItem Tab;
 		public ChromiumWebBrowser Browser;
+
+		public Bitmap FavIcon;
 
 	}
 }

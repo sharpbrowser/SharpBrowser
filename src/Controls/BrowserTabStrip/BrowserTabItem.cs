@@ -10,7 +10,7 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 	public class BrowserTabItem : Panel {
 		private RectangleF stripRect = Rectangle.Empty;
 
-		private Image image;
+		private Bitmap image;
 
 		private bool canClose = true;
 
@@ -70,12 +70,15 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 		}
 
 		[DefaultValue(null)]
-		public Image Image {
+		public Bitmap Image {
 			get {
 				return image;
 			}
 			set {
-				image = value;
+				if (image != value) {
+					image = value;
+					OnChanged();
+				}
 			}
 		}
 
@@ -144,9 +147,11 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 
 		protected override void Dispose(bool disposing) {
 			base.Dispose(disposing);
-			if (disposing && image != null) {
+
+			// don't dispose favicons as they are shared across multiple tabs
+			/*if (disposing && image != null) {
 				image.Dispose();
-			}
+			}*/
 		}
 
 		public bool ShouldSerializeIsDrawn() {

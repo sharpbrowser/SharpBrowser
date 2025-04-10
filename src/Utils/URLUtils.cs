@@ -1,4 +1,5 @@
-﻿using SharpBrowser.Utils;
+﻿using SharpBrowser.Config;
+using SharpBrowser.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,25 @@ using System.Threading.Tasks;
 
 namespace SharpBrowser {
 	internal static class URLUtils {
+
+		public static string CleanURL(string url) {
+			if (url.BeginsWith("about:")) {
+				return "";
+			}
+			url = url.RemovePrefix("http://");
+			url = url.RemovePrefix("https://");
+			url = url.RemovePrefix("file://");
+			url = url.RemovePrefix("/");
+			return url.DecodeURL();
+		}
+		public static bool IsBlank(string url) {
+			if (url == null) return true;
+			return (url == "" || url == "about:blank");
+		}
+		public static bool IsBlankOrSystem(string url) {
+			if (url == null) return true;
+			return (url == "" || url.BeginsWith("about:") || url.BeginsWith("chrome:") || url.BeginsWith(BrowserConfig.InternalScheme + ":"));
+		}
 
 		public static string PathToURL(this string filePath, string removeBaseDir = null) {
 
