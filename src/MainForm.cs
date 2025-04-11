@@ -86,6 +86,43 @@ namespace SharpBrowser {
 
 		#endregion
 
+		#region Browser UI
+
+
+		private void SetFormTitle(string tabName) {
+
+			if (tabName.CheckIfValid()) {
+
+				this.Text = tabName + " - " + BrowserConfig.Branding;
+				currentTitle = tabName;
+
+			}
+			else {
+
+				this.Text = BrowserConfig.Branding;
+				currentTitle = "New Tab";
+			}
+
+		}
+
+		private void SetFormURL(string URL) {
+
+			currentFullURL = URL;
+			currentCleanURL = URLUtils.CleanURL(URL);
+
+			TxtURL.Text = currentCleanURL;
+
+			if (CurTab != null) {
+				CurTab.CurURL = currentFullURL;
+			}
+
+			CloseSearch();
+
+		}
+
+
+		#endregion
+
 		#region Web Browser & Tabs
 
 		private string currentFullURL;
@@ -178,37 +215,6 @@ namespace SharpBrowser {
 			// always enable back btn
 			EnableBackButton(true);
 			EnableForwardButton(false);
-
-		}
-
-		private void SetFormTitle(string tabName) {
-
-			if (tabName.CheckIfValid()) {
-
-				this.Text = tabName + " - " + BrowserConfig.Branding;
-				currentTitle = tabName;
-
-			}
-			else {
-
-				this.Text = BrowserConfig.Branding;
-				currentTitle = "New Tab";
-			}
-
-		}
-
-		private void SetFormURL(string URL) {
-
-			currentFullURL = URL;
-			currentCleanURL = URLUtils.CleanURL(URL);
-
-			TxtURL.Text = currentCleanURL;
-
-			if (CurTab != null) {
-				CurTab.CurURL = currentFullURL;
-			}
-
-			CloseSearch();
 
 		}
 
