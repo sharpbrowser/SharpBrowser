@@ -19,7 +19,7 @@ namespace SharpBrowser.Model {
 
 		public DateTime DateCreated;
 
-		public BrowserTabItem Tab;
+		public BrowserTabPage Tab;
 		public ChromiumWebBrowser Browser;
 
 		public Bitmap FavIcon;

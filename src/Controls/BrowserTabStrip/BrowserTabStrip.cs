@@ -1,19 +1,17 @@
 using SharpBrowser.Config;
 using SharpBrowser.Controls.BrowserTabStrip.Buttons;
-using SharpBrowser.Model;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Windows.Controls.Primitives;
 using System.Windows.Forms;
-using static System.Windows.Forms.DataFormats;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace SharpBrowser.Controls.BrowserTabStrip {
 
+	/// <summary>
+	/// This is the tab strip that displays tab buttons that are clickable, as well as tab pages.
+	/// </summary>
 	[DefaultEvent("TabStripItemSelectionChanged")]
 	[DefaultProperty("Items")]
 	[ToolboxItem(true)]
@@ -21,7 +19,7 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 
 		public int TabButton_Height => BrowserTabStyle.TabHeight;
 
-		private BrowserTabItem selectedItem;
+		private BrowserTabPage selectedItem;
 		private ContextMenuStrip menu;
 		private TabCloseButton closeButton;
 		private TabNewButton newTabButton;
@@ -35,7 +33,7 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 
 		[RefreshProperties(RefreshProperties.All)]
 		[DefaultValue(null)]
-		public BrowserTabItem SelectedTab {
+		public BrowserTabPage SelectedTab {
 			get {
 				return selectedItem;
 			}
@@ -57,7 +55,7 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 					selectedItem = value;
 				}
 
-				foreach (BrowserTabItem item in Items) {
+				foreach (BrowserTabPage item in Items) {
 					if (item == selectedItem) {
 						SelectItem(item);
 						//item.Dock = DockStyle.Fill;
@@ -142,9 +140,9 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 			return HitTestResult.None;
 		}
 
-		public void AddTab(BrowserTabItem tabItem) => AddTab(tabItem, autoSelect: false);
+		public void AddTab(BrowserTabPage tabItem) => AddTab(tabItem, autoSelect: false);
 
-		public void AddTab(BrowserTabItem tabItem, bool autoSelect) {
+		public void AddTab(BrowserTabPage tabItem, bool autoSelect) {
 
 			// add this tab to my collection
 			tabItem.Dock = DockStyle.Fill;
@@ -157,7 +155,7 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 			}
 		}
 
-		public void RemoveTab(BrowserTabItem tabItem) {
+		public void RemoveTab(BrowserTabPage tabItem) {
 
 			// if tab is found in my collection
 			int num = Items.IndexOf(tabItem);
@@ -179,11 +177,11 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 			}
 		}
 
-		public BrowserTabItem GetTabItemByPoint(Point pt) {
-			BrowserTabItem result = null;
+		public BrowserTabPage GetTabItemByPoint(Point pt) {
+			BrowserTabPage result = null;
 			bool flag = false;
 			for (int i = 0; i < Items.Count; i++) {
-				BrowserTabItem fATabStripItem = Items[i];
+				BrowserTabPage fATabStripItem = Items[i];
 				if (fATabStripItem.StripRect.Contains(pt) && fATabStripItem.Visible && fATabStripItem.IsDrawn) {
 					result = fATabStripItem;
 					flag = true;
@@ -203,13 +201,13 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 			}
 		}
 
-		internal void SelectItem(BrowserTabItem tabItem) {
+		internal void SelectItem(BrowserTabPage tabItem) {
 			//tabItem.Dock = DockStyle.Fill;
 			tabItem.Visible = true;
 			tabItem.Selected = true;
 		}
 
-		internal void UnSelectItem(BrowserTabItem tabItem) => tabItem.Selected = false;
+		internal void UnSelectItem(BrowserTabPage tabItem) => tabItem.Selected = false;
 
 		protected internal virtual void OnTabStripItemClosing(TabStripItemClosingEventArgs e) => this.TabStripItemClosing?.Invoke(e);
 
@@ -237,7 +235,7 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 			menu.RightToLeft = RightToLeft;
 			menu.Items.Clear();
 			for (int i = 0; i < Items.Count; i++) {
-				BrowserTabItem fATabStripItem = Items[i];
+				BrowserTabPage fATabStripItem = Items[i];
 				if (fATabStripItem.Visible) {
 					ToolStripMenuItem toolStripMenuItem = new ToolStripMenuItem(fATabStripItem.Title);
 					toolStripMenuItem.Tag = fATabStripItem;
@@ -261,7 +259,7 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 			if (hitTestResult == HitTestResult.TabItem) {
 
 				// select the tab if clicked
-				BrowserTabItem tabItemByPoint = GetTabItemByPoint(e.Location);
+				BrowserTabPage tabItemByPoint = GetTabItemByPoint(e.Location);
 				if (tabItemByPoint != null) {
 					SelectedTab = tabItemByPoint;
 					Invalidate();
@@ -324,7 +322,7 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 		}
 
 		private void OnMenuItemClicked(object sender, ToolStripItemClickedEventArgs e) {
-			BrowserTabItem fATabStripItem2 = (SelectedTab = (BrowserTabItem)e.ClickedItem.Tag);
+			BrowserTabPage fATabStripItem2 = (SelectedTab = (BrowserTabPage)e.ClickedItem.Tag);
 		}
 
 		private void OnMenuVisibleChanged(object sender, EventArgs e) {
@@ -350,7 +348,7 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 			//--------------------------------------------------------
 			// DRAW ALL TABS
 			for (int i = 0; i < Items.Count; i++) {
-				BrowserTabItem fATabStripItem = Items[i];
+				BrowserTabPage fATabStripItem = Items[i];
 				if (fATabStripItem.Visible || base.DesignMode) {
 					OnCalcTabPage(e.Graphics, fATabStripItem);
 					fATabStripItem.IsDrawn = false;
@@ -397,7 +395,7 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 		/// </summary>
 		int atRight_ReservedWidth = 250;
 		private int TabStartX = BrowserTabStyle.TabLeftPadding;
-		private void OnCalcTabPage(Graphics g, BrowserTabItem currentItem) {
+		private void OnCalcTabPage(Graphics g, BrowserTabPage currentItem) {
 			//_ = Font;
 			int calcWidth = 0;
 			calcWidth = (base.Width - atRight_ReservedWidth - (AddButtonWidth + 20)) / Math.Max(1, (items.Count - 1));
@@ -417,7 +415,7 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 		/// <summary>
 		/// Draws The Tab Header button
 		/// </summary>
-		private void OnDrawTabButton(Graphics g, BrowserTabItem tab) {
+		private void OnDrawTabButton(Graphics g, BrowserTabPage tab) {
 			Items.IndexOf(tab);
 			Font font = Font;
 
@@ -540,7 +538,7 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 		}
 
 		private void OnCollectionChanged(object sender, CollectionChangeEventArgs e) {
-			BrowserTabItem fATabStripItem = (BrowserTabItem)e.Element;
+			BrowserTabPage fATabStripItem = (BrowserTabPage)e.Element;
 			if (e.Action == CollectionChangeAction.Add) {
 				Controls.Add(fATabStripItem);
 				OnTabStripItemChanged(new TabStripItemChangedEventArgs(fATabStripItem, BrowserTabStripItemChangeTypes.Added));
@@ -566,7 +564,7 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 				items.CollectionChanged -= OnCollectionChanged;
 				menu.ItemClicked -= OnMenuItemClicked;
 				menu.VisibleChanged -= OnMenuVisibleChanged;
-				foreach (BrowserTabItem item in items) {
+				foreach (BrowserTabPage item in items) {
 					if (item != null && !item.IsDisposed) {
 						item.Dispose();
 					}
@@ -581,10 +579,10 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 			base.Dispose(disposing);
 		}
 
-		public List<BrowserTabItem> Tabs {
+		public List<BrowserTabPage> Tabs {
 			get {
-				var tabs = new List<BrowserTabItem>();
-				foreach (BrowserTabItem item in items) {
+				var tabs = new List<BrowserTabPage>();
+				foreach (BrowserTabPage item in items) {
 					tabs.Add(item);
 				}
 				return tabs;

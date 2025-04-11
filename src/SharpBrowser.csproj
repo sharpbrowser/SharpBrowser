@@ -24,7 +24,7 @@
     <Compile Update="Controls\BrowserTabStrip\BrowserTabStrip.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Update="Controls\BrowserTabStrip\BrowserTabItem.cs">
+    <Compile Update="Controls\BrowserTabStrip\BrowserTabPage.cs">
       <SubType>Component</SubType>
     </Compile>
   </ItemGroup>

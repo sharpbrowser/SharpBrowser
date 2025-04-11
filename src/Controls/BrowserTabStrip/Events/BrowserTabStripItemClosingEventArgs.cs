@@ -4,9 +4,9 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 	public class TabStripItemClosingEventArgs : EventArgs {
 		private bool _cancel;
 
-		private BrowserTabItem _item;
+		private BrowserTabPage _item;
 
-		public BrowserTabItem Item {
+		public BrowserTabPage Item {
 			get {
 				return _item;
 			}
@@ -24,7 +24,7 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 			}
 		}
 
-		public TabStripItemClosingEventArgs(BrowserTabItem item) {
+		public TabStripItemClosingEventArgs(BrowserTabPage item) {
 			_item = item;
 		}
 	}

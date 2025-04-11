@@ -15,7 +15,7 @@ namespace SharpBrowser.Controls.BrowserTabStrip.Buttons {
 			Renderer = renderer;
 		}
 
-		public void CalcBounds(BrowserTabItem tab, bool displayInButton) {
+		public void CalcBounds(BrowserTabPage tab, bool displayInButton) {
 			var tabrect = tab.StripRect;
 			var x = displayInButton ? (int)tab.StripRect.Right - BrowserTabStyle.TabCloseButton_XOffset : (int)tab.StripRect.Right + 10;
 			var y = (int)tab.StripRect.Top + BrowserTabStyle.TabButton_Y;

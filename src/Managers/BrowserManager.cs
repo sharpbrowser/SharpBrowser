@@ -19,62 +19,68 @@ namespace SharpBrowser.Managers {
 
 		public static void Init(MainForm form) {
 
-			CefSettings settings = new CefSettings();
+			if (Cef.IsInitialized != true) {
+				CefSettings settings = new CefSettings();
 
-			settings.RegisterScheme(new CefCustomScheme {
-				SchemeName = BrowserConfig.InternalScheme,
-				SchemeHandlerFactory = new SchemeHandlerFactory()
-			});
+				settings.RegisterScheme(new CefCustomScheme {
+					SchemeName = BrowserConfig.InternalScheme,
+					SchemeHandlerFactory = new SchemeHandlerFactory()
+				});
 
-			//------------------------------------------------------------
-			// FIX: this prevents a crash if 2 CefSharp apps are opened at once
+				//------------------------------------------------------------
+				// FIX: this prevents a crash if 2 CefSharp apps are opened at once
 
-			// init cache dirs in AppData Roaming
-			var rcPath = Path.Combine(ConfigManager.AppDataPath, "CefCache");
-			// fix: CachePath MUST be a child of the RootCachePath as of CEF 128+
-			var cPath = Path.Combine(rcPath, "_TempCache");
+				// init cache dirs in AppData Roaming
+				var rcPath = Path.Combine(ConfigManager.AppDataPath, "CefCache");
+				// fix: CachePath MUST be a child of the RootCachePath as of CEF 128+
+				var cPath = Path.Combine(rcPath, "_TempCache");
 
-			// create cache dirs
-			rcPath.EnsureFolderExists();
-			cPath.EnsureFolderExists();
+				// create cache dirs
+				rcPath.EnsureFolderExists();
+				cPath.EnsureFolderExists();
 
-			settings.RootCachePath = rcPath;
-			settings.CachePath = cPath;
-			//------------------------------------------------------------
+				settings.RootCachePath = rcPath;
+				settings.CachePath = cPath;
+				//------------------------------------------------------------
 
-			// add user agent settings
-			settings.UserAgent = BrowserConfig.UserAgent;
-			settings.AcceptLanguageList = BrowserConfig.AcceptLanguage;
-			settings.IgnoreCertificateErrors = true;
+				// add user agent settings
+				settings.UserAgent = BrowserConfig.UserAgent;
+				settings.AcceptLanguageList = BrowserConfig.AcceptLanguage;
+				settings.IgnoreCertificateErrors = true;
 
-			// needed for loading local images
-			if (BrowserConfig.LocalFiles) {
-				settings.CefCommandLineArgs.Add("disable-web-security", "1");
-				settings.CefCommandLineArgs.Add("allow-file-access-from-files", "1");
+				// needed for loading local images
+				if (BrowserConfig.LocalFiles) {
+					settings.CefCommandLineArgs.Add("disable-web-security", "1");
+					settings.CefCommandLineArgs.Add("allow-file-access-from-files", "1");
+				}
+
+				// enable webRTC streams
+				if (BrowserConfig.WebRTC) {
+					settings.CefCommandLineArgs.Add("enable-media-stream", "1");
+				}
+
+				// enable proxy if wanted
+				if (BrowserConfig.Proxy) {
+					CefSharpSettings.Proxy = new ProxyOptions(BrowserConfig.ProxyIP,
+						BrowserConfig.ProxyPort.ToString(), BrowserConfig.ProxyUsername,
+						BrowserConfig.ProxyPassword, BrowserConfig.ProxyBypassList);
+				}
+
+				Cef.Initialize(settings);
+
 			}
 
-			// enable webRTC streams
-			if (BrowserConfig.WebRTC) {
-				settings.CefCommandLineArgs.Add("enable-media-stream", "1");
+			if (dHandler == null) {
+
+				dHandler = new DownloadHandler(form);
+				lHandler = new LifeSpanHandler(form);
+				mHandler = new ContextMenuHandler(form);
+				kHandler = new KeyboardHandler(form);
+				rHandler = new RequestHandler(form);
+				pHandler = new PermissionHandler();
+				_HostHandler = new HostHandler(form);
+
 			}
-
-			// enable proxy if wanted
-			if (BrowserConfig.Proxy) {
-				CefSharpSettings.Proxy = new ProxyOptions(BrowserConfig.ProxyIP,
-					BrowserConfig.ProxyPort.ToString(), BrowserConfig.ProxyUsername,
-					BrowserConfig.ProxyPassword, BrowserConfig.ProxyBypassList);
-			}
-
-			Cef.Initialize(settings);
-
-			dHandler = new DownloadHandler(form);
-			lHandler = new LifeSpanHandler(form);
-			mHandler = new ContextMenuHandler(form);
-			kHandler = new KeyboardHandler(form);
-			rHandler = new RequestHandler(form);
-			pHandler = new PermissionHandler();
-			_HostHandler = new HostHandler(form);
-
 		}
 
 		/// <summary>

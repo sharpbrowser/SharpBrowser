@@ -43,6 +43,7 @@ namespace SharpBrowser {
 			ConfigManager.Init(BrowserConfig.AppID);
 			DownloadManager.Init();
 			BrowserManager.Init(this);
+			InitFavIcons();
 
 			// init the browser UI
 			InitBrowser();
@@ -58,35 +59,6 @@ namespace SharpBrowser {
 
 		}
 
-		private void InitToolbar() {
-			TxtURL.MakeTextbox_CustomBorderColor();
-			PanelToolbar.Dock = DockStyle.None;
-			PanelToolbar.BringToFront();
-			PanelToolbar.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-			PanelToolbar.Location = new Point(0, TabPages.TabButton_Height + 1); //for different dpi, need stable way to get it.				 
-			PanelToolbar.Width = this.Width;
-			PanelToolbar.Width = pnlToolbarOverlay.Width;
-
-			if (Debugger.IsAttached)
-				pnlToolbarOverlay.BackColor = Color.Cyan;
-		}
-
-		private void InitDisabledIcons() {
-			BtnBack.EnabledChanged += (s1, e1) => handleFAButton_DisabledColors(s1);
-			BtnForward.EnabledChanged += (s1, e1) => handleFAButton_DisabledColors(s1);
-			BtnStop.EnabledChanged += (s1, e1) => handleFAButton_DisabledColors(s1);
-			BtnRefresh.EnabledChanged += (s1, e1) => handleFAButton_DisabledColors(s1);
-			BtnDownloads.EnabledChanged += (s1, e1) => handleFAButton_DisabledColors(s1);
-			BtnHome.EnabledChanged += (s1, e1) => handleFAButton_DisabledColors(s1);
-			BtnMenu.EnabledChanged += (s1, e1) => handleFAButton_DisabledColors(s1);
-		}
-		private async void handleFAButton_DisabledColors(object senderBtn) {
-			var faBtn = senderBtn as FontAwesome.Sharp.IconButton;
-			//faBtn.IconColor = faBtn.Enabled ? Color.Black : PanelToolbar.BackColor.ChangeColorBrightness(0);
-			faBtn.IconColor = faBtn.Enabled ? Color.Black : Color.Black.ChangeColorBrightness(0.8);
-
-
-		}
 
 
 		#region Tooltips & Hotkeys
@@ -147,6 +119,11 @@ namespace SharpBrowser {
 
 			browser.BrowserSettings = config;
 
+		}
+
+		private void InitFavIcons() {
+			FavIconManager.OnLoaded = Manager_OnFavIconLoaded;
+			FavIconManager.Init();
 		}
 
 		private void LoadURL(string url) {
@@ -240,7 +217,7 @@ namespace SharpBrowser {
 
 				// check if already exists
 				if (skipIfUrlAlreadyOpen) {
-					foreach (BrowserTabItem tab in TabPages.Items) {
+					foreach (BrowserTabPage tab in TabPages.Items) {
 						BrowserTab tab2 = (BrowserTab)tab.Tag;
 						if (tab2 != null && (tab2.CurURL == url)) {
 							TabPages.SelectedTab = tab;
@@ -250,7 +227,7 @@ namespace SharpBrowser {
 				}
 
 				// new tab button and select it
-				BrowserTabItem tabStrip = new BrowserTabItem();
+				BrowserTabPage tabStrip = new BrowserTabPage();
 				tabStrip.Title = "New Tab";
 				TabPages.AddTab(tabStrip, focusNewTab);
 
@@ -268,7 +245,7 @@ namespace SharpBrowser {
 			});
 		}
 
-		private BrowserTab AddNewBrowser(BrowserTabItem tabStrip, String url) {
+		private BrowserTab AddNewBrowser(BrowserTabPage tabStrip, String url) {
 			if (url == "") url = BrowserConfig.NewTabURL;
 			ChromiumWebBrowser browser = new ChromiumWebBrowser(url);
 
@@ -318,7 +295,7 @@ namespace SharpBrowser {
 		}
 
 		public BrowserTab GetTabByBrowser(IWebBrowser browser) {
-			foreach (BrowserTabItem tab2 in TabPages.Items) {
+			foreach (BrowserTabPage tab2 in TabPages.Items) {
 				BrowserTab tab = (BrowserTab)(tab2.Tag);
 				if (tab != null && tab.Browser == browser) {
 					return tab;
@@ -384,12 +361,17 @@ namespace SharpBrowser {
 		}
 		public List<BrowserTab> GetAllTabs() {
 			List<BrowserTab> tabs = new List<BrowserTab>();
-			foreach (BrowserTabItem tabPage in TabPages.Items) {
+			foreach (BrowserTabPage tabPage in TabPages.Items) {
 				if (tabPage.Tag != null) {
 					tabs.Add((BrowserTab)tabPage.Tag);
 				}
 			}
 			return tabs;
+		}
+
+		public bool IsFavIconLoaded(ChromiumWebBrowser browser) {
+			var tab = GetTabByBrowser(browser);
+			return (tab != null && tab.FavIcon != null);
 		}
 
 		private void SetTabTitle(ChromiumWebBrowser browser, string text) {
@@ -403,7 +385,7 @@ namespace SharpBrowser {
 			browser.Tag = text;
 
 			// get tab of given browser
-			BrowserTabItem tabStrip = (BrowserTabItem)browser.Parent;
+			BrowserTabPage tabStrip = (BrowserTabPage)browser.Parent;
 			if (tabStrip != null) //fix error, when fast hit on close button 
 				tabStrip.Title = text;
 
@@ -492,44 +474,6 @@ namespace SharpBrowser {
 
 		private void bStop_Click(object sender, EventArgs e) => StopActiveTab();
 
-		private void TxtURL_KeyDown(object sender, KeyEventArgs e) {
-
-			// if ENTER or CTRL+ENTER pressed
-			if (e.IsHotkey(Keys.Enter) || e.IsHotkey(Keys.Enter, true)) {
-				LoadURL(TxtURL.Text);
-
-				// im handling this
-				e.Handled = true;
-				e.SuppressKeyPress = true;
-
-				// defocus from url textbox
-				this.Focus();
-			}
-
-			// if full URL copied
-			if (e.IsHotkey(Keys.C, true) && WinFormsUtils.IsFullySelected(TxtURL)) {
-
-				// copy the real URL, not the pretty one
-				Clipboard.SetText(CurBrowser.Address, TextDataFormat.UnicodeText);
-
-				// im handling this
-				e.Handled = true;
-				e.SuppressKeyPress = true;
-			}
-		}
-
-		private bool TxtURL_JustEntered = false;
-		private void TxtURL_Enter(object sender, EventArgs e) {
-			TxtURL.SelectAll();
-			TxtURL_JustEntered = true;
-		}
-		private void TxtURL_Click(object sender, EventArgs e) {
-			if (TxtURL_JustEntered) {
-				TxtURL.SelectAll();
-			}
-			TxtURL_JustEntered = false;
-		}
-
 
 		#endregion
 
@@ -567,12 +511,11 @@ namespace SharpBrowser {
 		private void Browser_FrameLoadEnd(object sender, FrameLoadEndEventArgs e) {
 
 			// for any tab, even background tabs, download the favicon
-			FavIconManager.OnLoaded = Manager_OnFavIconLoaded;
 			if (e.Frame.IsMain) {
 
 				if (!URLUtils.IsBlankOrSystem(e.Url)) {
 
-					FavIconManager.OnFrameLoadEnd(sender as ChromiumWebBrowser, e);
+					FavIconManager.LoadFavicon(sender as ChromiumWebBrowser, false);
 				}
 			}
 		}
@@ -630,6 +573,8 @@ namespace SharpBrowser {
 
 		private void Browser_LoadingStateChanged(object sender, LoadingStateChangedEventArgs e) {
 
+			var browser = sender as ChromiumWebBrowser;
+
 			// if its the current tab, update browser UI based on its state
 			if (sender == CurBrowser) {
 
@@ -652,6 +597,12 @@ namespace SharpBrowser {
 				}
 			}
 
+			// for any tab, check favicons
+			if (!URLUtils.IsBlankOrSystem(browser.Address)) {
+				if (!IsFavIconLoaded(browser)) {
+					FavIconManager.LoadFavicon(sender as ChromiumWebBrowser, true);
+				}
+			}
 
 		}
 
@@ -664,7 +615,9 @@ namespace SharpBrowser {
 
 		public void AddBlankWindow() {
 
-			// open a new instance of the browser
+			// DISABLED BECAUSE 2 CEFSHARP INSTANCES CAUSES A CRASH
+
+			/*// open a new instance of the browser
 
 			ProcessStartInfo info = new ProcessStartInfo(Application.ExecutablePath, "");
 			//info.WorkingDirectory = workingDir ?? exePath.GetPathDir(true);
@@ -675,7 +628,7 @@ namespace SharpBrowser {
 			info.RedirectStandardOutput = true;
 			info.RedirectStandardInput = true;
 
-			Process.Start(info);
+			Process.Start(info);*/
 		}
 		public void AddBlankTab() {
 			AddNewBrowserTab(BrowserConfig.NewTabURL, true, null, false, true);
@@ -694,11 +647,11 @@ namespace SharpBrowser {
 			CurBrowser.ShowDevTools();
 		}
 		public void CloseOtherTabs() {
-			List<BrowserTabItem> listToClose = new List<BrowserTabItem>();
-			foreach (BrowserTabItem tab in TabPages.Items) {
+			List<BrowserTabPage> listToClose = new List<BrowserTabPage>();
+			foreach (BrowserTabPage tab in TabPages.Items) {
 				if (tab != TabPages.SelectedTab) listToClose.Add(tab);
 			}
-			foreach (BrowserTabItem tab in listToClose) {
+			foreach (BrowserTabPage tab in listToClose) {
 				TabPages.RemoveTab(tab);
 			}
 		}
@@ -807,6 +760,81 @@ namespace SharpBrowser {
 		/// open a new tab with the downloads URL
 		/// </summary>
 		private void btnDownloads_Click(object sender, EventArgs e) => OpenDownloads();
+
+		#endregion
+
+		#region Toolbar
+
+		private void InitToolbar() {
+			TxtURL.MakeTextbox_CustomBorderColor();
+			PanelToolbar.Dock = DockStyle.None;
+			PanelToolbar.BringToFront();
+			PanelToolbar.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+			PanelToolbar.Location = new Point(0, TabPages.TabButton_Height + 1); //for different dpi, need stable way to get it.				 
+			PanelToolbar.Width = this.Width;
+			PanelToolbar.Width = pnlToolbarOverlay.Width;
+
+			if (Debugger.IsAttached)
+				pnlToolbarOverlay.BackColor = Color.Cyan;
+		}
+
+		private void InitDisabledIcons() {
+			BtnBack.EnabledChanged += (s1, e1) => SetIconByState(s1);
+			BtnForward.EnabledChanged += (s1, e1) => SetIconByState(s1);
+			BtnStop.EnabledChanged += (s1, e1) => SetIconByState(s1);
+			BtnRefresh.EnabledChanged += (s1, e1) => SetIconByState(s1);
+			BtnDownloads.EnabledChanged += (s1, e1) => SetIconByState(s1);
+			BtnHome.EnabledChanged += (s1, e1) => SetIconByState(s1);
+			BtnMenu.EnabledChanged += (s1, e1) => SetIconByState(s1);
+		}
+		private async void SetIconByState(object senderBtn) {
+			var faBtn = senderBtn as FontAwesome.Sharp.IconButton;
+			//faBtn.IconColor = faBtn.Enabled ? Color.Black : PanelToolbar.BackColor.ChangeColorBrightness(0);
+			faBtn.IconColor = faBtn.Enabled ? Color.Black : Color.Black.ChangeColorBrightness(0.8);
+		}
+
+		#endregion
+
+		#region Address Bar
+
+		private void TxtURL_KeyDown(object sender, KeyEventArgs e) {
+
+			// if ENTER or CTRL+ENTER pressed
+			if (e.IsHotkey(Keys.Enter) || e.IsHotkey(Keys.Enter, true)) {
+				LoadURL(TxtURL.Text);
+
+				// im handling this
+				e.Handled = true;
+				e.SuppressKeyPress = true;
+
+				// defocus from url textbox
+				this.Focus();
+			}
+
+			// if full URL copied
+			if (e.IsHotkey(Keys.C, true) && WinFormsUtils.IsFullySelected(TxtURL)) {
+
+				// copy the real URL, not the pretty one
+				Clipboard.SetText(CurBrowser.Address, TextDataFormat.UnicodeText);
+
+				// im handling this
+				e.Handled = true;
+				e.SuppressKeyPress = true;
+			}
+		}
+
+		private bool TxtURL_JustEntered = false;
+		private void TxtURL_Enter(object sender, EventArgs e) {
+			TxtURL.SelectAll();
+			TxtURL_JustEntered = true;
+		}
+		private void TxtURL_Click(object sender, EventArgs e) {
+			if (TxtURL_JustEntered) {
+				TxtURL.SelectAll();
+			}
+			TxtURL_JustEntered = false;
+		}
+
 
 		#endregion
 

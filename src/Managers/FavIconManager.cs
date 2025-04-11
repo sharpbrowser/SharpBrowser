@@ -1,5 +1,6 @@
 ﻿using CefSharp;
 using CefSharp.WinForms;
+using SharpBrowser.Utils;
 using System;
 using System.Collections.Concurrent;
 using System.Drawing;
@@ -9,6 +10,8 @@ using System.Net.Http;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Shapes;
+using Path = System.IO.Path;
 
 namespace SharpBrowser.Managers {
 	/// <summary>
@@ -37,39 +40,66 @@ namespace SharpBrowser.Managers {
 		///  Reuse HttpClient for better performance
 		/// </summary>
 		private static readonly HttpClient httpClient = new HttpClient() { Timeout = TimeSpan.FromSeconds(5) };
+
+		public static void Init() {
+			Path.Combine(ConfigManager.AppDataPath, "FavIcons").EnsureFolderExists();
+		}
 		
-		public static async void OnFrameLoadEnd(ChromiumWebBrowser browser, FrameLoadEndEventArgs e) {
+		private static string GetIconPath(string domain) {
+			var cleanDomain = domain.RemovePrefix("www.").Replace(".", "_");
+			return Path.Combine(ConfigManager.AppDataPath, "FavIcons\\" + cleanDomain + ".ico");
+		}
+		
+		public static async void LoadFavicon(ChromiumWebBrowser browser, bool readCacheOnly) {
 
 			//try {
 			var uri = new Uri(browser.Address);
 			var domain = uri.Host;
 
 			//--------------------------------------------------------------
-			// 1. Check cache first for performance
+			// 1. Check in-mem cache first
 			if (FaviconCache.TryGetValue(domain, out byte[] cachedIcon)) {
-
-				//Console.WriteLine("Favicon loaded from cache.");
 				OnLoaded(browser, cachedIcon);
+				return;
+			}
+
+			//--------------------------------------------------------------
+			// 2. Check on-disk cache second
+
+			var path = GetIconPath(domain);
+			if (File.Exists(path)) {
+				var diskIcon = await File.ReadAllBytesAsync(path);
+				StoreFavicon(domain, diskIcon, false);
+				OnLoaded(browser, diskIcon);
 				return;
 			}
 
 			byte[] iconBitmap = null;
 
+			if (readCacheOnly) return;
+
 			//--------------------------------------------------------------
-			// 2. Try the standard favicon paths first
+			// 3. Try the standard favicon paths first
 			iconBitmap = await TryGetFaviconFromUrl($"{uri.Scheme}://{domain}/favicon.ico");
 			if (iconBitmap == null) {
 				iconBitmap = await TryGetFaviconFromUrl($"{uri.Scheme}://{domain}/favicon.png");
 			}
 			if (iconBitmap != null) {
 				//Console.WriteLine("Favicon loaded from default path.");
-				StoreFavicon(domain, iconBitmap);
+				StoreFavicon(domain, iconBitmap, true);
 				OnLoaded(browser, iconBitmap);
 				return;
 			}
 
 			//--------------------------------------------------------------
-			// 3. Search for the link tag on the page for the icon path
+			// 4. Check in-mem cache again
+			if (FaviconCache.TryGetValue(domain, out byte[] cachedIcon2)) {
+				OnLoaded(browser, cachedIcon2);
+				return;
+			}
+
+			//--------------------------------------------------------------
+			// 5. Search for the link tag on the page for the icon path
 			var result = await browser.EvaluateScriptAsync(FavIconJS);
 			if (result.Success && result.Result is string iconHref && !string.IsNullOrWhiteSpace(iconHref)) {
 				try {
@@ -81,7 +111,7 @@ namespace SharpBrowser.Managers {
 					iconBitmap = await TryGetFaviconFromUrl(iconUri.ToString());
 					if (iconBitmap != null) {
 						//Console.WriteLine("Favicon loaded from <link> tag.");
-						StoreFavicon(domain, iconBitmap);
+						StoreFavicon(domain, iconBitmap, true);
 						OnLoaded(browser, iconBitmap);
 						return;
 					}
@@ -138,9 +168,12 @@ namespace SharpBrowser.Managers {
 		/// <summary>
 		/// Helper method to safely store favicon in cache, using thread-safe code to prevent GDI errors.
 		/// </summary>
-		private static void StoreFavicon(string domain, byte[] icon) {
+		private static void StoreFavicon(string domain, byte[] icon, bool saveToDisk) {
 			if (icon != null) {
 				FaviconCache[domain] = icon;
+				if (saveToDisk) {
+					File.WriteAllBytesAsync(GetIconPath(domain), icon);
+				}
 			}
 		}
 

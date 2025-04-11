@@ -46,7 +46,7 @@ namespace SharpBrowser
 			BtnMenu = new IconButton();
 			BtnHome = new IconButton();
 			TabPages = new SharpBrowser.Controls.BrowserTabStrip.BrowserTabStrip();
-			tabStrip1 = new SharpBrowser.Controls.BrowserTabStrip.BrowserTabItem();
+			tabStrip1 = new SharpBrowser.Controls.BrowserTabStrip.BrowserTabPage();
 			PanelSearch = new Panel();
 			BtnNextSearch = new Button();
 			BtnPrevSearch = new Button();
@@ -54,7 +54,6 @@ namespace SharpBrowser
 			TxtSearch = new TextBox();
 			MainMenu = new ContextMenuStrip(components);
 			MMNewTab = new IconMenuItem();
-			MMNewWindow = new IconMenuItem();
 			MMNextTab = new IconMenuItem();
 			MMPrevTab = new IconMenuItem();
 			toolStripSeparator1 = new ToolStripSeparator();
@@ -282,10 +281,11 @@ namespace SharpBrowser
 			TabPages.ContextMenuStrip = TabMenu;
 			TabPages.Dock = DockStyle.Fill;
 			TabPages.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
-			TabPages.Items.AddRange(new Controls.BrowserTabStrip.BrowserTabItem[] { tabStrip1 });
+			TabPages.Items.AddRange(new Controls.BrowserTabStrip.BrowserTabPage[] { tabStrip1 });
 			TabPages.Location = new System.Drawing.Point(0, 45);
 			TabPages.Name = "TabPages";
 			TabPages.Padding = new Padding(1, 41, 1, 1);
+			TabPages.SelectedIndex = 0;
 			TabPages.SelectedTab = tabStrip1;
 			TabPages.Size = new System.Drawing.Size(916, 427);
 			TabPages.TabIndex = 4;
@@ -381,9 +381,9 @@ namespace SharpBrowser
 			// MainMenu
 			// 
 			MainMenu.ImageScalingSize = new System.Drawing.Size(20, 20);
-			MainMenu.Items.AddRange(new ToolStripItem[] { MMNewTab, MMNewWindow, MMNextTab, MMPrevTab, toolStripSeparator1, MMPrint, MMPrintPDF, MMDownloads, MMFullscreen, MMDevTools, toolStripSeparator2, MMClose, MMCloseOther });
+			MainMenu.Items.AddRange(new ToolStripItem[] { MMNewTab, MMNextTab, MMPrevTab, toolStripSeparator1, MMPrint, MMPrintPDF, MMDownloads, MMFullscreen, MMDevTools, toolStripSeparator2, MMClose, MMCloseOther });
 			MainMenu.Name = "menuStripTab";
-			MainMenu.Size = new System.Drawing.Size(228, 324);
+			MainMenu.Size = new System.Drawing.Size(228, 276);
 			// 
 			// MMNewTab
 			// 
@@ -395,17 +395,6 @@ namespace SharpBrowser
 			MMNewTab.Size = new System.Drawing.Size(227, 26);
 			MMNewTab.Text = "New tab";
 			MMNewTab.Click += MMNewTab_Click;
-			// 
-			// MMNewWindow
-			// 
-			MMNewWindow.IconChar = IconChar.PlusSquare;
-			MMNewWindow.IconColor = System.Drawing.Color.Black;
-			MMNewWindow.IconFont = IconFont.Auto;
-			MMNewWindow.Name = "MMNewWindow";
-			MMNewWindow.ShortcutKeyDisplayString = "Ctrl+N";
-			MMNewWindow.Size = new System.Drawing.Size(227, 26);
-			MMNewWindow.Text = "New window";
-			MMNewWindow.Click += MMNewWindow_Click;
 			// 
 			// MMNextTab
 			// 
@@ -544,7 +533,7 @@ namespace SharpBrowser
 		#endregion
 
 		private SharpBrowser.Controls.BrowserTabStrip.BrowserTabStrip TabPages;
-        private SharpBrowser.Controls.BrowserTabStrip.BrowserTabItem tabStrip1;
+        private SharpBrowser.Controls.BrowserTabStrip.BrowserTabPage tabStrip1;
         private System.Windows.Forms.ContextMenuStrip TabMenu;
 		private FontAwesome.Sharp.IconButton BtnForward;
 		private FontAwesome.Sharp.IconButton BtnBack;
@@ -564,7 +553,6 @@ namespace SharpBrowser
 		private IconMenuItem MMClose;
 		private IconMenuItem MMCloseOther;
 		private IconMenuItem MMNewTab;
-		private IconMenuItem MMNewWindow;
 		private ToolStripSeparator toolStripSeparator1;
 		private IconMenuItem TMReload;
         private IconMenuItem TMClose;

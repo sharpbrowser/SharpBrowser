@@ -4,10 +4,14 @@ using System.Drawing;
 using System.Windows.Forms;
 
 namespace SharpBrowser.Controls.BrowserTabStrip {
+
+	/// <summary>
+	/// This is a panel that holds controls to be displayed in this tab, like the web browser.
+	/// </summary>
 	[ToolboxItem(false)]
 	[DefaultProperty("Title")]
 	[DefaultEvent("Changed")]
-	public class BrowserTabItem : Panel {
+	public class BrowserTabPage : Panel {
 		private RectangleF stripRect = Rectangle.Empty;
 
 		private Bitmap image;
@@ -123,15 +127,15 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 
 		public event EventHandler Changed;
 
-		public BrowserTabItem()
+		public BrowserTabPage()
 			: this(string.Empty, null) {
 		}
 
-		public BrowserTabItem(Control displayControl)
+		public BrowserTabPage(Control displayControl)
 			: this(string.Empty, displayControl) {
 		}
 
-		public BrowserTabItem(string caption, Control displayControl) {
+		public BrowserTabPage(string caption, Control displayControl) {
 			SetStyle(ControlStyles.OptimizedDoubleBuffer, value: true);
 			SetStyle(ControlStyles.ResizeRedraw, value: true);
 			SetStyle(ControlStyles.UserPaint, value: true);
@@ -185,7 +189,7 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 			}
 		}
 
-		public void Assign(BrowserTabItem item) {
+		public void Assign(BrowserTabPage item) {
 			Visible = item.Visible;
 			Text = item.Text;
 			CanClose = item.CanClose;

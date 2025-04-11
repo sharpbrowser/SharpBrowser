@@ -13,7 +13,6 @@ namespace SharpBrowser.Managers {
 			// browser hotkeys
 			KeyboardHandler.AddHotKey(form, form.CloseActiveTab, Keys.W, true);
 			KeyboardHandler.AddHotKey(form, form.CloseActiveTab, Keys.Escape, true);
-			KeyboardHandler.AddHotKey(form, form.AddBlankWindow, Keys.N, true);
 			KeyboardHandler.AddHotKey(form, form.AddBlankTab, Keys.T, true);
 			KeyboardHandler.AddHotKey(form, form.RefreshActiveTab, Keys.F5);
 			KeyboardHandler.AddHotKey(form, form.OpenDeveloperTools, Keys.F12);

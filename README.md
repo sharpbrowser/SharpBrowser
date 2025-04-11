@@ -22,9 +22,9 @@ SharpBrowser is the fastest and most full-featured open source C# web browser th
 
 - [Hotkeys for all features](#hotkeys)
 - Saves open tabs and resumes the browsing session when reopened
-- Saves cookies and cache in the `AppData` folder
+- Saves cookies and web cache in the `AppData` folder
 - Saves application settings in a custom JSON file
-- Saves favicons in a cache for fast reuse
+- Saves favicons in a disk cache for fast reuse
 - Developer tools
 - Web app permission handling
 - Popups open in new tabs
@@ -44,7 +44,6 @@ Hotkeys | Function
 ------------ | -------------
 Ctrl+MouseWheel		| Zoom in/out
 Ctrl+T		| Add a new tab
-Ctrl+N		| Add a new window
 Ctrl+W		| Close active tab
 Ctrl+MiddleClick		| Close Tab
 F5			| Refresh active tab
