@@ -142,7 +142,7 @@ namespace SharpBrowser {
 		/// this is done every time a new tab is openede
 		/// </summary>
 		private void ConfigureBrowser(ChromiumWebBrowser browser) {
-			browser.BrowserSettings = BrowserConfig.GetCefConfig(browser);
+			browser.BrowserSettings = BrowserConfig.GetCefConfig();
 
 		}
 
