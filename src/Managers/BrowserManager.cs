@@ -43,28 +43,7 @@ namespace SharpBrowser.Managers {
 				settings.CachePath = cPath;
 				//------------------------------------------------------------
 
-				// add user agent settings
-				settings.UserAgent = BrowserConfig.UserAgent;
-				settings.AcceptLanguageList = BrowserConfig.AcceptLanguage;
-				settings.IgnoreCertificateErrors = true;
-
-				// needed for loading local images
-				if (BrowserConfig.LocalFiles) {
-					settings.CefCommandLineArgs.Add("disable-web-security", "1");
-					settings.CefCommandLineArgs.Add("allow-file-access-from-files", "1");
-				}
-
-				// enable webRTC streams
-				if (BrowserConfig.WebRTC) {
-					settings.CefCommandLineArgs.Add("enable-media-stream", "1");
-				}
-
-				// enable proxy if wanted
-				if (BrowserConfig.Proxy) {
-					CefSharpSettings.Proxy = new ProxyOptions(BrowserConfig.ProxyIP,
-						BrowserConfig.ProxyPort.ToString(), BrowserConfig.ProxyUsername,
-						BrowserConfig.ProxyPassword, BrowserConfig.ProxyBypassList);
-				}
+				BrowserConfig.GetCefSettings(settings);
 
 				Cef.Initialize(settings);
 

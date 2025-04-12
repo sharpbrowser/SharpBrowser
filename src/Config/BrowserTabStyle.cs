@@ -11,7 +11,7 @@ namespace SharpBrowser.Config {
 		public static int Tab_IconSize = 16;
 
 		public static Color SelectedTabBackColor = Color.FromArgb(247, 247, 247);
-		public static Color NormalTabBackColor = Color.FromArgb(230, 230, 230);
+		public static Color NormalTabBackColor = Color.FromArgb(225, 225, 225);
 
 		public static SolidBrush BackColor = new SolidBrush(NormalTabBackColor);
 

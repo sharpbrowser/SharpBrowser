@@ -142,19 +142,7 @@ namespace SharpBrowser {
 		/// this is done every time a new tab is openede
 		/// </summary>
 		private void ConfigureBrowser(ChromiumWebBrowser browser) {
-
-			BrowserSettings config = new BrowserSettings();
-
-			config.TextAreaResize = BrowserConfig.TextAreaResize.ToCefState();
-			config.LocalStorage = BrowserConfig.LocalStorage.ToCefState();
-			config.WebGl = BrowserConfig.WebGL.ToCefState();
-			config.Javascript = BrowserConfig.Javascript.ToCefState();
-			config.JavascriptAccessClipboard = BrowserConfig.JavascriptClipboard.ToCefState();
-			config.JavascriptCloseWindows = CefState.Disabled;
-			config.JavascriptDomPaste = BrowserConfig.JavascriptClipboard.ToCefState();
-			config.RemoteFonts = CefState.Enabled;
-
-			browser.BrowserSettings = config;
+			browser.BrowserSettings = BrowserConfig.GetCefConfig(browser);
 
 		}
 

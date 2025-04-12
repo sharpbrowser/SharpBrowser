@@ -1,4 +1,5 @@
 ﻿using CefSharp;
+using CefSharp.WinForms;
 
 namespace SharpBrowser.Config {
 	internal static class BrowserConfig {
@@ -110,6 +111,64 @@ namespace SharpBrowser.Config {
 		public static string ProxyUsername = "username";
 		public static string ProxyPassword = "pass";
 		public static string ProxyBypassList = "";
+
+
+
+
+		/// <summary>
+		/// Load the above config into the CEF `BrowserSettings` object.
+		/// </summary>
+		public static BrowserSettings GetCefConfig(ChromiumWebBrowser browser) {
+			BrowserSettings config = new BrowserSettings();
+
+			config.TextAreaResize = TextAreaResize.ToCefState();
+			config.LocalStorage = LocalStorage.ToCefState();
+			config.WebGl = WebGL.ToCefState();
+			config.Javascript = Javascript.ToCefState();
+			config.JavascriptAccessClipboard = JavascriptClipboard.ToCefState();
+			config.JavascriptCloseWindows = CefState.Disabled;
+			config.JavascriptDomPaste = JavascriptClipboard.ToCefState();
+			config.RemoteFonts = CefState.Enabled;
+
+			return config;
+		}
+		public static CefState ToCefState(this bool value) {
+			return value ? CefState.Enabled : CefState.Disabled;
+		}
+
+		/// <summary>
+		/// Load the above config into the CEF `CefSettings` object.
+		/// </summary>
+		public static void GetCefSettings(CefSettings settings) {
+
+			// add user agent settings
+			settings.UserAgent = UserAgent;
+			settings.AcceptLanguageList = AcceptLanguage;
+			settings.IgnoreCertificateErrors = true;
+
+			// needed for loading local images
+			if (LocalFiles) {
+				settings.CefCommandLineArgs.Add("disable-web-security", "1");
+				settings.CefCommandLineArgs.Add("allow-file-access-from-files", "1");
+			}
+
+			// enable webRTC streams
+			if (WebRTC) {
+				settings.CefCommandLineArgs.Add("enable-media-stream", "1");
+			}
+
+			// enable proxy if wanted
+			if (Proxy) {
+				CefSharpSettings.Proxy = new ProxyOptions(ProxyIP,
+					ProxyPort.ToString(), ProxyUsername,
+					ProxyPassword, ProxyBypassList);
+			}
+			else {
+
+				// disable proxy if not wanted
+				settings.CefCommandLineArgs.Add("no-proxy-server");
+			}
+		}
 
 	}
 }
