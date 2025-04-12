@@ -118,7 +118,7 @@ namespace SharpBrowser.Config {
 		/// <summary>
 		/// Load the above config into the CEF `BrowserSettings` object.
 		/// </summary>
-		public static BrowserSettings GetCefConfig(ChromiumWebBrowser browser) {
+		public static BrowserSettings GetCefConfig() {
 			BrowserSettings config = new BrowserSettings();
 
 			config.TextAreaResize = TextAreaResize.ToCefState();
