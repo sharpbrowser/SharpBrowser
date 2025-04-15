@@ -42,9 +42,9 @@ namespace SharpBrowser.Controls
             //BtnDownloads.Invalidate();
 
 
-            testdl_pct = testdl_pct + 10;
-            if (testdl_pct > 100)
-                testdl_pct = 0;
+            //testdl_pct = testdl_pct + 10;
+            //if (testdl_pct > 100)
+            //    testdl_pct = 0;
         }
 
         private void btnDL_Paint(object sender, PaintEventArgs e)
@@ -104,7 +104,7 @@ namespace SharpBrowser.Controls
             }
             catch (Exception ex)
             {
-                var x = 123;
+				Console.WriteLine(ex + "ERROR at btnDL_Paint:");
             }
         }
 
