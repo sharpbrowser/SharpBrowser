@@ -38,7 +38,14 @@ namespace SharpBrowser.Controls
         int testdl_pct = 0;
         private void Tmr_downloader_Tick(object sender, EventArgs e)
         {
-            _btnDL.Refresh();
+
+			bool isDownloading=false;
+			try { isDownloading = DownloadManager.DownloadsInProgress(); }
+			catch (Exception ex) { }	
+				
+			if (isDownloading)
+				_btnDL.Refresh();
+
             //BtnDownloads.Invalidate();
 
 
