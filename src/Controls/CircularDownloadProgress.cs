@@ -40,10 +40,24 @@ namespace SharpBrowser.Controls
         {
 
 			bool isDownloading=false;
-			try { isDownloading = DownloadManager.DownloadsInProgress(); }
+			bool needs_lastRefresh=false;
+			try 
+			{ 
+				isDownloading = DownloadManager.DownloadsInProgress();
+				if (!isDownloading)
+				{
+					var curdlitemKV_val = DownloadManager.Downloads
+						.Where(x => DateTime.Now.Subtract( x.Value.EndTime ?? DateTime.MinValue).TotalSeconds <3 )
+						.Select(x=>x.Value)
+						.FirstOrDefault();
+					//var curdlitem = curdlitemKV.Value;
+					if(curdlitemKV_val != null)
+						needs_lastRefresh = true;
+				}
+			}
 			catch (Exception ex) { }	
 				
-			if (isDownloading)
+			if (isDownloading || needs_lastRefresh)
 				_btnDL.Refresh();
 
             //BtnDownloads.Invalidate();
