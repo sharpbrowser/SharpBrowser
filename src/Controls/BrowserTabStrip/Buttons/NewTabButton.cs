@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 
 namespace SharpBrowser.Controls.BrowserTabStrip.Buttons {
-	internal class TabNewButton(ToolStripProfessionalRenderer renderer) : TabButtonBase(renderer) {
+	internal class NewTabButton(ToolStripProfessionalRenderer renderer) : TabButtonBase(renderer) {
 	
 		public override void Draw(Graphics g) {
 			if (IsVisible) {
