@@ -4,6 +4,7 @@ using SharpBrowser.Utils;
 using System;
 using System.Collections.Concurrent;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -11,9 +12,11 @@ using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Shapes;
+using static System.Windows.Forms.DataFormats;
 using Path = System.IO.Path;
 
 namespace SharpBrowser.Managers {
+	 
 	/// <summary>
 	/// Downloads and caches favicons for any given URL.
 	/// 
@@ -41,10 +44,22 @@ namespace SharpBrowser.Managers {
 		/// </summary>
 		private static readonly HttpClient httpClient = new HttpClient() { Timeout = TimeSpan.FromSeconds(5) };
 
+
+		static byte[] NotFound_favico { get; set; }
+
 		public static void Init() {
 			Path.Combine(ConfigManager.AppDataPath, "FavIcons").EnsureFolderExists();
+
+			var favnf = new Bitmap(16, 16);
+			var favg = Graphics.FromImage(favnf);
+
+			favg.FillRectangle(Brushes.Beige,0,0,favnf.Width,favnf.Height);
+			favg.DrawString("na", new Font( SystemFonts.DefaultFont.FontFamily,7f),Brushes.Black,0,0);
+
+			NotFound_favico = favnf.ToByteArray(ImageFormat.Png) ;
+
 		}
-		
+
 		private static string GetIconPath(string domain) {
 			var cleanDomain = domain.RemovePrefix("www.").Replace(".", "_");
 			return Path.Combine(ConfigManager.AppDataPath, "FavIcons\\" + cleanDomain + ".ico");
@@ -121,7 +136,12 @@ namespace SharpBrowser.Managers {
 				}
 			}
 
+
 			// NOT FOUND!
+			//if you dont do this,  there is residue favicon from previous Website.
+			iconBitmap = NotFound_favico;
+			OnLoaded(browser, iconBitmap);
+			return;
 
 			//Console.WriteLine("No favicon could be retrieved.");
 			/*}
@@ -215,5 +235,21 @@ namespace SharpBrowser.Managers {
                 return null;
             })()
         ";
+
 	}
+
+	public static class ImageExtensions
+	{
+		public static byte[] ToByteArray(this Image image) => ToByteArray(image, ImageFormat.Png);
+
+		public static byte[] ToByteArray(this Image image, ImageFormat format)
+		{
+			using (MemoryStream ms = new MemoryStream())
+			{
+				image.Save(ms, format);
+				return ms.ToArray();
+			}
+		}
+	}
+
 }
