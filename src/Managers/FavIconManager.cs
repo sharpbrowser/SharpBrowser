@@ -137,7 +137,7 @@ namespace SharpBrowser.Managers {
 			try {
 				var response = await httpClient.GetAsync(iconUrl);
 
-				if (!response.Content.Headers.ContentType.MediaType.StartsWith("image")) {
+				if (!response.Content.Headers.ContentType?.MediaType.StartsWith("image") ?? false) {
 					// non image returned!!
 					return null;
 				}
