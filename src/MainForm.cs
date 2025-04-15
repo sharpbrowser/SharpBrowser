@@ -270,7 +270,7 @@ namespace SharpBrowser {
 			BrowserManager.SetupHandlers(browser);
 
 			// new tab obj
-			BrowserTab tab = new BrowserTab {
+			BrowserTab tab = new BrowserTab(){
 				IsOpen = true,
 				Browser = browser,
 				Tab = tabStrip,
