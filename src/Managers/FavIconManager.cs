@@ -115,6 +115,9 @@ namespace SharpBrowser.Managers {
 
 			//--------------------------------------------------------------
 			// 5. Search for the link tag on the page for the icon path
+			if (browser is null || browser.IsDisposed || browser.Disposing) //because its async..
+				return;
+
 			var result = await browser.EvaluateScriptAsync(FavIconJS);
 			if (result.Success && result.Result is string iconHref && !string.IsNullOrWhiteSpace(iconHref)) {
 				try {
