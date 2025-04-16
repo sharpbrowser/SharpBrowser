@@ -252,7 +252,7 @@ namespace SharpBrowser
 			BtnMenu.Size = new System.Drawing.Size(36, 34);
 			BtnMenu.TabIndex = 7;
 			BtnMenu.Tag = "Menu3dot";
-			BtnMenu.Text = "...";
+			BtnMenu.Text = "";
 			BtnMenu.UseVisualStyleBackColor = true;
 			BtnMenu.Click += BtnMenu_Click;
 			// 

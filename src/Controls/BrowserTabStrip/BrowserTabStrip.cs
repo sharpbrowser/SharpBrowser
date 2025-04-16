@@ -22,7 +22,7 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 		private BrowserTabPage selectedItem;
 		private ContextMenuStrip menu;
 		private TabCloseButton closeButton;
-		private TabNewButton newTabButton;
+		private NewTabButton newTabButton;
 		private BrowserTabStripItemCollection items;
 
 		private StringFormat DrawStringFormat;
@@ -121,7 +121,7 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 			menu.ItemClicked += OnMenuItemClicked;
 			menu.VisibleChanged += OnMenuVisibleChanged;
 			closeButton = new TabCloseButton(base.ToolStripRenderer);
-			newTabButton = new TabNewButton(base.ToolStripRenderer);
+			newTabButton = new NewTabButton(base.ToolStripRenderer);
 			DrawStringFormat = new StringFormat();
 			EndInit();
 			UpdateLayout();
@@ -357,6 +357,7 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 			}
 
 			//--------------------------------------------------------
+			// DRAW  BOTTOM LINE to tabButtons, Except Active Tab.
 
 			if (Items.DrawnCount == 0 || Items.VisibleCount == 0) {
 				e.Graphics.DrawLine(Pens.Red, new Point(0, BrowserTabStyle.TabHeight), new Point(base.ClientRectangle.Width, BrowserTabStyle.TabHeight));
@@ -491,11 +492,12 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 			}
 
 			// draw tab text title
-			// FIX: fix janky text rendering and bad kerning by using TextRenderer instead of DrawString
-			g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
-			if (tab == SelectedTab) {
+			if (tab == SelectedTab)
+			{
 				textRect.Width -= 25;
 			}
+			// FIX: fix janky text rendering and bad kerning by using TextRenderer instead of DrawString
+			g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
 			TextRenderer.DrawText(g,tab.Title,font,Rectangle.Round(textRect),ForeColorSel,
 				TextFormatFlags.Left | TextFormatFlags.VerticalCenter | TextFormatFlags.EndEllipsis
 			);

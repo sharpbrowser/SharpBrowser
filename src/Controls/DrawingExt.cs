@@ -288,6 +288,15 @@ namespace System.Drawing
             return Color.FromArgb(color.A, (int)red, (int)green, (int)blue);
         }
 
+        /// <summary>
+        /// Creates color with corrected brightness.
+        /// </summary>
+        /// <param name="color">Color to correct.</param>
+        /// <param name="correctionFactor">The brightness correction factor. Must be between -1 and 1. 
+        /// Negative values produce darker colors.</param>
+        /// <returns>
+        /// Corrected <see cref="Color"/> structure.
+        /// </returns>
         public static Color ChangeColorBrightness(this Color color, double correctionFactor)
             => ChangeColorBrightness(color, (float)correctionFactor);
 

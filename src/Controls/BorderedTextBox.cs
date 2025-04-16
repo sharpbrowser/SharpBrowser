@@ -60,10 +60,13 @@ namespace SharpBrowser.Controls
         private TextBox textBox;
         private bool focusedAlways = false;
         private Color normalBorderColor = Color.LightGray;
-        //private Color focusedBorderColor = Color.FromArgb(86,156,214);
+        //private Color focusedBorderColor = Color.FromArgb(86, 156, 214);
         //private Color focusedBorderColor = Color.FromArgb(0,00,225);
-        private Color focusedBorderColor = Color.FromArgb(11, 87, 208);
+        //private Color focusedBorderColor = Color.FromArgb(11, 87, 208);
+        private Color focusedBorderColor = Color.FromArgb(153, 187, 239); //edge light blue
         public int borderThickness = 2;
+
+        int roundingRadius=19; //5 firefox, //19 full-round   //15
 
         public TextBox TextBox
         {
@@ -143,7 +146,8 @@ namespace SharpBrowser.Controls
                     new Rectangle(0 + borderThickness, 0 + borderThickness,
                     this.ClientSize.Width - borderThickness * 2,
                     this.ClientSize.Height - borderThickness * 2)
-                    , 15);
+                    , roundingRadius);
+
                 e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
 
                 //e.Graphics.DrawRectangle(borderPen,
@@ -151,7 +155,7 @@ namespace SharpBrowser.Controls
                     new Rectangle(0+borderThickness, 0 + borderThickness, 
                     this.ClientSize.Width - borderThickness*2, 
                     this.ClientSize.Height - borderThickness*2)
-                    ,15);
+                    , roundingRadius);
             }
             base.OnPaint(e);
         }
