@@ -917,48 +917,21 @@ namespace SharpBrowser {
 			MainMenu.Show(x, y);
 		}
 
-		private void MMNewTab_Click(object sender, EventArgs e) {
-			AddBlankTab();
-		}
-
-		private void MMNewWindow_Click(object sender, EventArgs e) {
-			AddBlankWindow();
-		}
-
-		private void MMNextTab_Click(object sender, EventArgs e) {
-			NextTab();
-		}
-
-		private void MMPrevTab_Click(object sender, EventArgs e) {
-			PrevTab();
-		}
-
-		private void MMDownloads_Click(object sender, EventArgs e) {
-			OpenDownloads();
-		}
-
-		private void MMPrint_Click(object sender, EventArgs e) {
-			Print();
-		}
-
-		private void MMPrintPDF_Click(object sender, EventArgs e) {
-			PrintToPDF();
-		}
-
-		private void MMClose_Click(object sender, EventArgs e) {
-			CloseActiveTab();
-		}
-
-		private void MMCloseOther_Click(object sender, EventArgs e) {
-			CloseOtherTabs();
-		}
-
-		private void MMDevTools_Click(object sender, EventArgs e) {
-			OpenDeveloperTools();
-		}
-		private void MMFullscreen_Click(object sender, EventArgs e) {
-			ToggleFullscreen();
-		}
+		
+		private void MMNewTab_Click(object sender, EventArgs e) => AddBlankTab();
+		private void MMNewWindow_Click(object sender, EventArgs e) => AddBlankWindow();
+		private void MMNextTab_Click(object sender, EventArgs e) => NextTab();
+		private void MMPrevTab_Click(object sender, EventArgs e) => PrevTab();
+		
+		private void MMDownloads_Click(object sender, EventArgs e) => OpenDownloads();
+		private void MMPrint_Click(object sender, EventArgs e) => Print();
+		private void MMPrintPDF_Click(object sender, EventArgs e) => PrintToPDF();
+		
+		private void MMClose_Click(object sender, EventArgs e) => CloseActiveTab();
+		private void MMCloseOther_Click(object sender, EventArgs e) => CloseOtherTabs();
+		
+		private void MMDevTools_Click(object sender, EventArgs e) => OpenDeveloperTools();
+		private void MMFullscreen_Click(object sender, EventArgs e) => ToggleFullscreen();
 		#endregion
 
 		#region Saved Settings
