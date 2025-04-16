@@ -522,7 +522,11 @@ namespace SharpBrowser {
 
 				var tab = GetTabByBrowser(browser);
 				if (tab != null && tab.Tab != null) {
-					var bitmap = new Bitmap(new MemoryStream(iconData));
+
+					Bitmap bitmap = null;
+					if (iconData !=null){
+						bitmap = new Bitmap(new MemoryStream(iconData));
+					}
 					tab.FavIcon = bitmap;
 					tab.Tab.Image = bitmap;
 				}

@@ -45,7 +45,7 @@ namespace SharpBrowser.Managers {
 		private static readonly HttpClient httpClient = new HttpClient() { Timeout = TimeSpan.FromSeconds(5) };
 
 
-		static byte[] NotFound_favico { get; set; }
+		//static byte[] NotFound_favico { get; set; }
 
 		public static void Init() {
 			Path.Combine(ConfigManager.AppDataPath, "FavIcons").EnsureFolderExists();
@@ -56,7 +56,7 @@ namespace SharpBrowser.Managers {
 			favg.FillRectangle(Brushes.Beige,0,0,favnf.Width,favnf.Height);
 			favg.DrawString("na", new Font( SystemFonts.DefaultFont.FontFamily,7f),Brushes.Black,0,0);
 
-			NotFound_favico = favnf.ToByteArray(ImageFormat.Png) ;
+			//NotFound_favico = favnf.ToByteArray(ImageFormat.Png) ;
 
 		}
 
@@ -139,7 +139,8 @@ namespace SharpBrowser.Managers {
 
 			// NOT FOUND!
 			//if you dont do this,  there is residue favicon from previous Website.
-			iconBitmap = NotFound_favico;
+			//iconBitmap = NotFound_favico;
+			iconBitmap = null;
 			OnLoaded(browser, iconBitmap);
 			return;
 
