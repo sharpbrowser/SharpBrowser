@@ -68,68 +68,77 @@ namespace SharpBrowser.Controls
             //    testdl_pct = 0;
         }
 
-        private void btnDL_Paint(object sender, PaintEventArgs e)
-        {
-            try
-            {
-                var isDownloading = DownloadManager.DownloadsInProgress();
-                float pct_ofRecentDownloadingItem = 0;
-                if (isDownloading)
-                {
-                    var curdlitemKV = DownloadManager.Downloads.Where(x => x.Value.IsInProgress).FirstOrDefault();
-                    var curdlitem = curdlitemKV.Value;
-                    pct_ofRecentDownloadingItem = (int)(curdlitem.ReceivedBytes * 100.0f / curdlitem.TotalBytes);
-                }
+		private void btnDL_Paint(object sender, PaintEventArgs e)
+		{
+			try
+			{
+				var isDownloading = DownloadManager.DownloadsInProgress();
+				float pct_ofRecentDownloadingItem = 0;
+				if (isDownloading)
+				{
+					var curdlitemKV = DownloadManager.Downloads.Where(x => x.Value.IsInProgress).FirstOrDefault();
+					var curdlitem = curdlitemKV.Value;
+					pct_ofRecentDownloadingItem = (int)(curdlitem.ReceivedBytes * 100.0f / curdlitem.TotalBytes);
+				}
 
-                //var isDownloading = true;
-                if (isDownloading)
-                {
-                    //var pct1 = 100; // 100 %;
-                    //var pct2 = 50; // 50 %;
-                    //var pct3 =25; // 20 %;
-                    var pct = testdl_pct; //test val;  //  <<<<----  input download percentage HERE;;
-                    pct = (int)pct_ofRecentDownloadingItem;
+				//var isDownloading = true;
+				if (isDownloading)
+				{
+					//var pct1 = 100; // 100 %;
+					//var pct2 = 50; // 50 %;
+					//var pct3 =25; // 20 %;
+					var pct = testdl_pct; //test val;  //  <<<<----  input download percentage HERE;;
+					pct = (int)pct_ofRecentDownloadingItem;
 
-                    var pctAs360val = pct / 100.0f * 360;
-                    var arc_StartOffset = 90;
+					var pctAs360val = pct / 100.0f * 360;
+					var arc_StartOffset = 90;
 
-                    //Color activeColorORG = Color.FromArgb(11, 87, 208);
-                    //Color activeLightColor = Color.FromArgb(76, 194, 255);
-                    Color activeColor = Color.FromArgb(27, 117, 208);
-                    int gray = 200;
-                    var myGray = Color.FromArgb(gray, gray, gray);
+					//Color activeColorORG = Color.FromArgb(11, 87, 208);
+					//Color activeLightColor = Color.FromArgb(76, 194, 255);
+					Color activeColor = Color.FromArgb(27, 117, 208);
+					int gray = 200;
+					var myGray = Color.FromArgb(gray, gray, gray);
 
-                    //var loc = BtnDownloads.Location;
-                    //var sz = BtnDownloads.Size;
-                    var loc = new Point(0, 0);
-                    var sz = _btnDL.ClientRectangle;
-                    var pad = 0;
-                    //var btng = BtnDownloads.CreateGraphics();
+					//var loc = BtnDownloads.Location;
+					//var sz = BtnDownloads.Size;
+					var loc = new Point(0, 0);
+					var sz = _btnDL.ClientRectangle;
+					var pad = 0;
+					//var btng = BtnDownloads.CreateGraphics();
 
-                    var thickness = 4;
+					var thickness = 4;
 
-                    var btng = e.Graphics;
-                    //var btng = BtnDownloads.CreateGraphics();
-                    btng.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+					var btng = e.Graphics;
+					//var btng = BtnDownloads.CreateGraphics();
+					btng.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
-                    Rectangle rect = new Rectangle(
-                        loc.X + pad + thickness / 2,
-                        loc.Y + pad + thickness / 2,
-                        sz.Width - 1 * pad - thickness / 2 * 2 - 1,
-                        sz.Height - 1 * pad - thickness / 2 * 2 - 1);
-                    //btng.FillRectangle(new Pen(new SolidBrush(Color.Black), 10).Brush, rect);
-                    btng.DrawArc(new Pen(new SolidBrush(myGray), thickness), rect, 0 + arc_StartOffset, 360);
-                    btng.DrawArc(new Pen(new SolidBrush(activeColor), thickness), rect, 0 + arc_StartOffset, pctAs360val);
 
-                }
-            }
-            catch (Exception ex)
-            {
+					var szHW_min = Math.Min(sz.Width, sz.Height);
+					var szHW_max_minus_min = Math.Abs(sz.Width - sz.Height) / 2; //aka center it. vertical.
+					Rectangle rect = new Rectangle(
+						loc.X + pad + thickness / 2,
+						loc.Y + pad + thickness / 2,
+					szHW_min - 1 * pad - thickness / 2 * 2 - 1,
+					szHW_min - 1 * pad - thickness / 2 * 2 - 1
+					);
+
+					rect.Offset(szHW_max_minus_min, 0);
+					//sz.Width - 1 * pad - thickness / 2 * 2 - 1,
+					//sz.Height - 1 * pad - thickness / 2 * 2 - 1
+					//);
+					//btng.FillRectangle(new Pen(new SolidBrush(Color.Black), 10).Brush, rect);
+					btng.DrawArc(new Pen(new SolidBrush(myGray), thickness), rect, 0 + arc_StartOffset, 360);
+					btng.DrawArc(new Pen(new SolidBrush(activeColor), thickness), rect, 0 + arc_StartOffset, pctAs360val);
+
+				}
+			}
+			catch (Exception ex)
+			{
 				Console.WriteLine(ex + "ERROR at btnDL_Paint:");
-            }
-        }
+			}
+		}
 
 
 
-    }
+	}
 }
