@@ -8,6 +8,8 @@ namespace SharpBrowser.Handlers {
 	internal class RequestHandler : IRequestHandler {
 		MainForm myForm;
 
+		public static bool settings__onCtrlClick_focusNewTab = true;
+
 		public RequestHandler(MainForm form) {
 			myForm = form;
 		}
@@ -107,6 +109,8 @@ namespace SharpBrowser.Handlers {
 		public bool OnCertificateError(IWebBrowser browserControl, IBrowser browser, CefErrorCode errorCode, string requestUrl, ISslInfo sslInfo, IRequestCallback callback) {
 			return true;
 		}
+
+
 		//
 		// Summary:
 		//     Called on the UI thread before OnBeforeBrowse in certain limited cases where
@@ -132,8 +136,36 @@ namespace SharpBrowser.Handlers {
 		// Returns:
 		//     Return true to cancel the navigation or false to allow the navigation to
 		//     proceed in the source browser's top-level frame.
-		public bool OnOpenUrlFromTab(IWebBrowser browserControl, IBrowser browser, IFrame frame, string targetUrl, WindowOpenDisposition targetDisposition, bool userGesture) {
+		public bool OnOpenUrlFromTab(IWebBrowser browserControl, IBrowser browser, IFrame frame, 
+			string targetUrl, WindowOpenDisposition targetDisposition, bool userGesture) {
+			//return false;
+
+			// check if the user intended to open the link in a new tab
+			// (Ctrl+Click often results in NewBackgroundTab or NewForegroundTab)
+			if (targetDisposition == WindowOpenDisposition.NewForegroundTab || 
+				targetDisposition == WindowOpenDisposition.NewBackgroundTab)
+			{
+				// Check if it was a user gesture (actual click)
+				if (userGesture)
+				{
+					myForm.Invoke((MethodInvoker)(() => {
+						myForm.AddNewBrowserTab(targetUrl,
+							//focusNewTab: (targetDisposition == WindowOpenDisposition.NewForegroundTab), 
+							focusNewTab: settings__onCtrlClick_focusNewTab,
+							browser.MainFrame.Url
+							);
+					}));
+
+					
+					//handled.. (dont load it in the current tab)
+					return true;
+				}
+			}
+
+			// For all other cases, return false to let the default navigation proceed.
 			return false;
+
+
 		}
 		//
 		// Summary:
