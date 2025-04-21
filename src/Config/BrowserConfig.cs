@@ -1,5 +1,6 @@
 ﻿using CefSharp;
 using CefSharp.WinForms;
+using System.Net;
 
 namespace SharpBrowser.Config {
 	internal static class BrowserConfig {
@@ -101,19 +102,29 @@ namespace SharpBrowser.Config {
 		public static bool TextAreaResize = true;
 
 
+		//3way to set proxy, needs enum to reduce complication.
+		public static ProxyMode currentProxyMode = ProxyMode.AutoDetect;
+		//public static bool useSystemProxy = true;
 
 		/// <summary>
 		/// If true then the following proxy is used for all browsing and downloads.
 		/// </summary>
-		public static bool Proxy = false;
+		//public static bool customProxy = false;
 		public static string ProxyIP = "123.123.123.123";
 		public static int ProxyPort = 123;
 		public static string ProxyUsername = "username";
 		public static string ProxyPassword = "pass";
 		public static string ProxyBypassList = "";
 
-
-
+		public enum ProxyMode 
+		{
+			/// <summary>
+			/// aka use system proxy 
+			/// </summary>
+			AutoDetect,
+			CustomProxy,
+			NoProxy,
+		}
 
 		/// <summary>
 		/// Load the above config into the CEF `BrowserSettings` object.
@@ -157,13 +168,21 @@ namespace SharpBrowser.Config {
 				settings.CefCommandLineArgs.Add("enable-media-stream", "1");
 			}
 
-			// enable proxy if wanted
-			if (Proxy) {
-				CefSharpSettings.Proxy = new ProxyOptions(ProxyIP,
-					ProxyPort.ToString(), ProxyUsername,
-					ProxyPassword, ProxyBypassList);
+			if (currentProxyMode == ProxyMode.AutoDetect) 
+			{
+				//settings.CefCommandLineArgs.Add("proxy-auto-detect"); // or maybe do nothing.
 			}
-			else {
+			else if (currentProxyMode == ProxyMode.CustomProxy)
+			{
+				// enable proxy if wanted
+				CefSharpSettings.Proxy = new ProxyOptions(
+					ProxyIP, 
+					ProxyPort.ToString(), 
+					ProxyUsername,ProxyPassword, 
+					ProxyBypassList);
+			}
+			else if (currentProxyMode == ProxyMode.NoProxy)
+			{
 
 				// disable proxy if not wanted
 				settings.CefCommandLineArgs.Add("no-proxy-server");
