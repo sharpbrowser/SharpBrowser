@@ -33,7 +33,6 @@ namespace SharpBrowser {
 
 		}
 
-		Panel pnlToolbarOverlay;
 		private void MainForm_Load(object sender, EventArgs e) {
 
 
@@ -237,6 +236,7 @@ namespace SharpBrowser {
 			});
 		}
 
+		Panel pnlToolbarOverlay;
 		private BrowserTab AddNewBrowser(BrowserTabPage tabStrip, String url) {
 			if (url == "") url = BrowserConfig.NewTabURL;
 			ChromiumWebBrowser browser = new ChromiumWebBrowser(url);
@@ -762,7 +762,7 @@ namespace SharpBrowser {
 		#region Toolbar
 
 		private void InitToolbar() {
-			TxtURL.MakeTextbox_CustomBorderColor();
+			TxtURL.ToBordered();
 			PanelToolbar.Dock = DockStyle.None;
 			PanelToolbar.BringToFront();
 			PanelToolbar.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;

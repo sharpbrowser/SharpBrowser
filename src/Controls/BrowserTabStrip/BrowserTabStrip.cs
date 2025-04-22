@@ -1,5 +1,6 @@
 using SharpBrowser.Config;
 using SharpBrowser.Controls.BrowserTabStrip.Buttons;
+using SharpBrowser.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,7 +22,7 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 
 		private BrowserTabPage selectedItem;
 		private ContextMenuStrip menu;
-		private TabCloseButton closeButton;
+		private CloseTabButton closeButton;
 		private NewTabButton newTabButton;
 		private BrowserTabStripItemCollection items;
 
@@ -120,7 +121,7 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 			menu.Renderer = base.ToolStripRenderer;
 			menu.ItemClicked += OnMenuItemClicked;
 			menu.VisibleChanged += OnMenuVisibleChanged;
-			closeButton = new TabCloseButton(base.ToolStripRenderer);
+			closeButton = new CloseTabButton(base.ToolStripRenderer);
 			newTabButton = new NewTabButton(base.ToolStripRenderer);
 			DrawStringFormat = new StringFormat();
 			EndInit();

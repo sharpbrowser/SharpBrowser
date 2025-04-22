@@ -1,4 +1,5 @@
 ﻿using SharpBrowser.Config;
+using SharpBrowser.Utils;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -13,13 +14,13 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SharpBrowser.Controls {
-	public static class TextBox_Helper {
+	public static class BorderedTextBoxUtils {
 
 		/// <summary>
 		/// Wraps an exisiting textbox with a panel which has roundd borders and a custom backcolor.
 		/// Returns the panel which wraps the textbox.
 		/// </summary>
-		public static BorderedTextBox MakeTextbox_CustomBorderColor(this TextBox tbx) {
+		public static BorderedTextBox ToBordered(this TextBox tbx) {
 			
 			//backup previous TBX status
 			var tbxOriginalParent = tbx.Parent;
@@ -51,7 +52,6 @@ namespace SharpBrowser.Controls {
 		}
 	}
 
-	// https://stackoverflow.com/questions/17466067/change-border-color-in-textbox-c-sharp/39420512#39420512
 	public class BorderedTextBox : Panel {
 		private TextBox textBox;
 		private bool focusedAlways = false;

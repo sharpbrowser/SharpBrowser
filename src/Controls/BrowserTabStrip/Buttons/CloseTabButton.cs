@@ -1,10 +1,10 @@
 using SharpBrowser.Config;
+using SharpBrowser.Utils;
 using System.Drawing;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace SharpBrowser.Controls.BrowserTabStrip.Buttons {
-	internal class TabCloseButton(ToolStripProfessionalRenderer renderer) : TabButtonBase(renderer) {
+	internal class CloseTabButton(ToolStripProfessionalRenderer renderer) : TabButtonBase(renderer) {
 		
 		public override void Draw(Graphics g) {
 			if (IsVisible) {

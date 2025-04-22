@@ -1,4 +1,5 @@
 ﻿using SharpBrowser.Config;
+using SharpBrowser.Utils;
 using System.Drawing;
 using System.Windows.Forms;
 
