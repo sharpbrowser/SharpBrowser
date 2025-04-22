@@ -353,18 +353,15 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 				if (fATabStripItem.Visible || base.DesignMode) {
 					OnCalcTabPage(e.Graphics, fATabStripItem);
 					fATabStripItem.IsDrawn = false;
-					OnDrawTabButton(e.Graphics, fATabStripItem);
+					DrawSingleTabButton(e.Graphics, fATabStripItem);
 				}
 			}
 
 			//--------------------------------------------------------
-			// DRAW  BOTTOM LINE to tabButtons, Except Active Tab.
+			// DRAW BOTTOM LINE on the left/right side of the selected tab
 
-			if (Items.DrawnCount == 0 || Items.VisibleCount == 0) {
-				e.Graphics.DrawLine(Pens.Red, new Point(0, BrowserTabStyle.TabHeight), new Point(base.ClientRectangle.Width, BrowserTabStyle.TabHeight));
-			}
-			else if (SelectedTab != null && SelectedTab.IsDrawn) {
-				var lineColorPen = new Pen(BrowserTabStyle.NormalTabBackColor);
+			if (SelectedTab != null && SelectedTab.IsDrawn) {
+				var lineColorPen = new Pen(BrowserTabStyle.TabBorderColor, BrowserTabStyle.TabBorderThickness);
 
 				Point point = new Point((int)SelectedTab.StripRect.Left - TabRadius, BrowserTabStyle.TabHeight);
 				e.Graphics.DrawLine(lineColorPen, new Point(0, BrowserTabStyle.TabHeight), point);
@@ -415,9 +412,9 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 
 
 		/// <summary>
-		/// Draws The Tab Header button
+		/// Draws a single tab header button.
 		/// </summary>
-		private void OnDrawTabButton(Graphics g, BrowserTabPage tab) {
+		private void DrawSingleTabButton(Graphics g, BrowserTabPage tab) {
 			Items.IndexOf(tab);
 			Font font = Font;
 
@@ -427,7 +424,7 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 			RectangleF stripRect = tab.StripRect;
 			var sr = stripRect;
 			SolidBrush brush = new SolidBrush((tab == SelectedTab) ? BrowserTabStyle.SelectedTabBackColor : BrowserTabStyle.NormalTabBackColor);
-			Pen pen = new Pen((tab == SelectedTab) ? BrowserTabStyle.SelectedTabBackColor : BrowserTabStyle.NormalTabBackColor);
+			Pen pen = new Pen((tab == SelectedTab) ? BrowserTabStyle.TabBorderColor : BrowserTabStyle.NormalTabBackColor, BrowserTabStyle.TabBorderThickness);
 
 			//--------------------------------------------------------
 			// Calc Rect for the Tab
@@ -449,7 +446,7 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 			//g.DrawRoundRectangle(SystemPens.ControlDark, tabDrawnRect, TabRadius);
 
 			//--------------------------------------------------------
-			//// Rounded Chrome Tabs
+			// Rounded Chrome Tabs
 			//--------------------------------------------------------
 			var tabpathNew =
 				isActiveTab ?
@@ -457,10 +454,8 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 				tabDrawnRect.CreateTabPath_roundAll(TabRadius);
 
 			g.FillPath(brush, tabpathNew);
-			//g.DrawPath(SystemPens.ControlDark, tabpathNew);
-			//--white color requires more work...
 			g.DrawPath(pen, tabpathNew);
-			//--draw ,tab seperator line:   | TAB1 | TAB2
+			// draw tab seperator line:   | TAB1 | TAB2
 			if (!isActiveTab && !is_atRightof_ActiveTab) {
 				int margin = 14;
 				sr.Y += 2; //move rect down

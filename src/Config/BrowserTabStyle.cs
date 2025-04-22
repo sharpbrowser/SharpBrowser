@@ -18,7 +18,7 @@ namespace SharpBrowser.Config {
 		public static SolidBrush BackColor = new SolidBrush(NormalTabBackColor);
 
 		public static Color TabBorderColor = Color.LightGray;
-		public static int TabBorderThickness = 2;
+		public static float TabBorderThickness = 2;
 
 		// Close tab button (X)
 
