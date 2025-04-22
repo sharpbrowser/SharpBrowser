@@ -32,6 +32,8 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 		public int MaxTabSize = 200;
 		public int AddButtonWidth = 40;
 
+		private Point LastMousePos;
+
 		[RefreshProperties(RefreshProperties.All)]
 		[DefaultValue(null)]
 		public BrowserTabPage SelectedTab {
@@ -299,20 +301,26 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 		protected override void OnMouseMove(MouseEventArgs e) {
 			base.OnMouseMove(e);
 
+			LastMousePos = e.Location;
+
 			// manually process events for buttons
 			closeButton.ProcessRolloverEvents(this, e);
 			newTabButton.ProcessRolloverEvents(this, e);
 
+			this.Invalidate();
 		}
 
 
 		protected override void OnMouseLeave(EventArgs e) {
 			base.OnMouseLeave(e);
 
+			LastMousePos = Point.Empty;
+
 			// manually process events for buttons
 			closeButton.ProcessRolloutEvents(this);
 			newTabButton.ProcessRolloutEvents(this);
 
+			this.Invalidate();
 		}
 
 		protected override void OnSizeChanged(EventArgs e) {
@@ -423,8 +431,6 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 
 			RectangleF stripRect = tab.StripRect;
 			var sr = stripRect;
-			SolidBrush brush = new SolidBrush((tab == SelectedTab) ? BrowserTabStyle.SelectedTabBackColor : BrowserTabStyle.NormalTabBackColor);
-			Pen pen = new Pen((tab == SelectedTab) ? BrowserTabStyle.TabBorderColor : BrowserTabStyle.NormalTabBackColor, BrowserTabStyle.TabBorderThickness);
 
 			//--------------------------------------------------------
 			// Calc Rect for the Tab
@@ -444,6 +450,21 @@ namespace SharpBrowser.Controls.BrowserTabStrip {
 			////--Draw Pill Style Tabs
 			//g.FillRoundRectangle(brush, tabDrawnRect,TabRadius);
 			//g.DrawRoundRectangle(SystemPens.ControlDark, tabDrawnRect, TabRadius);
+
+			//--------------------------------------------------------
+			// Style for the tab button
+			//--------------------------------------------------------
+			var tabColor = BrowserTabStyle.TabBackColor_Normal;
+			var borderColor = BrowserTabStyle.TabBackColor_Normal;
+			if (tab == SelectedTab) {
+				tabColor = BrowserTabStyle.TabBackColor_Selected;
+				borderColor = BrowserTabStyle.TabBorderColor;
+			}
+			else if (tabDrawnRect.Contains(LastMousePos)) {
+				tabColor = BrowserTabStyle.TabBackColor_Rollover;
+			}
+			var brush = new SolidBrush(tabColor);
+			var pen = new Pen(borderColor, BrowserTabStyle.TabBorderThickness);
 
 			//--------------------------------------------------------
 			// Rounded Chrome Tabs

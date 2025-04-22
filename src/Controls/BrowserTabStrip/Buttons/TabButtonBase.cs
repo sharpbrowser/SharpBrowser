@@ -30,19 +30,14 @@ namespace SharpBrowser.Controls.BrowserTabStrip.Buttons {
 			if (IsVisible) {
 				if (Rect.Contains(e.Location)) {
 					IsMouseOver = true;
-					parent.Invalidate(RedrawRect);
 				}
 				else if (IsMouseOver) {
 					IsMouseOver = false;
-					parent.Invalidate(RedrawRect);
 				}
 			}
 		}
 		public void ProcessRolloutEvents(Control parent) {
 			IsMouseOver = false;
-			if (IsVisible) {
-				parent.Invalidate(RedrawRect);
-			}
 		}
 
 	}
