@@ -16,15 +16,12 @@ using SharpBrowser.Handlers;
 using SharpBrowser.Config;
 using SharpBrowser.Model;
 using SharpBrowser.Utils;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
 
 namespace SharpBrowser {
 
-    /// <summary>
-    /// The main SharpBrowser form, supporting multiple tabs.
-    /// We used the x86 version of CefSharp, so the app works on 32-bit and 64-bit machines.
-    /// If you would only like to support 64-bit machines, simply change the DLL references.
-    /// </summary>
+	/// <summary>
+	/// The main SharpBrowser form supporting multiple tabs, and handling all the managers required for the browser.
+	/// </summary>
 	internal partial class MainForm : Form {
 
 		public static MainForm Instance;
@@ -55,10 +52,8 @@ namespace SharpBrowser {
 			InitDisabledIcons();
 			InitToolbar();
 
-            new CircularDownloadProgress(BtnDownloads);
-
-            // start with the last tabs
-            LoadLastTabs();
+			// start with the last tabs
+			LoadLastTabs();
 
 		}
 
@@ -270,7 +265,7 @@ namespace SharpBrowser {
 			BrowserManager.SetupHandlers(browser);
 
 			// new tab obj
-			BrowserTab tab = new BrowserTab(){
+			BrowserTab tab = new BrowserTab() {
 				IsOpen = true,
 				Browser = browser,
 				Tab = tabStrip,
@@ -524,7 +519,7 @@ namespace SharpBrowser {
 				if (tab != null && tab.Tab != null) {
 
 					Bitmap bitmap = null;
-					if (iconData !=null){
+					if (iconData != null) {
 						bitmap = new Bitmap(new MemoryStream(iconData));
 					}
 					tab.FavIcon = bitmap;
@@ -777,6 +772,8 @@ namespace SharpBrowser {
 
 			if (Debugger.IsAttached)
 				pnlToolbarOverlay.BackColor = Color.Cyan;
+
+			new CircularDownloadProgress(BtnDownloads);
 		}
 
 		private void InitDisabledIcons() {
@@ -917,19 +914,19 @@ namespace SharpBrowser {
 			MainMenu.Show(x, y);
 		}
 
-		
+
 		private void MMNewTab_Click(object sender, EventArgs e) => AddBlankTab();
 		private void MMNewWindow_Click(object sender, EventArgs e) => AddBlankWindow();
 		private void MMNextTab_Click(object sender, EventArgs e) => NextTab();
 		private void MMPrevTab_Click(object sender, EventArgs e) => PrevTab();
-		
+
 		private void MMDownloads_Click(object sender, EventArgs e) => OpenDownloads();
 		private void MMPrint_Click(object sender, EventArgs e) => Print();
 		private void MMPrintPDF_Click(object sender, EventArgs e) => PrintToPDF();
-		
+
 		private void MMClose_Click(object sender, EventArgs e) => CloseActiveTab();
 		private void MMCloseOther_Click(object sender, EventArgs e) => CloseOtherTabs();
-		
+
 		private void MMDevTools_Click(object sender, EventArgs e) => OpenDeveloperTools();
 		private void MMFullscreen_Click(object sender, EventArgs e) => ToggleFullscreen();
 		#endregion
@@ -970,13 +967,13 @@ namespace SharpBrowser {
 				ConfigManager.Set("browser.lastTabs", urls);
 				ConfigManager.Set("browser.lastTab", TabPages.SelectedIndex);
 				ConfigManager.SaveSettings();
-            }
-        }
+			}
+		}
 
-        #endregion
-
-
+		#endregion
 
 
-    }
+
+
+	}
 }
